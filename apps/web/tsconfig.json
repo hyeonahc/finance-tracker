@@ -1,0 +1,12 @@
+{
+  "files": [],
+  "extends": "../../tsconfig.json", // Extend the config options from the root
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}
