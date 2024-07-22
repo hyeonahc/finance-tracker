@@ -17,3 +17,12 @@ pnpm add express --filter=web
 ```
 
 # Front-end
+
+# Back-end
+
+Run the Server
+
+```
+cd apps/server/
+nodemon --exec 'ts-node -r tsconfig-paths/register' server.ts
+```
