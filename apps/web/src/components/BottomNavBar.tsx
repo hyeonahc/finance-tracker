@@ -30,7 +30,9 @@ export default function BottomNavBar() {
   return (
     <Paper
       elevation={3}
-      sx={{ bottom: 0, left: 0, position: "fixed", right: 0 }}
+      sx={{
+        minHeight: "10vh",
+      }}
     >
       <BottomNavigation onChange={handlechange} showLabels value={currentPath}>
         {navItems.map((item, index) => (
