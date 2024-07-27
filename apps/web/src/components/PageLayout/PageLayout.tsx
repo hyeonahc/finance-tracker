@@ -1,10 +1,14 @@
 import { Box, Container } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import BottomNavBar from "../BottomNavBar";
 
 const PageLayout = () => {
   const theme = useTheme();
+  const location = useLocation();
+
+  const hideBottomNavBar = ["/signin", "/signup"].includes(location.pathname);
+
   return (
     <Box sx={{ border: 1, borderColor: theme.palette.border.main }}>
       <Box
@@ -21,7 +25,7 @@ const PageLayout = () => {
         >
           <Outlet />
         </Container>
-        <BottomNavBar />
+        {!hideBottomNavBar && <BottomNavBar />}
       </Box>
     </Box>
   );
