@@ -1,44 +1,44 @@
-import { IUser } from '@interfaces/IUser'
-import bcrypt from 'bcrypt'
-import mongoose from 'mongoose'
-import validator from 'validator'
+import { IUser } from "@interfaces/IUser";
+import bcrypt from "bcrypt";
+import mongoose from "mongoose";
+import validator from "validator";
 
 const emailValidator = (email: string): boolean => {
-  return validator.isEmail(email)
-}
+  return validator.isEmail(email);
+};
 
 const isValidPassword = (password: string): boolean => {
   const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#\s]{8,}$/
-  return passwordRegex.test(password)
-}
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#\s]{8,}$/;
+  return passwordRegex.test(password);
+};
 
 const userSchema = new mongoose.Schema<IUser>({
   firstName: {
     type: String,
-    required: [true, 'First name is required'],
+    required: [true, "First name is required"],
     trim: true,
   },
   lastName: {
     type: String,
-    required: [true, 'Last name is required'],
+    required: [true, "Last name is required"],
     trim: true,
   },
   email: {
     type: String,
-    required: [true, 'Email is required'],
+    required: [true, "Email is required"],
     trim: true,
     unique: true,
     lowercase: true,
     validate: {
       validator: emailValidator,
-      message: 'Please provide a valid email',
+      message: "Please provide a valid email",
     },
   },
   password: {
     type: String,
-    required: [true, 'Password is required'],
-    minlength: [8, 'Password must be at least 8 characters long'],
+    required: [true, "Password is required"],
+    minlength: [8, "Password must be at least 8 characters long"],
     validate: {
       validator: isValidPassword,
       message: (props: { value: string }) =>
@@ -48,23 +48,23 @@ const userSchema = new mongoose.Schema<IUser>({
   googleId: {
     type: String,
   },
-})
+});
 
 // This function runs automatically before a user document is saved to the database.
-userSchema.pre('save', async function (next) {
+userSchema.pre("save", async function (next) {
   // 'this' refers to the user document that is about to be saved
   // checks if the password has been changed since the last time the user document was saved.
-  if (!this.isModified('password')) return next()
+  if (!this.isModified("password")) return next();
   try {
     // Creates a unique random string (salt) with 10 rounds of processing to add to the password for extra security.
-    const salt = await bcrypt.genSalt(10)
+    const salt = await bcrypt.genSalt(10);
     // Combines the plain text password with the salt and scrambles it to create a secure, hashed version of the password.
-    const hashedPassword = await bcrypt.hash(this.password, salt)
-    this.password = hashedPassword
-    next()
+    const hashedPassword = await bcrypt.hash(this.password, salt);
+    this.password = hashedPassword;
+    next();
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
 
-export default mongoose.model('User', userSchema)
+export default mongoose.model("User", userSchema);
