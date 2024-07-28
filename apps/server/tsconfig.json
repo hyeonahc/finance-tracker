@@ -11,11 +11,11 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "controllers/*": ["src/controllers/*"],
-      "routers/*": ["src/routers/*"],
-      "models/*": ["src/models/*"],
-      "services/*": ["src/services/*"],
-      "interfaces/*": ["src/interfaces/*"]
+      "@controllers/*": ["src/controllers/*"],
+      "@routers/*": ["src/routers/*"],
+      "@models/*": ["src/models/*"],
+      "@services/*": ["src/services/*"],
+      "@interfaces/*": ["src/interfaces/*"]
     }
   }
 }

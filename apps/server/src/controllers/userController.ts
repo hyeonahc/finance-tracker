@@ -1,5 +1,5 @@
+import { createUser } from '@services/userService'
 import { Request, Response } from 'express'
-import { createUser } from 'services/userService'
 
 export const signupUser = async (
   req: Request,

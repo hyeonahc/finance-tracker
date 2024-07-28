@@ -1,5 +1,5 @@
+import { IUser } from '@interfaces/IUser'
 import bcrypt from 'bcrypt'
-import { IUser } from 'interfaces/IUser'
 import mongoose from 'mongoose'
 import validator from 'validator'
 

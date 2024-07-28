@@ -1,5 +1,5 @@
-import { IUser } from 'interfaces/IUser'
-import User from 'models/userModel'
+import { IUser } from '@interfaces/IUser'
+import User from '@models/userModel'
 
 export const createUser = async (input: IUser) => {
   const { firstName, lastName, email, password } = input
