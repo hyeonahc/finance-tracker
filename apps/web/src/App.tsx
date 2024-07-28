@@ -1,12 +1,12 @@
-import PageLayout from "components/PageLayout";
-import AnalysisReport from "pages/AnalysisReport";
-import ExpenseHistory from "pages/ExpenseHistory";
-import FinanceGoal from "pages/FinanceGoal";
-import Home from "pages/Home";
-import NotFound from "pages/NotFound";
-import Setting from "pages/Setting";
-import SignIn from "pages/SignIn";
-import SignUp from "pages/SignUp";
+import PageLayout from "@components/PageLayout";
+import AnalysisReport from "@pages/AnalysisReport";
+import ExpenseHistory from "@pages/ExpenseHistory";
+import FinanceGoal from "@pages/FinanceGoal";
+import Home from "@pages/Home";
+import NotFound from "@pages/NotFound";
+import Setting from "@pages/Setting";
+import SignIn from "@pages/SignIn";
+import SignUp from "@pages/SignUp";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {

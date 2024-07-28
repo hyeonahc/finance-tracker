@@ -25,9 +25,9 @@
 
     "baseUrl": "./",
     "paths": {
-      "pages/*": ["src/pages/*"],
-      "components/*": ["src/components/*"],
-      "theme/*": ["src/theme/*"]
+      "@pages/*": ["src/pages/*"],
+      "@components/*": ["src/components/*"],
+      "@theme/*": ["src/theme/*"]
     }
   },
   "include": ["src"]
