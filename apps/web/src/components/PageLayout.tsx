@@ -1,7 +1,7 @@
 import { Box, Container } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import BottomNavBar from "components/BottomNavBar";
 import { Outlet, useLocation } from "react-router-dom";
-import BottomNavBar from "../BottomNavBar";
 
 const PageLayout = () => {
   const theme = useTheme();
