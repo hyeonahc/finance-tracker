@@ -1,4 +1,5 @@
-import PageLayout from "@components/PageLayout";
+import Layout from "@components/Layout";
+import LayoutWithBottomNav from "@components/LayoutWithBottomNav";
 import AnalysisReport from "@pages/AnalysisReport";
 import ExpenseHistory from "@pages/ExpenseHistory";
 import FinanceGoal from "@pages/FinanceGoal";
@@ -13,20 +14,17 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<PageLayout />}>
-          {/* Main Pages: BottomNavBar is displayed */}
+        <Route path="/" element={<LayoutWithBottomNav />}>
           <Route index element={<Home />} />
           <Route path="expense-history" element={<ExpenseHistory />} />
           <Route path="analysis-report" element={<AnalysisReport />} />
           <Route path="finance-goal" element={<FinanceGoal />} />
           <Route path="setting" element={<Setting />} />
-
-          {/* User Pages: BottomNavBar is not displayed */}
+          <Route path="*" element={<NotFound />} />
+        </Route>
+        <Route path="/" element={<Layout />}>
           <Route path="signin" element={<SignIn />} />
           <Route path="signup" element={<SignUp />} />
-
-          {/* Catch-all route for 404 Not Found */}
-          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>
