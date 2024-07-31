@@ -16,6 +16,12 @@ const navItems = [
     label: "Setting",
     value: "/setting",
   },
+  {
+    href: "/test",
+    icon: <PersonIcon />,
+    label: "Test",
+    value: "/test",
+  },
 ];
 
 export default function BottomNavBar() {
