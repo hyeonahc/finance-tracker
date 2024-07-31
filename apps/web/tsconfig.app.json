@@ -27,7 +27,10 @@
     "paths": {
       "@pages/*": ["src/pages/*"],
       "@components/*": ["src/components/*"],
-      "@theme/*": ["src/theme/*"]
+      "@theme/*": ["src/theme/*"],
+      "@store/*": ["src/stores/*"],
+      "@api/*": ["src/api/*"],
+      "@interfaces/*": ["src/interfaces/*"]
     }
   },
   "include": ["src"]
