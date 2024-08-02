@@ -7,7 +7,7 @@ export type AuthStore = {
 };
 
 export type AuthActions = {
-  isLoggedIn: () => Promise<boolean>;
+  isAuthorized: () => Promise<boolean>;
   onLogin: (email: string, password: string) => Promise<unknown>;
   onLogout: () => Promise<void>;
   onRegister: (email: string, password: string) => Promise<unknown>;
@@ -18,7 +18,7 @@ export const useAuthStore = create<AuthActions & AuthStore>()(
   persist(
     (set, get) => ({
       initialized: false,
-      isLoggedIn: async () => {
+      isAuthorized: async () => {
         if (!get().initialized) return false;
         // todo: implement token validation
         // return await api.validateToken(get().token);
