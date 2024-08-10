@@ -3,7 +3,7 @@ import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalance
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import InsertChartOutlinedOutlinedIcon from "@mui/icons-material/InsertChartOutlinedOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
+import { BottomNavigation, BottomNavigationAction, Box } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const navItems = [
@@ -49,13 +49,22 @@ export default function BottomNavBar() {
   };
 
   return (
-    <Paper
-      elevation={3}
+    <Box
       sx={{
-        minHeight: "10vh",
+        width: "767px",
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: "80px",
       }}
     >
-      <BottomNavigation onChange={handlechange} showLabels value={currentPath}>
+      <BottomNavigation
+        onChange={handlechange}
+        showLabels
+        value={currentPath}
+        sx={{ height: "100%" }}
+      >
         {navItems.map((item, index) => (
           <BottomNavigationAction
             icon={item.icon}
@@ -66,6 +75,6 @@ export default function BottomNavBar() {
           />
         ))}
       </BottomNavigation>
-    </Paper>
+    </Box>
   );
 }
