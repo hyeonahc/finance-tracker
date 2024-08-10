@@ -1,4 +1,5 @@
-import { createTheme, ThemeOptions } from "@mui/material/styles";
+import { red } from "@mui/material/colors";
+import { createTheme } from "@mui/material/styles";
 
 // A custom theme for this app
 const theme = createTheme({
@@ -7,25 +8,16 @@ const theme = createTheme({
     MuiLink: {},
   },
   palette: {
-    primary: {
-      main: "#21A985",
-    },
-    text: {
-      primary: "#000000",
-      secondary: "#737373",
-      placeholder: "#DEDEDE",
-      disabled: "#BDBDBD",
-    },
-    success: {
-      main: "#21A985",
-    },
     error: {
-      main: "#FC4100",
+      main: red.A400,
     },
-    border: {
-      main: "#DEDEDE",
+    primary: {
+      main: "#556cd6",
+    },
+    secondary: {
+      main: "#19857b",
     },
   },
-} as ThemeOptions);
+});
 
 export default theme;

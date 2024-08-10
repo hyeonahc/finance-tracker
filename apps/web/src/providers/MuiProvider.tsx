@@ -2,7 +2,7 @@ import { ThemeProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
 import React, { FC } from "react";
 
-import theme from "@theme/index";
+import theme from "../theme";
 
 const MuiProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
