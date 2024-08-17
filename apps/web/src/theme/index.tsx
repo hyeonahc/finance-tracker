@@ -1,4 +1,4 @@
-import { createTheme, ThemeOptions } from "@mui/material/styles";
+import { ThemeOptions, createTheme } from "@mui/material/styles";
 
 // A custom theme for this app
 const theme = createTheme({
@@ -7,23 +7,23 @@ const theme = createTheme({
     MuiLink: {},
   },
   palette: {
-    primary: {
-      main: "#21A985",
-    },
-    text: {
-      primary: "#000000",
-      secondary: "#737373",
-      placeholder: "#DEDEDE",
-      disabled: "#BDBDBD",
-    },
-    success: {
-      main: "#21A985",
+    border: {
+      main: "#DEDEDE",
     },
     error: {
       main: "#FC4100",
     },
-    border: {
-      main: "#DEDEDE",
+    primary: {
+      main: "#21A985",
+    },
+    success: {
+      main: "#21A985",
+    },
+    text: {
+      disabled: "#BDBDBD",
+      placeholder: "#DEDEDE",
+      primary: "#000000",
+      secondary: "#737373",
     },
   },
 } as ThemeOptions);

@@ -6,24 +6,24 @@ const API_BASE_URL = import.meta.env.VITE_API_LOCAL_8080;
 export const signupUser = async (user: IUser): Promise<IApiResponse> => {
   try {
     const response = await fetch(`${API_BASE_URL}/api/signup`, {
-      method: "POST",
+      body: JSON.stringify(user),
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(user),
+      method: "POST",
     });
 
     console.log(response);
 
     if (response.ok) {
       const data = await response.json();
-      return { success: true, data };
+      return { data, success: true };
     } else {
       const errorData = await response.json();
-      return { success: false, error: errorData };
+      return { error: errorData, success: false };
     }
   } catch (error) {
     console.error("Error during sign up:", error);
-    return { success: false, error };
+    return { error, success: false };
   }
 };

@@ -5,16 +5,16 @@ import { useSignup } from "src/hooks/useSignup";
 
 export default function SignUp() {
   const {
+    confirmPassword,
+    email,
     firstName,
     lastName,
-    email,
     password,
-    confirmPassword,
+    setConfirmPassword,
+    setEmail,
     setFirstName,
     setLastName,
-    setEmail,
     setPassword,
-    setConfirmPassword,
   } = useSignUpStore();
 
   const { isPending, mutate: signupMutation } = useSignup();
@@ -26,9 +26,9 @@ export default function SignUp() {
     }
 
     const user = {
+      email,
       firstName,
       lastName,
-      email,
       password,
     };
 
@@ -38,67 +38,67 @@ export default function SignUp() {
 
   return (
     <Box mt={5}>
-      <Typography variant="h4" gutterBottom sx={{ textAlign: "center" }}>
+      <Typography gutterBottom sx={{ textAlign: "center" }} variant="h4">
         Sign Up
       </Typography>
       <TextField
         fullWidth
         label="First Name"
         margin="normal"
-        variant="outlined"
-        type="text"
-        required
-        value={firstName}
         onChange={(e) => setFirstName(e.target.value)}
+        required
+        type="text"
+        value={firstName}
+        variant="outlined"
       />
       <TextField
         fullWidth
         label="Last Name"
         margin="normal"
-        variant="outlined"
-        type="text"
-        required
-        value={lastName}
         onChange={(e) => setLastName(e.target.value)}
+        required
+        type="text"
+        value={lastName}
+        variant="outlined"
       />
       <TextField
         fullWidth
         label="Email"
         margin="normal"
-        variant="outlined"
-        type="email"
-        required
-        value={email}
         onChange={(e) => setEmail(e.target.value)}
+        required
+        type="email"
+        value={email}
+        variant="outlined"
       />
       <TextField
         fullWidth
         label="Password"
         margin="normal"
-        variant="outlined"
-        type="password"
-        required
-        value={password}
         onChange={(e) => setPassword(e.target.value)}
+        required
+        type="password"
+        value={password}
+        variant="outlined"
       />
       <TextField
         fullWidth
         label="Confirm Password"
         margin="normal"
-        variant="outlined"
-        type="password"
-        required
-        value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
+        required
+        type="password"
+        value={confirmPassword}
+        variant="outlined"
       />
       <LoadingButton
-        loading={isPending}
-        fullWidth
-        variant="contained"
         color="primary"
+        fullWidth
+        loading={isPending}
+        onClick={handleSignUpClick}
         size="large"
         type="button"
-        onClick={handleSignUpClick}
+        variant="contained"
       >
         Sign Up
       </LoadingButton>

@@ -1,6 +1,5 @@
-import { Box } from "@mui/material";
-
 import { Link } from "@components/Link";
+import { Box } from "@mui/material";
 
 export default function Home() {
   return (

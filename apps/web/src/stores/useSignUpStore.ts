@@ -1,29 +1,29 @@
 import { create } from "zustand";
 
 interface SignUpState {
+  confirmPassword: string;
+  email: string;
   firstName: string;
   lastName: string;
-  email: string;
   password: string;
-  confirmPassword: string;
+  setConfirmPassword: (confirmPassword: string) => void;
+  setEmail: (email: string) => void;
   setFirstName: (firstName: string) => void;
   setLastName: (lastName: string) => void;
-  setEmail: (email: string) => void;
   setPassword: (password: string) => void;
-  setConfirmPassword: (confirmPassword: string) => void;
 }
 
 const useSignUpStore = create<SignUpState>((set) => ({
+  confirmPassword: "",
+  email: "",
   firstName: "",
   lastName: "",
-  email: "",
   password: "",
-  confirmPassword: "",
+  setConfirmPassword: (confirmPassword) => set({ confirmPassword }),
+  setEmail: (email) => set({ email }),
   setFirstName: (firstName) => set({ firstName }),
   setLastName: (lastName) => set({ lastName }),
-  setEmail: (email) => set({ email }),
   setPassword: (password) => set({ password }),
-  setConfirmPassword: (confirmPassword) => set({ confirmPassword }),
 }));
 
 export default useSignUpStore;

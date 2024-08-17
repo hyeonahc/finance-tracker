@@ -14,17 +14,17 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LayoutWithBottomNav />}>
-          <Route index element={<Home />} />
-          <Route path="expense-history" element={<ExpenseHistory />} />
-          <Route path="analysis-report" element={<AnalysisReport />} />
-          <Route path="finance-goal" element={<FinanceGoal />} />
-          <Route path="setting" element={<Setting />} />
-          <Route path="*" element={<NotFound />} />
+        <Route element={<LayoutWithBottomNav />} path="/">
+          <Route element={<Home />} index />
+          <Route element={<ExpenseHistory />} path="expense-history" />
+          <Route element={<AnalysisReport />} path="analysis-report" />
+          <Route element={<FinanceGoal />} path="finance-goal" />
+          <Route element={<Setting />} path="setting" />
+          <Route element={<NotFound />} path="*" />
         </Route>
-        <Route path="/" element={<Layout />}>
-          <Route path="signin" element={<SignIn />} />
-          <Route path="signup" element={<SignUp />} />
+        <Route element={<Layout />} path="/">
+          <Route element={<SignIn />} path="signin" />
+          <Route element={<SignUp />} path="signup" />
         </Route>
       </Routes>
     </BrowserRouter>
