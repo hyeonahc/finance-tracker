@@ -1,6 +1,7 @@
-import { signupUser } from "@api/signUpUser";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import { Box, TextField, Typography } from "@mui/material";
 import useSignUpStore from "@store/useSignUpStore";
+import { useSignup } from "src/hooks/useSignup";
 
 export default function SignUp() {
   const {
@@ -16,6 +17,8 @@ export default function SignUp() {
     setConfirmPassword,
   } = useSignUpStore();
 
+  const { isPending, mutate: signupMutation } = useSignup();
+
   const handleSignUpClick = async () => {
     if (password !== confirmPassword) {
       alert("Passwords do not match");
@@ -29,13 +32,8 @@ export default function SignUp() {
       password,
     };
 
-    const result = await signupUser(user);
-
-    if (result.success) {
-      console.log("Sign up successful:", result.data);
-    } else {
-      console.error("Sign up failed:", result.error);
-    }
+    const result = await signupMutation(user);
+    console.log(result);
   };
 
   return (
@@ -93,7 +91,8 @@ export default function SignUp() {
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
       />
-      <Button
+      <LoadingButton
+        loading={isPending}
         fullWidth
         variant="contained"
         color="primary"
@@ -102,7 +101,7 @@ export default function SignUp() {
         onClick={handleSignUpClick}
       >
         Sign Up
-      </Button>
+      </LoadingButton>
     </Box>
   );
 }
