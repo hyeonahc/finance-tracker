@@ -1,18 +1,39 @@
-import HomeIcon from "@mui/icons-material/Home";
-import PersonIcon from "@mui/icons-material/Person";
-import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
+import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
+import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import InsertChartOutlinedOutlinedIcon from "@mui/icons-material/InsertChartOutlinedOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import { BottomNavigation, BottomNavigationAction, Box } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const navItems = [
   {
     href: "/",
-    icon: <HomeIcon />,
+    icon: <HomeOutlinedIcon />,
     label: "Home",
     value: "/",
   },
   {
+    href: "/expense-history",
+    icon: <AccessTimeOutlinedIcon />,
+    label: "Expense History",
+    value: "/expense-history",
+  },
+  {
+    href: "/analysis-report",
+    icon: <InsertChartOutlinedOutlinedIcon />,
+    label: "Analysis & Report",
+    value: "/analysis-report",
+  },
+  {
+    href: "/finance-goal",
+    icon: <AccountBalanceWalletOutlinedIcon />,
+    label: "Finance Goal",
+    value: "/finance-goal",
+  },
+  {
     href: "/setting",
-    icon: <PersonIcon />,
+    icon: <SettingsOutlinedIcon />,
     label: "Setting",
     value: "/setting",
   },
@@ -28,11 +49,22 @@ export default function BottomNavBar() {
   };
 
   return (
-    <Paper
-      elevation={3}
-      sx={{ bottom: 0, left: 0, position: "fixed", right: 0 }}
+    <Box
+      sx={{
+        width: "767px",
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: "80px",
+      }}
     >
-      <BottomNavigation onChange={handlechange} showLabels value={currentPath}>
+      <BottomNavigation
+        onChange={handlechange}
+        showLabels
+        value={currentPath}
+        sx={{ height: "100%" }}
+      >
         {navItems.map((item, index) => (
           <BottomNavigationAction
             icon={item.icon}
@@ -43,6 +75,6 @@ export default function BottomNavBar() {
           />
         ))}
       </BottomNavigation>
-    </Paper>
+    </Box>
   );
 }
