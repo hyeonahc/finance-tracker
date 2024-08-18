@@ -51,7 +51,7 @@ const userSchema = new mongoose.Schema<IUser>({
 });
 
 // This function runs automatically before a user document is saved to the database.
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function hashPassword(next) {
   // 'this' refers to the user document that is about to be saved
   // checks if the password has been changed since the last time the user document was saved.
   if (!this.isModified("password")) return next();
@@ -61,9 +61,9 @@ userSchema.pre("save", async function (next) {
     // Combines the plain text password with the salt and scrambles it to create a secure, hashed version of the password.
     const hashedPassword = await bcrypt.hash(this.password, salt);
     this.password = hashedPassword;
-    next();
+    return next();
   } catch (err) {
-    next(err);
+    return next(err);
   }
 });
 

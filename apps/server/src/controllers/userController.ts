@@ -1,10 +1,7 @@
 import { createUser } from "@services/userService";
 import { Request, Response } from "express";
 
-export const signupUser = async (
-  req: Request,
-  res: Response,
-): Promise<void> => {
+const signupUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const { firstName, lastName, email, password } = req.body;
     const newUser = await createUser({
@@ -18,3 +15,5 @@ export const signupUser = async (
     res.status(400).json({ error: error.message });
   }
 };
+
+export default signupUser;

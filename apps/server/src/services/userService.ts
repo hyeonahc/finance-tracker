@@ -2,7 +2,7 @@ import { IUser } from "@interfaces/IUser";
 import User from "@models/userModel";
 
 export const createUser = async (input: IUser) => {
-  const { firstName, lastName, email, password } = input;
+  const { email } = input;
 
   try {
     const existingUser = await User.findOne({ email });
@@ -17,11 +17,14 @@ export const createUser = async (input: IUser) => {
     return user.toObject({
       versionKey: false,
       transform: (doc, ret) => {
-        delete ret.password;
-        return ret;
+        const userObject = { ...ret };
+        delete userObject.password;
+        return userObject;
       },
     });
   } catch (error) {
     throw new Error(`Error creating user: ${error.message}`);
   }
 };
+
+export default createUser;
