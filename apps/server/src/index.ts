@@ -1,17 +1,33 @@
-import express, { Request, Response } from "express";
+import userRouter from "@routers/userRouter";
+import cors from "cors";
+import dotenv from "dotenv";
+import express from "express";
+import mongoose from "mongoose";
+
+dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 
-app.get("/", (req: Request, res: Response) => {
-  res.status(200).send("Hello World! Let's build something awesome!");
+const connectDB = async () => {
+  try {
+    console.log("Connecting to the database...");
+    await mongoose.connect(
+      `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@finance-tracker.m1v3yfi.mongodb.net/?retryWrites=true&w=majority&appName=finance-tracker`,
+    );
+    console.log("Database connection established");
+  } catch (error) {
+    console.error("Error connecting to the database:", error.message);
+    process.exit(1);
+  }
+};
+
+connectDB();
+
+app.use(cors());
+app.use(express.json());
+app.use("/api", userRouter);
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
-
-app
-  .listen(port, () => {
-    console.log(`server is listening on ${port}`);
-  })
-  .on("error", (error) => {
-    // gracefully handle error
-    throw new Error(error.message);
-  });

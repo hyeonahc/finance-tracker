@@ -1,5 +1,6 @@
 {
   "parser": "@typescript-eslint/parser",
+  "project": "./tsconfig.json",
   "plugins": ["import", "@typescript-eslint", "prettier"],
   "extends": [
     "airbnb-base",
@@ -18,6 +19,7 @@
   },
   "ignorePatterns": ["node_modules/"],
   "rules": {
+    "no-console": "off",
     "no-plusplus": "off",
     "prettier/prettier": "error",
     "import/extensions": [
@@ -34,6 +36,10 @@
   "settings": {
     "import/resolver": {
       "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      },
+      "alias": {
+        "map": [["@services/*", "src/services/*"]],
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     }

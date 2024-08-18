@@ -15,5 +15,3 @@ pnpm run dev
 pnpm add -D eslint-plugin-prettier --filter=server
 pnpm add express --filter=web
 ```
-
-# Front-end
