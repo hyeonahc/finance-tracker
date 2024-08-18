@@ -8,9 +8,9 @@ export default function Layout() {
   return (
     <Box
       sx={{
+        borderColor: theme.palette.border.main,
         borderLeft: 1,
         borderRight: 1,
-        borderColor: theme.palette.border.main,
         height: "100vh",
         width: "767px",
       }}
