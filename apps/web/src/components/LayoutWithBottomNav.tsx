@@ -1,25 +1,21 @@
 import BottomNavBar from "@components/BottomNavBar";
 import { Box } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 import { Outlet } from "react-router-dom";
+import { BOTTOM_NAV_HEIGHT, LAYOUT_PADDING } from "src/constants/constants";
 
 export default function LayoutWithBottomNav() {
-  const theme = useTheme();
-
   return (
-    <Box
-      sx={{
-        borderColor: theme.palette.border.main,
-        borderLeft: 1,
-        borderRight: 1,
-        height: "100vh",
-        width: "767px",
-      }}
-    >
-      <Box component="main" sx={{ paddingBottom: "80px" }}>
+    <>
+      <Box
+        component="main"
+        sx={{
+          padding: LAYOUT_PADDING,
+          paddingBottom: BOTTOM_NAV_HEIGHT,
+        }}
+      >
         <Outlet />
       </Box>
       <BottomNavBar />
-    </Box>
+    </>
   );
 }

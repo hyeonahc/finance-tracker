@@ -4,7 +4,9 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import InsertChartOutlinedOutlinedIcon from "@mui/icons-material/InsertChartOutlinedOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { BottomNavigation, BottomNavigationAction, Box } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { useLocation, useNavigate } from "react-router-dom";
+import { BOTTOM_NAV_HEIGHT } from "src/constants/constants";
 
 const navItems = [
   {
@@ -43,6 +45,7 @@ export default function BottomNavBar() {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
+  const theme = useTheme();
 
   const handlechange = (_: React.SyntheticEvent, newValue: number) => {
     navigate(newValue);
@@ -51,11 +54,12 @@ export default function BottomNavBar() {
   return (
     <Box
       sx={{
+        borderLeft: `1px solid ${theme.palette.border.main}`,
+        borderRight: `1px solid ${theme.palette.border.main}`,
+        borderTop: `1px solid ${theme.palette.border.main}`,
         bottom: 0,
-        height: "80px",
-        left: 0,
+        height: BOTTOM_NAV_HEIGHT,
         position: "fixed",
-        right: 0,
         width: "767px",
       }}
     >

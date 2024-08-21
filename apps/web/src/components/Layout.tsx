@@ -1,23 +1,16 @@
 import { Box } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 import { Outlet } from "react-router-dom";
+import { LAYOUT_PADDING } from "src/constants/constants";
 
 export default function Layout() {
-  const theme = useTheme();
-
   return (
     <Box
+      component="main"
       sx={{
-        borderColor: theme.palette.border.main,
-        borderLeft: 1,
-        borderRight: 1,
-        height: "100vh",
-        width: "767px",
+        padding: LAYOUT_PADDING,
       }}
     >
-      <Box component="main">
-        <Outlet />
-      </Box>
+      <Outlet />
     </Box>
   );
 }

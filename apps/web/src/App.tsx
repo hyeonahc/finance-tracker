@@ -1,3 +1,4 @@
+import AppWrapper from "@components/AppWrapper";
 import Layout from "@components/Layout";
 import LayoutWithBottomNav from "@components/LayoutWithBottomNav";
 import AnalysisReport from "@pages/AnalysisReport";
@@ -14,17 +15,19 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<LayoutWithBottomNav />} path="/">
-          <Route element={<Home />} index />
-          <Route element={<ExpenseHistory />} path="expense-history" />
-          <Route element={<AnalysisReport />} path="analysis-report" />
-          <Route element={<FinanceGoal />} path="finance-goal" />
-          <Route element={<Setting />} path="setting" />
-          <Route element={<NotFound />} path="*" />
-        </Route>
-        <Route element={<Layout />} path="/">
-          <Route element={<SignIn />} path="signin" />
-          <Route element={<SignUp />} path="signup" />
+        <Route element={<AppWrapper />} path="/">
+          <Route element={<LayoutWithBottomNav />} path="/">
+            <Route element={<Home />} index />
+            <Route element={<ExpenseHistory />} path="expense-history" />
+            <Route element={<AnalysisReport />} path="analysis-report" />
+            <Route element={<FinanceGoal />} path="finance-goal" />
+            <Route element={<Setting />} path="setting" />
+            <Route element={<NotFound />} path="*" />
+          </Route>
+          <Route element={<Layout />} path="/">
+            <Route element={<SignIn />} path="signin" />
+            <Route element={<SignUp />} path="signup" />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
