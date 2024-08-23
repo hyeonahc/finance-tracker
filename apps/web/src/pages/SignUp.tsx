@@ -1,21 +1,14 @@
 import { LoadingButton } from "@mui/lab";
 import { Box, TextField, Typography } from "@mui/material";
-import useSignUpStore from "@store/useSignUpStore";
+import { useState } from "react";
 import { useSignup } from "src/hooks/useSignup";
 
 export default function SignUp() {
-  const {
-    confirmPassword,
-    email,
-    firstName,
-    lastName,
-    password,
-    setConfirmPassword,
-    setEmail,
-    setFirstName,
-    setLastName,
-    setPassword,
-  } = useSignUpStore();
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [password, setPassword] = useState("");
 
   const { isPending, mutate: signupMutation } = useSignup();
 
