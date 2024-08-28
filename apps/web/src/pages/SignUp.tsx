@@ -21,12 +21,12 @@ export default function SignUp() {
       alert("Sign up successful!");
       navigate("/");
     } else {
-      console.log("User signed up unsuccessfully:", data);
+      console.log("User signed up failed:", data);
       alert(data.error.error);
     }
   };
 
-  const { isPending, mutate: signupMutation } = useSignup(onSuccess);
+  const { isPending, mutate: signupMutation } = useSignup({ onSuccess });
 
   const handleSignUpClick = async () => {
     if (password !== confirmPassword) {
