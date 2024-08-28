@@ -1,23 +1,32 @@
+import { ISignUpResponse } from "@interfaces/ISignUpResponse";
 import { LoadingButton } from "@mui/lab";
 import { Box, TextField, Typography } from "@mui/material";
-import useSignUpStore from "@store/useSignUpStore";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSignup } from "src/hooks/useSignup";
 
 export default function SignUp() {
-  const {
-    confirmPassword,
-    email,
-    firstName,
-    lastName,
-    password,
-    setConfirmPassword,
-    setEmail,
-    setFirstName,
-    setLastName,
-    setPassword,
-  } = useSignUpStore();
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [password, setPassword] = useState("");
 
-  const { isPending, mutate: signupMutation } = useSignup();
+  const navigate = useNavigate();
+
+  const onSuccess = (data: ISignUpResponse) => {
+    console.log("data", data);
+    if (data.success) {
+      console.log("User signed up successfully:", data);
+      alert("Sign up successful!");
+      navigate("/");
+    } else {
+      console.log("User signed up failed:", data);
+      alert(data.error.error);
+    }
+  };
+
+  const { isPending, mutate: signupMutation } = useSignup({ onSuccess });
 
   const handleSignUpClick = async () => {
     if (password !== confirmPassword) {
