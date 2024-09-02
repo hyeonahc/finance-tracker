@@ -1,4 +1,4 @@
-import { IUser } from "@interfaces/IUser";
+import { IUserModel } from "@interfaces/IUser";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import validator from "validator";
@@ -13,7 +13,7 @@ const isValidPassword = (password: string): boolean => {
   return passwordRegex.test(password);
 };
 
-const userSchema = new mongoose.Schema<IUser>({
+const userSchema = new mongoose.Schema<IUserModel>({
   firstName: {
     type: String,
     required: [true, "First name is required"],
@@ -66,5 +66,12 @@ userSchema.pre("save", async function hashPassword(next) {
     return next(err);
   }
 });
+
+// Method to compare passwords during sign-in
+userSchema.methods.comparePassword = async function (
+  candidatePassword: string,
+): Promise<boolean> {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
 
 export default mongoose.model("User", userSchema);

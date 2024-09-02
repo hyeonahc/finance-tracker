@@ -1,7 +1,7 @@
-import { createUser } from "@services/userService";
+import { createUser, validateUserSignin } from "@services/userService";
 import { Request, Response } from "express";
 
-const signupUser = async (req: Request, res: Response): Promise<void> => {
+const handleUserSignup = async (req: Request, res: Response): Promise<void> => {
   try {
     const { firstName, lastName, email, password } = req.body;
     const newUser = await createUser({
@@ -16,4 +16,17 @@ const signupUser = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export default signupUser;
+const handleUserSignin = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { email, password } = req.body;
+    const authenticatedUser = await validateUserSignin({ email, password });
+    res.status(200).json(authenticatedUser);
+  } catch (error) {
+    res.status(401).json({ error: error.message });
+  }
+};
+
+export default {
+  handleUserSignup,
+  handleUserSignin,
+};
