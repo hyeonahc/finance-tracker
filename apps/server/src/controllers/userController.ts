@@ -19,8 +19,12 @@ const handleUserSignup = async (req: Request, res: Response): Promise<void> => {
 const handleUserSignin = async (req: Request, res: Response): Promise<void> => {
   try {
     const { email, password } = req.body;
-    const authenticatedUser = await validateUserSignin({ email, password });
-    res.status(200).json(authenticatedUser);
+    const { user, token } = await validateUserSignin({ email, password });
+    res.status(200).json({
+      message: "Sign-in successful",
+      user,
+      token,
+    });
   } catch (error) {
     res.status(401).json({ error: error.message });
   }

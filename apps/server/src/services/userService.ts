@@ -1,5 +1,19 @@
-import { IUserSignin, IUserSignup } from "@interfaces/IUser";
+import { IUserModel, IUserSignin, IUserSignup } from "@interfaces/IUser";
 import User from "@models/userModel";
+import jwt from "jsonwebtoken";
+
+const JWT_SECRET = process.env.JWT_SECRET || "default_secret_key";
+
+const generateToken = (user: IUserModel) => {
+  return jwt.sign(
+    {
+      id: user._id,
+      email: user.email,
+    },
+    JWT_SECRET,
+    { expiresIn: "1d" },
+  );
+};
 
 export const createUser = async (input: IUserSignup) => {
   const { email } = input;
@@ -41,14 +55,19 @@ export const validateUserSignin = async (input: IUserSignin) => {
       throw new Error("Invalid email or password");
     }
 
-    return user.toObject({
-      versionKey: false,
-      transform: (doc, ret) => {
-        const userObject = { ...ret };
-        delete userObject.password;
-        return userObject;
-      },
-    });
+    const token = generateToken(user);
+
+    return {
+      user: user.toObject({
+        versionKey: false,
+        transform: (doc, ret) => {
+          const userObject = { ...ret };
+          delete userObject.password;
+          return userObject;
+        },
+      }),
+      token,
+    };
   } catch (error) {
     throw new Error(`Error signing in: ${error.message}`);
   }
