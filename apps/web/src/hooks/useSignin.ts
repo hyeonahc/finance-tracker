@@ -1,15 +1,15 @@
-import { signupUser } from "@api/signUpUser";
+import { signinUser } from "@api/signinUser";
 import { ISignUpResponse } from "@interfaces/ISignUpResponse";
-import { IUserSignup } from "@interfaces/IUser";
+import { IUserSignin } from "@interfaces/IUser";
 import { useMutation } from "@tanstack/react-query";
 
-export const useSignup = ({
+export const useSignin = ({
   onSuccess,
 }: {
   onSuccess: (data: ISignUpResponse) => void;
 }) => {
   const mutation = useMutation({
-    mutationFn: (user: IUserSignup) => signupUser(user),
+    mutationFn: (user: IUserSignin) => signinUser(user),
     onSuccess: onSuccess,
   });
 

@@ -1,11 +1,11 @@
 import { IApiResponse } from "@interfaces/IApiResponse";
-import { IUserSignup } from "@interfaces/IUser";
+import { IUserSignin } from "@interfaces/IUser";
 
 const API_BASE_URL = import.meta.env.VITE_API_LOCAL_8080;
 
-export const signupUser = async (user: IUserSignup): Promise<IApiResponse> => {
+export const signinUser = async (user: IUserSignin): Promise<IApiResponse> => {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/signup`, {
+    const response = await fetch(`${API_BASE_URL}/api/signin`, {
       body: JSON.stringify(user),
       headers: {
         "Content-Type": "application/json",
@@ -23,7 +23,7 @@ export const signupUser = async (user: IUserSignup): Promise<IApiResponse> => {
       return { error: errorData, success: false };
     }
   } catch (error) {
-    console.error("Error during sign up:", error);
+    console.error("Error during sign in:", error);
     return { error, success: false };
   }
 };
