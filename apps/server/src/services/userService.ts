@@ -1,8 +1,11 @@
 import { IUserModel, IUserSignin, IUserSignup } from "@interfaces/IUser";
 import User from "@models/userModel";
+import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET || "default_secret_key";
+dotenv.config();
+
+const JWT_SECRET = process.env.JWT_SECRET || "default jwt secret key";
 
 const generateToken = (user: IUserModel) => {
   return jwt.sign(
