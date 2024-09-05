@@ -1,4 +1,4 @@
-import { ISignUpResponse } from "@interfaces/ISignUpResponse";
+import { ISignupResponse } from "@interfaces/IAuthResponse";
 import { LoadingButton } from "@mui/lab";
 import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
@@ -14,7 +14,7 @@ export default function SignUp() {
 
   const navigate = useNavigate();
 
-  const onSuccess = (data: ISignUpResponse) => {
+  const onSuccess = (data: ISignupResponse) => {
     console.log("data", data);
     if (data.success) {
       console.log("User signed up successfully:", data);
