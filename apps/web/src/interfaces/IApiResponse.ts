@@ -1,5 +1,6 @@
-export interface IApiResponse<TData = unknown, TError = unknown> {
-  data?: TData;
-  error?: TError;
+export interface IApiResponse<T = unknown> {
+  data?: T;
+  error?: string;
+  message: string;
   success: boolean;
 }

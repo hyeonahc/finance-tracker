@@ -1,32 +1,37 @@
-import { ISignupResponse } from "@interfaces/IAuthResponse";
+import { IApiResponse } from "@interfaces/IApiResponse";
 import { LoadingButton } from "@mui/lab";
 import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSignup } from "src/hooks/useSignup";
+import { useSignupMutation } from "src/hooks/useSignupMutation";
 
 export default function SignUp() {
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigate = useNavigate();
 
-  const onSuccess = (data: ISignupResponse) => {
-    console.log("data", data);
-    if (data.success) {
-      console.log("User signed up successfully:", data);
-      alert("Sign up successful!");
-      navigate("/");
+  const onSuccess = (data: IApiResponse) => {
+    console.log(data);
+    if (!data.success) {
+      alert(data.error);
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
     } else {
-      console.log("User signed up failed:", data);
-      alert(data.error.error);
+      alert(data.message);
+      navigate("/");
     }
   };
 
-  const { isPending, mutate: signupMutation } = useSignup({ onSuccess });
+  const { isPending, mutate } = useSignupMutation({
+    onSuccess,
+  });
 
   const handleSignUpClick = async () => {
     if (password !== confirmPassword) {
@@ -34,15 +39,14 @@ export default function SignUp() {
       return;
     }
 
-    const user = {
+    const userSignupData = {
       email,
       firstName,
       lastName,
       password,
     };
 
-    const result = await signupMutation(user);
-    console.log(result);
+    await mutate(userSignupData);
   };
 
   return (
