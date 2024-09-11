@@ -1,10 +1,9 @@
-import userRouter from "@routers/userRouter";
 import cors from "cors";
 import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
-
-dotenv.config();
+import userRouter from "@routers/userRouter";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
