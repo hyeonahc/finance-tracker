@@ -7,8 +7,8 @@ import FinanceGoal from "@pages/FinanceGoal";
 import Home from "@pages/Home";
 import NotFound from "@pages/NotFound";
 import Setting from "@pages/Setting";
+import SignIn from "@pages/SignIn";
 import SignUp from "@pages/SignUp";
-import Signin from "@pages/Signin";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
             <Route element={<NotFound />} path="*" />
           </Route>
           <Route element={<Layout />} path="/">
-            <Route element={<Signin />} path="signin" />
+            <Route element={<SignIn />} path="signin" />
             <Route element={<SignUp />} path="signup" />
           </Route>
         </Route>
