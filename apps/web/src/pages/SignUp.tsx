@@ -29,11 +29,11 @@ export default function SignUp() {
     }
   };
 
-  const { isPending, mutate } = useSignupMutation({
+  const { isPending, mutate: signupMutation } = useSignupMutation({
     onSuccess,
   });
 
-  const handleSignUpClick = async () => {
+  const handleSignupClick = async () => {
     if (password !== confirmPassword) {
       alert("Passwords do not match");
       return;
@@ -46,7 +46,7 @@ export default function SignUp() {
       password,
     };
 
-    await mutate(userSignupData);
+    await signupMutation(userSignupData);
   };
 
   return (
@@ -108,7 +108,7 @@ export default function SignUp() {
         color="primary"
         fullWidth
         loading={isPending}
-        onClick={handleSignUpClick}
+        onClick={handleSignupClick}
         size="large"
         type="button"
         variant="contained"
