@@ -18,6 +18,9 @@ export default function SignIn() {
       setEmail("");
       setPassword("");
     } else {
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
       alert(data.message);
       navigate("/");
     }

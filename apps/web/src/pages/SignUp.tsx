@@ -1,8 +1,9 @@
-import { ISignupResponse } from "@interfaces/IAuthResponse";
+import { ISigninResponse, ISignupResponse } from "@interfaces/IAuthResponse";
 import { LoadingButton } from "@mui/lab";
 import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSigninMutation } from "src/hooks/useSigninMutation";
 import { useSignupMutation } from "src/hooks/useSignupMutation";
 
 export default function SignUp() {
@@ -14,23 +15,30 @@ export default function SignUp() {
 
   const navigate = useNavigate();
 
-  const onSuccess = (data: ISignupResponse) => {
-    console.log(data);
-    if (!data.success) {
-      alert(data.message);
-      setFirstName("");
-      setLastName("");
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
-    } else {
-      alert(data.message);
-      navigate("/");
-    }
-  };
+  const { mutate: signinMutation } = useSigninMutation({
+    onSuccess: (data: ISigninResponse) => {
+      if (data.success && data.token) {
+        localStorage.setItem("token", data.token);
+      }
+    },
+  });
 
   const { isPending, mutate: signupMutation } = useSignupMutation({
-    onSuccess,
+    onSuccess: (data: ISignupResponse) => {
+      console.log(data);
+      if (!data.success) {
+        alert(data.message);
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+      } else {
+        alert(data.message);
+        signinMutation({ email, password });
+        navigate("/");
+      }
+    },
   });
 
   const handleSignupClick = async () => {
