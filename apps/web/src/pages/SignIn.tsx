@@ -1,9 +1,9 @@
-import { ISignupResponse } from "@interfaces/IAuthResponse";
+import { IApiResponse } from "@interfaces/IApiResponse";
 import { LoadingButton } from "@mui/lab";
 import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSignin } from "src/hooks/useSignin";
+import { useSigninMutation } from "src/hooks/useSigninMutation";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -11,27 +11,29 @@ export default function SignIn() {
 
   const navigate = useNavigate();
 
-  const onSuccess = (data: ISignupResponse) => {
-    console.log("data", data);
-    if (data.success) {
-      console.log("User signed in successfully:", data);
-      alert("Sign in successful!");
-      navigate("/");
+  const onSuccess = (data: IApiResponse) => {
+    console.log(data);
+    if (!data.success) {
+      alert(data.error);
+      setEmail("");
+      setPassword("");
     } else {
-      console.log("User signed in failed:", data);
-      alert(data.error.error);
+      alert(data.message);
+      navigate("/");
     }
   };
 
-  const { isPending, mutate: signupMutation } = useSignin({ onSuccess });
+  const { isPending, mutate: signinMutation } = useSigninMutation({
+    onSuccess,
+  });
 
-  const handleSignUpClick = async () => {
-    const user = {
+  const handleSigninClick = async () => {
+    const userSigninData = {
       email,
       password,
     };
 
-    const result = await signupMutation(user);
+    const result = await signinMutation(userSigninData);
     console.log(result);
   };
 
@@ -64,12 +66,12 @@ export default function SignIn() {
         color="primary"
         fullWidth
         loading={isPending}
-        onClick={handleSignUpClick}
+        onClick={handleSigninClick}
         size="large"
         type="button"
         variant="contained"
       >
-        Sign Up
+        Sign In
       </LoadingButton>
     </Box>
   );
