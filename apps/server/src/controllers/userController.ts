@@ -4,15 +4,19 @@ import { Request, Response } from "express";
 const handleUserSignup = async (req: Request, res: Response): Promise<void> => {
   try {
     const { firstName, lastName, email, password } = req.body;
-    const newUser = await createUser({
+    const user = await createUser({
       firstName,
       lastName,
       email,
       password,
     });
-    res.status(201).json(newUser);
+    res.status(201).json({
+      message: "Sign-up successful",
+      user,
+      success: true,
+    });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ message: error.message, success: false });
   }
 };
 
@@ -24,9 +28,10 @@ const handleUserSignin = async (req: Request, res: Response): Promise<void> => {
       message: "Sign-in successful",
       user,
       token,
+      success: true,
     });
   } catch (error) {
-    res.status(401).json({ error: error.message });
+    res.status(401).json({ message: error.message, success: false });
   }
 };
 

@@ -1,11 +1,11 @@
-import { IApiResponse } from "@interfaces/IApiResponse";
+import { ISignupResponse } from "@interfaces/IAuthResponse";
 import { IUserSignup } from "@interfaces/IUser";
 
 const API_BASE_URL = import.meta.env.VITE_API_LOCAL_8080;
 
 export const signupApiRequest = async (
   userSignupData: IUserSignup,
-): Promise<IApiResponse> => {
+): Promise<ISignupResponse> => {
   try {
     const response = await fetch(`${API_BASE_URL}/api/signup`, {
       body: JSON.stringify(userSignupData),
@@ -19,25 +19,15 @@ export const signupApiRequest = async (
 
     if (response.ok) {
       const data = await response.json();
-      return {
-        data: data,
-        message: "User signed up successfully",
-        success: true,
-      };
+      return data;
     } else {
       const errorData = await response.json();
-      return {
-        error: errorData.error || "An unknown error occurred",
-        message: "Sign up failed",
-        success: false,
-      };
+      return errorData;
     }
   } catch (error) {
-    console.error("Error during sign up:", error);
     return {
-      error:
+      message:
         error instanceof Error ? error.message : "An unknown error occurred",
-      message: "Sign up failed",
       success: false,
     };
   }

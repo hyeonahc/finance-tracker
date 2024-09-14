@@ -1,31 +1,28 @@
 interface SignupSuccessResponse {
-  data: {
+  message: string;
+  success: true;
+  user: {
     _id: string;
     email: string;
     firstName: string;
     lastName: string;
   };
-  success: true;
 }
 
 interface SigninSuccessResponse {
-  data: {
-    message: string;
-    token: string;
-    user: {
-      _id: string;
-      email: string;
-      firstName: string;
-      lastName: string;
-    };
-  };
+  message: string;
   success: true;
+  token: string;
+  user: {
+    _id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+  };
 }
 
 interface AuthErrorResponse {
-  error: {
-    error: string;
-  };
+  message: string;
   success: false;
 }
 

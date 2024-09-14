@@ -1,4 +1,4 @@
-import { IApiResponse } from "@interfaces/IApiResponse";
+import { ISignupResponse } from "@interfaces/IAuthResponse";
 import { LoadingButton } from "@mui/lab";
 import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
@@ -14,10 +14,10 @@ export default function SignUp() {
 
   const navigate = useNavigate();
 
-  const onSuccess = (data: IApiResponse) => {
+  const onSuccess = (data: ISignupResponse) => {
     console.log(data);
     if (!data.success) {
-      alert(data.error);
+      alert(data.message);
       setFirstName("");
       setLastName("");
       setEmail("");

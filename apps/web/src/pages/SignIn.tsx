@@ -1,4 +1,4 @@
-import { IApiResponse } from "@interfaces/IApiResponse";
+import { ISigninResponse } from "@interfaces/IAuthResponse";
 import { LoadingButton } from "@mui/lab";
 import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
@@ -11,10 +11,10 @@ export default function SignIn() {
 
   const navigate = useNavigate();
 
-  const onSuccess = (data: IApiResponse) => {
+  const onSuccess = (data: ISigninResponse) => {
     console.log(data);
     if (!data.success) {
-      alert(data.error);
+      alert(data.message);
       setEmail("");
       setPassword("");
     } else {
@@ -33,8 +33,7 @@ export default function SignIn() {
       password,
     };
 
-    const result = await signinMutation(userSigninData);
-    console.log(result);
+    await signinMutation(userSigninData);
   };
 
   return (
