@@ -3,7 +3,7 @@ import { IUserSignup } from "@interfaces/IUser";
 
 const API_BASE_URL = import.meta.env.VITE_API_LOCAL_8080;
 
-export const signupApiRequest = async (
+export const signup = async (
   userSignupData: IUserSignup,
 ): Promise<ISignupResponse> => {
   try {
