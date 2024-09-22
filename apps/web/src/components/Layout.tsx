@@ -7,6 +7,7 @@ export default function Layout() {
     <Box
       component="main"
       sx={{
+        height: "100%",
         padding: LAYOUT_PADDING,
       }}
     >
