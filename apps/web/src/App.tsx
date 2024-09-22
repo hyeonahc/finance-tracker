@@ -1,6 +1,7 @@
 import AppWrapper from "@components/AppWrapper";
 import Layout from "@components/Layout";
 import LayoutWithBottomNav from "@components/LayoutWithBottomNav";
+import ProtectedRoute from "@components/ProtectedRoute";
 import AnalysisReport from "@pages/AnalysisReport";
 import ExpenseHistory from "@pages/ExpenseHistory";
 import FinanceGoal from "@pages/FinanceGoal";
@@ -17,11 +18,13 @@ function App() {
       <Routes>
         <Route element={<AppWrapper />} path="/">
           <Route element={<LayoutWithBottomNav />} path="/">
-            <Route element={<Home />} index />
-            <Route element={<ExpenseHistory />} path="expense-history" />
-            <Route element={<AnalysisReport />} path="analysis-report" />
-            <Route element={<FinanceGoal />} path="finance-goal" />
-            <Route element={<Setting />} path="setting" />
+            <Route element={<ProtectedRoute />}>
+              <Route element={<Home />} index />
+              <Route element={<ExpenseHistory />} path="expense-history" />
+              <Route element={<AnalysisReport />} path="analysis-report" />
+              <Route element={<FinanceGoal />} path="finance-goal" />
+              <Route element={<Setting />} path="setting" />
+            </Route>
             <Route element={<NotFound />} path="*" />
           </Route>
           <Route element={<Layout />} path="/">

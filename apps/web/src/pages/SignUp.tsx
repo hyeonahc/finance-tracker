@@ -1,48 +1,75 @@
-import { ISignUpResponse } from "@interfaces/ISignUpResponse";
+import { ISigninResponse } from "@api/signin";
+import { ISignupResponse } from "@api/signup";
 import { LoadingButton } from "@mui/lab";
 import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSignup } from "src/hooks/useSignup";
+import { useSigninMutation } from "src/hooks/useSigninMutation";
+import { useSignupMutation } from "src/hooks/useSignupMutation";
 
 export default function SignUp() {
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigate = useNavigate();
 
-  const onSuccess = (data: ISignUpResponse) => {
-    console.log("data", data);
-    if (data.success) {
-      console.log("User signed up successfully:", data);
-      alert("Sign up successful!");
+  const handleSigninSuccess = (data: ISigninResponse) => {
+    if (data.token) {
+      localStorage.setItem("token", data.token);
       navigate("/");
-    } else {
-      console.log("User signed up failed:", data);
-      alert(data.error.error);
     }
   };
 
-  const { isPending, mutate: signupMutation } = useSignup({ onSuccess });
+  const { mutate: signinMutation } = useSigninMutation({
+    onSuccess: handleSigninSuccess,
+  });
 
-  const handleSignUpClick = async () => {
+  const handleSignupSuccess = async (data: ISignupResponse) => {
+    console.log("onSuccess data: ", data);
+
+    alert(data.message);
+
+    const userSigninData = {
+      email,
+      password,
+    };
+
+    signinMutation(userSigninData);
+  };
+
+  const handleSignupError = (data: Error) => {
+    console.log("onError data: ", data);
+
+    alert(data.message);
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+  };
+
+  const { isPending, mutate: signupMutation } = useSignupMutation({
+    onError: handleSignupError,
+    onSuccess: handleSignupSuccess,
+  });
+
+  const handleSignup = async () => {
     if (password !== confirmPassword) {
       alert("Passwords do not match");
       return;
     }
 
-    const user = {
+    const userSignupData = {
       email,
       firstName,
       lastName,
       password,
     };
 
-    const result = await signupMutation(user);
-    console.log(result);
+    await signupMutation(userSignupData);
   };
 
   return (
@@ -104,7 +131,7 @@ export default function SignUp() {
         color="primary"
         fullWidth
         loading={isPending}
-        onClick={handleSignUpClick}
+        onClick={handleSignup}
         size="large"
         type="button"
         variant="contained"
