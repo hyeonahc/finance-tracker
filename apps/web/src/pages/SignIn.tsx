@@ -1,4 +1,4 @@
-import { ISigninResponse } from "@interfaces/IAuthResponse";
+import { ISigninResponse } from "@api/signin";
 import { LoadingButton } from "@mui/lab";
 import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
@@ -12,21 +12,25 @@ export default function SignIn() {
   const navigate = useNavigate();
 
   const onSuccess = (data: ISigninResponse) => {
-    console.log(data);
-    if (!data.success) {
-      alert(data.message);
-      setEmail("");
-      setPassword("");
-    } else {
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-      }
-      alert(data.message);
-      navigate("/");
+    console.log("onSuccess data: ", data);
+
+    if (data.token) {
+      localStorage.setItem("token", data.token);
     }
+    alert(data.message);
+    navigate("/");
+  };
+
+  const onError = (data: Error) => {
+    console.log("onError data: ", data);
+
+    alert(data.message);
+    setEmail("");
+    setPassword("");
   };
 
   const { isPending, mutate: signinMutation } = useSigninMutation({
+    onError,
     onSuccess,
   });
 

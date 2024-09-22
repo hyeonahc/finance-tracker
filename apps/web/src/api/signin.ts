@@ -1,32 +1,39 @@
-import { ISigninResponse } from "@interfaces/IAuthResponse";
-import { IUserSignin } from "@interfaces/IUser";
+export interface ISigninRequest {
+  email: string;
+  password: string;
+}
+
+export interface ISigninResponse {
+  message: string;
+  token: string;
+  user: {
+    _id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+  };
+}
 
 const API_BASE_URL = import.meta.env.VITE_API_LOCAL_8080;
 
-export const signin = async (user: IUserSignin): Promise<ISigninResponse> => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/signin`, {
-      body: JSON.stringify(user),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-    });
+export const signin = async (
+  userSigninData: ISigninRequest,
+): Promise<ISigninResponse> => {
+  const response = await fetch(`${API_BASE_URL}/api/signin`, {
+    body: JSON.stringify(userSigninData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+  });
 
-    console.log("response: ", response);
+  console.log("signin api response: ", response);
 
-    if (response.ok) {
-      const data = await response.json();
-      return data;
-    } else {
-      const errorData = await response.json();
-      return errorData;
-    }
-  } catch (error) {
-    return {
-      message:
-        error instanceof Error ? error.message : "An unknown error occurred",
-      success: false,
-    };
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message);
   }
+
+  const responseData = await response.json();
+  return responseData;
 };

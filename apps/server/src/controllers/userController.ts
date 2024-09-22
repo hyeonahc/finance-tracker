@@ -28,10 +28,9 @@ const handleUserSignin = async (req: Request, res: Response): Promise<void> => {
       message: "Sign-in successful",
       user,
       token,
-      success: true,
     });
   } catch (error) {
-    res.status(401).json({ message: error.message, success: false });
+    res.status(401).json({ message: error.message });
   }
 };
 
