@@ -13,10 +13,9 @@ const handleUserSignup = async (req: Request, res: Response): Promise<void> => {
     res.status(201).json({
       message: "Sign-up successful",
       user,
-      success: true,
     });
   } catch (error) {
-    res.status(400).json({ message: error.message, success: false });
+    res.status(400).json({ message: error.message });
   }
 };
 

@@ -1,10 +1,9 @@
-import { signup } from "@api/signup";
-import { IUserSignup } from "@interfaces/IUser";
+import { ISignupRequest, signup } from "@api/signup";
 import { useMutation } from "@tanstack/react-query";
 
 export const useSignupMutation = (options = {}) => {
   return useMutation({
-    mutationFn: (userSignupData: IUserSignup) => signup(userSignupData),
+    mutationFn: (userSignupData: ISignupRequest) => signup(userSignupData),
     ...options,
   });
 };

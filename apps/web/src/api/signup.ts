@@ -1,34 +1,41 @@
-import { ISignupResponse } from "@interfaces/IAuthResponse";
-import { IUserSignup } from "@interfaces/IUser";
+export interface ISignupRequest {
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  // TODO: add googleId type
+}
+
+export interface ISignupResponse {
+  message: string;
+  user: {
+    _id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+  };
+}
 
 const API_BASE_URL = import.meta.env.VITE_API_LOCAL_8080;
 
 export const signup = async (
-  userSignupData: IUserSignup,
+  userSignupData: ISignupRequest,
 ): Promise<ISignupResponse> => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/signup`, {
-      body: JSON.stringify(userSignupData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-    });
+  const response = await fetch(`${API_BASE_URL}/api/signup`, {
+    body: JSON.stringify(userSignupData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+  });
 
-    console.log("response: ", response);
+  console.log("signup api response: ", response);
 
-    if (response.ok) {
-      const data = await response.json();
-      return data;
-    } else {
-      const errorData = await response.json();
-      return errorData;
-    }
-  } catch (error) {
-    return {
-      message:
-        error instanceof Error ? error.message : "An unknown error occurred",
-      success: false,
-    };
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message);
   }
+
+  const responseData = await response.json();
+  return responseData;
 };

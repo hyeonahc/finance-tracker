@@ -1,4 +1,5 @@
-import { ISigninResponse, ISignupResponse } from "@interfaces/IAuthResponse";
+import { ISigninResponse } from "@api/signin";
+import { ISignupResponse } from "@api/signup";
 import { LoadingButton } from "@mui/lab";
 import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
@@ -15,30 +16,44 @@ export default function SignUp() {
 
   const navigate = useNavigate();
 
+  const handleSigninSuccess = (data: ISigninResponse) => {
+    if (data.token) {
+      localStorage.setItem("token", data.token);
+      navigate("/");
+    }
+  };
+
   const { mutate: signinMutation } = useSigninMutation({
-    onSuccess: (data: ISigninResponse) => {
-      if (data.success && data.token) {
-        localStorage.setItem("token", data.token);
-      }
-    },
+    onSuccess: handleSigninSuccess,
   });
 
+  const handleSignupSuccess = async (data: ISignupResponse) => {
+    console.log("onSuccess data: ", data);
+
+    alert(data.message);
+
+    const userSigninData = {
+      email,
+      password,
+    };
+
+    signinMutation(userSigninData);
+  };
+
+  const handleSignupError = (data: Error) => {
+    console.log("onError data: ", data);
+
+    alert(data.message);
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+  };
+
   const { isPending, mutate: signupMutation } = useSignupMutation({
-    onSuccess: (data: ISignupResponse) => {
-      console.log(data);
-      if (!data.success) {
-        alert(data.message);
-        setFirstName("");
-        setLastName("");
-        setEmail("");
-        setPassword("");
-        setConfirmPassword("");
-      } else {
-        alert(data.message);
-        signinMutation({ email, password });
-        navigate("/");
-      }
-    },
+    onError: handleSignupError,
+    onSuccess: handleSignupSuccess,
   });
 
   const handleSignupClick = async () => {
