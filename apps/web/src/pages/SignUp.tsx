@@ -56,7 +56,7 @@ export default function SignUp() {
     onSuccess: handleSignupSuccess,
   });
 
-  const handleSignupClick = async () => {
+  const handleSignup = async () => {
     if (password !== confirmPassword) {
       alert("Passwords do not match");
       return;
@@ -131,7 +131,7 @@ export default function SignUp() {
         color="primary"
         fullWidth
         loading={isPending}
-        onClick={handleSignupClick}
+        onClick={handleSignup}
         size="large"
         type="button"
         variant="contained"
