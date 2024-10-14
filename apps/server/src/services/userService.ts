@@ -58,7 +58,7 @@ export const validateUserSignin = async (input: IUserSignin) => {
     const token = generateToken(user);
 
     return {
-      user: user.toObject({
+      ...user.toObject({
         versionKey: false,
         transform: (doc, ret) => {
           const userObject = { ...ret };

@@ -1,6 +1,6 @@
 import { IUserModel } from "@interfaces/IUser";
 import bcrypt from "bcrypt";
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
 import validator from "validator";
 
 const emailValidator = (email: string): boolean => {
@@ -13,7 +13,7 @@ const isValidPassword = (password: string): boolean => {
   return passwordRegex.test(password);
 };
 
-const userSchema = new mongoose.Schema<IUserModel>({
+const userSchema = new Schema<IUserModel>({
   firstName: {
     type: String,
     required: [true, "First name is required"],
@@ -74,4 +74,4 @@ userSchema.methods.comparePassword = async function (
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
-export default mongoose.model("User", userSchema);
+export default model("User", userSchema);

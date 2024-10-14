@@ -4,14 +4,12 @@ export interface ISigninRequest {
 }
 
 export interface ISigninResponse {
+  _id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
   message: string;
   token: string;
-  user: {
-    _id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-  };
 }
 
 const API_BASE_URL = import.meta.env.VITE_API_LOCAL_8080;

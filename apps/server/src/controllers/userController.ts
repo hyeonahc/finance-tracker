@@ -3,16 +3,10 @@ import { Request, Response } from "express";
 
 const handleUserSignup = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { firstName, lastName, email, password } = req.body;
-    const user = await createUser({
-      firstName,
-      lastName,
-      email,
-      password,
-    });
+    const user = await createUser(req.body);
     res.status(201).json({
       message: "Sign-up successful",
-      user,
+      ...user,
     });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -21,12 +15,10 @@ const handleUserSignup = async (req: Request, res: Response): Promise<void> => {
 
 const handleUserSignin = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { email, password } = req.body;
-    const { user, token } = await validateUserSignin({ email, password });
+    const user = await validateUserSignin(req.body);
     res.status(200).json({
       message: "Sign-in successful",
-      user,
-      token,
+      ...user,
     });
   } catch (error) {
     res.status(401).json({ message: error.message });

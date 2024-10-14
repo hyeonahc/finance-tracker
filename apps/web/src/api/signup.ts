@@ -7,13 +7,11 @@ export interface ISignupRequest {
 }
 
 export interface ISignupResponse {
+  _id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
   message: string;
-  user: {
-    _id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-  };
 }
 
 const API_BASE_URL = import.meta.env.VITE_API_LOCAL_8080;
