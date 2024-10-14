@@ -26,7 +26,9 @@ connectDB();
 
 app.use(cors());
 app.use(express.json());
-app.use("/api/users", userRouter);
+
+const routers = [userRouter];
+routers.forEach((router) => app.use("/api", router));
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

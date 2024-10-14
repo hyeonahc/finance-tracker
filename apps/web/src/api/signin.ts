@@ -17,7 +17,7 @@ const API_BASE_URL = import.meta.env.VITE_API_LOCAL_8080;
 export const signin = async (
   userSigninData: ISigninRequest,
 ): Promise<ISigninResponse> => {
-  const response = await fetch(`${API_BASE_URL}/api/users/signin`, {
+  const response = await fetch(`${API_BASE_URL}/api/signin`, {
     body: JSON.stringify(userSigninData),
     headers: {
       "Content-Type": "application/json",
