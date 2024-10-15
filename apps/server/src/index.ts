@@ -1,3 +1,4 @@
+import transactionRouter from "@routers/transactionRouter";
 import userRouter from "@routers/userRouter";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -27,7 +28,7 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
-const routers = [userRouter];
+const routers = [userRouter, transactionRouter];
 routers.forEach((router) => app.use("/api", router));
 
 app.listen(PORT, () => {
