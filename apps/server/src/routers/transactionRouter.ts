@@ -4,31 +4,12 @@ import authMiddleware from "src/middleware/authMiddleware";
 
 const router: Router = Router();
 
-// TODO: Apply it once to a router group to avoid setting middleware individually for each endpoint.
-router.get(
-  "/transactions",
-  authMiddleware,
-  transactionController.getAllTransactions,
-);
-router.get(
-  "/transactions/:id",
-  authMiddleware,
-  transactionController.getTransactionById,
-);
-router.post(
-  "/transactions",
-  authMiddleware,
-  transactionController.createTransaction,
-);
-router.put(
-  "/transactions/:id",
-  authMiddleware,
-  transactionController.updateTransactionById,
-);
-router.delete(
-  "/transactions/:id",
-  authMiddleware,
-  transactionController.deleteTransactionById,
-);
+router.use("/transactions", authMiddleware);
+
+router.get("/transactions", transactionController.getAllTransactions);
+router.get("/transactions/:id", transactionController.getTransactionById);
+router.post("/transactions", transactionController.createTransaction);
+router.put("/transactions/:id", transactionController.updateTransactionById);
+router.delete("/transactions/:id", transactionController.deleteTransactionById);
 
 export default router;
