@@ -1,11 +1,12 @@
-import transactionRouter from "@routers/transactionRouter";
-import userRouter from "@routers/userRouter";
 import cors from "cors";
-import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 
+import dotenv from "dotenv";
 dotenv.config();
+
+import transactionRouter from "@routers/transactionRouter";
+import userRouter from "@routers/userRouter";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -28,8 +29,12 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
-const routers = [userRouter, transactionRouter];
-routers.forEach((router) => app.use("/api", router));
+// TODO: Find a way to store and apply all routers without repeating app.use("/api", routerName);
+// const routers = [userRouter, transactionRouter];
+// routers.forEach((router) => app.use("/api", router));
+
+app.use("/api", userRouter);
+app.use("/api", transactionRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

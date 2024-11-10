@@ -1,7 +1,8 @@
+import { AuthenticatedRequest } from "@interfaces/IUser";
 import * as transactionService from "@services/transactionService";
-import { Request, Response } from "express";
+import { Response } from "express";
 
-const getAllTransactions = async (req: Request, res: Response) => {
+const getAllTransactions = async (req: AuthenticatedRequest, res: Response) => {
   try {
     if (!req.user) {
       return res.status(401).json({ message: "User not authenticated" });
@@ -17,7 +18,7 @@ const getAllTransactions = async (req: Request, res: Response) => {
   }
 };
 
-const getTransactionById = async (req: Request, res: Response) => {
+const getTransactionById = async (req: AuthenticatedRequest, res: Response) => {
   try {
     if (!req.user) {
       return res.status(401).json({ message: "User not authenticated" });
@@ -42,7 +43,7 @@ const getTransactionById = async (req: Request, res: Response) => {
   }
 };
 
-const createTransaction = async (req: Request, res: Response) => {
+const createTransaction = async (req: AuthenticatedRequest, res: Response) => {
   try {
     if (!req.user) {
       return res.status(401).json({ message: "User not authenticated" });
@@ -60,7 +61,10 @@ const createTransaction = async (req: Request, res: Response) => {
   }
 };
 
-const updateTransactionById = async (req: Request, res: Response) => {
+const updateTransactionById = async (
+  req: AuthenticatedRequest,
+  res: Response,
+) => {
   try {
     if (!req.user) {
       return res.status(401).json({ message: "User not authenticated" });
@@ -86,7 +90,10 @@ const updateTransactionById = async (req: Request, res: Response) => {
   }
 };
 
-const deleteTransactionById = async (req: Request, res: Response) => {
+const deleteTransactionById = async (
+  req: AuthenticatedRequest,
+  res: Response,
+) => {
   try {
     if (!req.user) {
       return res.status(401).json({ message: "User not authenticated" });
