@@ -1,4 +1,4 @@
-import BottomNavBar from "@components/BottomNavBar";
+import BottomNavBar from "@components/layout/BottomNavBar";
 import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import { BOTTOM_NAV_HEIGHT } from "src/constants/constants";

@@ -1,9 +1,9 @@
-import ViewOptions from "@components/ViewOptions";
-import YearMonthPicker from "@components/YearMonthPicker";
+import YearMonthPicker from "@components/filters/YearMonthPicker";
 import CalendarView from "@components/views/CalendarView";
 import CategoryView from "@components/views/CategoryView";
 import DailyView from "@components/views/DailyView";
 import MonthlyView from "@components/views/MonthlyView";
+import ViewOptions from "@components/views/ViewOptions";
 import { Box } from "@mui/material";
 import { useState } from "react";
 

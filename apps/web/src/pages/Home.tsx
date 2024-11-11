@@ -1,4 +1,4 @@
-import { Link } from "@components/Link";
+import { Link } from "@components/navigation/Link";
 import { Box } from "@mui/material";
 
 export default function Home() {

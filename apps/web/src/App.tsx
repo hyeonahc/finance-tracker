@@ -1,7 +1,7 @@
-import AppWrapper from "@components/AppWrapper";
-import Layout from "@components/Layout";
-import LayoutWithBottomNav from "@components/LayoutWithBottomNav";
-import ProtectedRoute from "@components/ProtectedRoute";
+import AppWrapper from "@components/layout/AppWrapper";
+import Layout from "@components/layout/Layout";
+import LayoutWithBottomNav from "@components/layout/LayoutWithBottomNav";
+import ProtectedRoute from "@components/utility/ProtectedRoute";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import AnalysisReport from "@pages/AnalysisReport";
