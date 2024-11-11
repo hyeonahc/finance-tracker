@@ -4,12 +4,12 @@ import authMiddleware from "src/middleware/authMiddleware";
 
 const router: Router = Router();
 
-router.use("/transactions", authMiddleware);
+router.use("/", authMiddleware);
 
-router.get("/transactions", transactionController.getAllTransactions);
-router.get("/transactions/:id", transactionController.getTransactionById);
-router.post("/transactions", transactionController.createTransaction);
-router.put("/transactions/:id", transactionController.updateTransactionById);
-router.delete("/transactions/:id", transactionController.deleteTransactionById);
+router.get("/", transactionController.getAllTransactions);
+router.get("/:id", transactionController.getTransactionById);
+router.post("/", transactionController.createTransaction);
+router.put("/:id", transactionController.updateTransactionById);
+router.delete("/:id", transactionController.deleteTransactionById);
 
 export default router;
