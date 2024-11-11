@@ -64,7 +64,7 @@ export default function YearMonthPicker({ displayMode }: YearMonthPickerProps) {
       alignItems="center"
       display="flex"
       gap={2}
-      justifyContent="center"
+      justifyContent="space-between"
       mb={2}
     >
       <IconButton onClick={handlePrev}>

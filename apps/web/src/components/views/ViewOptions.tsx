@@ -1,9 +1,28 @@
 import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { styled } from "@mui/system";
 import { useState } from "react";
 
 interface ViewOptionsProps {
   onViewChange: (view: string) => void;
 }
+
+const CustomToggleButton = styled(ToggleButton)(({ theme }) => ({
+  "&.Mui-selected": {
+    "&:hover": {
+      backgroundColor: "transparent",
+    },
+    backgroundColor: "transparent",
+    color: theme.palette.primary.main,
+  },
+  "&:hover": {
+    backgroundColor: "transparent",
+    color: theme.palette.primary.main,
+  },
+  border: "none",
+  color: theme.palette.text.primary,
+  fontSize: "1rem",
+  textTransform: "capitalize",
+}));
 
 export default function ViewOptions({ onViewChange }: ViewOptionsProps) {
   const [view, setView] = useState("daily");
@@ -24,20 +43,18 @@ export default function ViewOptions({ onViewChange }: ViewOptionsProps) {
         aria-label="View Options"
         exclusive
         onChange={handleViewChange}
+        sx={{ justifyContent: "space-around", width: "100%" }}
         value={view}
       >
-        <ToggleButton aria-label="Daily View" value="daily">
-          Daily
-        </ToggleButton>
-        <ToggleButton aria-label="Monthly View" value="monthly">
-          Monthly
-        </ToggleButton>
-        <ToggleButton aria-label="Calendar View" value="calendar">
-          Calendar
-        </ToggleButton>
-        <ToggleButton aria-label="Category View" value="category">
-          Category
-        </ToggleButton>
+        {["daily", "monthly", "calendar", "category"].map((option) => (
+          <CustomToggleButton
+            aria-label={`${option} view`}
+            key={option}
+            value={option}
+          >
+            {option}
+          </CustomToggleButton>
+        ))}
       </ToggleButtonGroup>
     </Box>
   );
