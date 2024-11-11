@@ -28,7 +28,7 @@ const CustomDatePicker = styled(DatePicker)({
   },
 });
 
-export default function YearMonthPicker({ displayMode }: YearMonthPickerProps) {
+const YearMonthPicker = ({ displayMode }: YearMonthPickerProps) => {
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
@@ -94,4 +94,6 @@ export default function YearMonthPicker({ displayMode }: YearMonthPickerProps) {
       </IconButton>
     </Box>
   );
-}
+};
+
+export default YearMonthPicker;

@@ -14,7 +14,7 @@ import SignIn from "@pages/SignIn";
 import SignUp from "@pages/SignUp";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-function App() {
+const App = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <BrowserRouter>
@@ -39,6 +39,6 @@ function App() {
       </BrowserRouter>
     </LocalizationProvider>
   );
-}
+};
 
 export default App;

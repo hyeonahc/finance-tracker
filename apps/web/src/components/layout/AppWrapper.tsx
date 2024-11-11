@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Outlet } from "react-router-dom";
 
-export default function AppWrapper() {
+const AppWrapper = () => {
   const theme = useTheme();
 
   return (
@@ -18,3 +18,5 @@ export default function AppWrapper() {
     </Box>
   );
 }
+
+export default AppWrapper;

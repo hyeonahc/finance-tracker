@@ -1,3 +1,5 @@
-export default function MonthlyView() {
+const MonthlyView = () => {
   return <div>MonthlyView</div>;
-}
+};
+
+export default MonthlyView;

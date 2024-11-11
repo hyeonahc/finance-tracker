@@ -1,3 +1,5 @@
-export default function CategoryView() {
+const CategoryView = () => {
   return <div>CategoryView</div>;
-}
+};
+
+export default CategoryView;

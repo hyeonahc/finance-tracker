@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useSigninMutation } from "src/hooks/users/useSigninMutation";
 import { useSignupMutation } from "src/hooks/users/useSignupMutation";
 
-export default function SignUp() {
+const SignUp = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -140,4 +140,6 @@ export default function SignUp() {
       </LoadingButton>
     </Box>
   );
-}
+};
+
+export default SignUp;

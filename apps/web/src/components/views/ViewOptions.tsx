@@ -24,7 +24,7 @@ const CustomToggleButton = styled(ToggleButton)(({ theme }) => ({
   textTransform: "capitalize",
 }));
 
-export default function ViewOptions({ onViewChange }: ViewOptionsProps) {
+const ViewOptions = ({ onViewChange }: ViewOptionsProps) => {
   const [view, setView] = useState("daily");
 
   const handleViewChange = (
@@ -58,4 +58,6 @@ export default function ViewOptions({ onViewChange }: ViewOptionsProps) {
       </ToggleButtonGroup>
     </Box>
   );
-}
+};
+
+export default ViewOptions;

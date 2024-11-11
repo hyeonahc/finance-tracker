@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import { BOTTOM_NAV_HEIGHT } from "src/constants/constants";
 
-export default function LayoutWithBottomNav() {
+const LayoutWithBottomNav = () => {
   return (
     <>
       <Box
@@ -17,4 +17,6 @@ export default function LayoutWithBottomNav() {
       <BottomNavBar />
     </>
   );
-}
+};
+
+export default LayoutWithBottomNav;

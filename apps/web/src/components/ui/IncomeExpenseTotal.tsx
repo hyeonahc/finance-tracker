@@ -6,11 +6,12 @@ interface IncomeExpenseTotalProps {
   total: number;
 }
 
-export default function IncomeExpenseTotal({
+// TODO: If IncomeExpenseTotalProps has negative values, update the display to show the minus symbol before the dollar sign (e.g., -$750 instead of $-750)
+const IncomeExpenseTotal = ({
   expense,
   income,
   total,
-}: IncomeExpenseTotalProps) {
+}: IncomeExpenseTotalProps) => {
   const theme = useTheme();
 
   return (
@@ -50,4 +51,6 @@ export default function IncomeExpenseTotal({
       </Box>
     </Box>
   );
-}
+};
+
+export default IncomeExpenseTotal;

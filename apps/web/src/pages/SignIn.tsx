@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSigninMutation } from "src/hooks/users/useSigninMutation";
 
-export default function SignIn() {
+const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -107,4 +107,6 @@ export default function SignIn() {
       </Box>
     </Box>
   );
-}
+};
+
+export default SignIn;

@@ -41,7 +41,7 @@ const navItems = [
   },
 ];
 
-export default function BottomNavBar() {
+const BottomNavBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
@@ -81,4 +81,6 @@ export default function BottomNavBar() {
       </BottomNavigation>
     </Box>
   );
-}
+};
+
+export default BottomNavBar;

@@ -1,3 +1,5 @@
-export default function CalendarView() {
+const CalendarView = () => {
   return <div>CalendarView</div>;
-}
+};
+
+export default CalendarView;

@@ -10,7 +10,7 @@ import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useGetAllTransactions } from "src/hooks/transactions/useGetAllTransactions";
 
-export default function ExpenseHistory() {
+const ExpenseHistory = () => {
   const [selectedView, setSelectedView] = useState("daily");
   const [financialSummary, setFinancialSummary] = useState({
     expense: 0,
@@ -78,4 +78,6 @@ export default function ExpenseHistory() {
       </Box>
     </Box>
   );
-}
+};
+
+export default ExpenseHistory;
