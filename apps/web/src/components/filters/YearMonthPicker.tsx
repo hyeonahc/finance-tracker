@@ -13,7 +13,6 @@ interface YearMonthPickerProps {
 const CustomDatePicker = styled(DatePicker)({
   "& .MuiInputBase-input": {
     cursor: "pointer",
-    fontSize: "1.25rem",
     textAlign: "center",
   },
   "& .MuiOutlinedInput-root": {
@@ -65,10 +64,9 @@ export default function YearMonthPicker({ displayMode }: YearMonthPickerProps) {
       display="flex"
       gap={2}
       justifyContent="space-between"
-      mb={2}
     >
-      <IconButton onClick={handlePrev}>
-        <ArrowBackIosNewIcon />
+      <IconButton onClick={handlePrev} sx={{ color: "text.primary" }}>
+        <ArrowBackIosNewIcon sx={{ transform: "scale(0.8, 1)" }} />
       </IconButton>
 
       <CustomDatePicker
@@ -91,8 +89,8 @@ export default function YearMonthPicker({ displayMode }: YearMonthPickerProps) {
         views={displayMode === "year" ? ["year"] : ["year", "month"]}
       />
 
-      <IconButton onClick={handleNext}>
-        <ArrowForwardIosIcon />
+      <IconButton onClick={handleNext} sx={{ color: "text.primary" }}>
+        <ArrowForwardIosIcon sx={{ transform: "scale(0.8, 1)" }} />
       </IconButton>
     </Box>
   );

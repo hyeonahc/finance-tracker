@@ -20,31 +20,31 @@ export default function IncomeExpenseTotal({
       display="flex"
       justifyContent="space-around"
       mb={2}
-      padding={2}
+      padding="10px"
     >
       <Box textAlign="center">
-        <Typography color="success.main" variant="subtitle1">
+        <Typography color="success.main" fontSize="0.9rem">
           Income
         </Typography>
-        <Typography color="success.main" variant="h6">
+        <Typography color="success.main" fontSize="1.1rem">
           ${income.toLocaleString()}
         </Typography>
       </Box>
 
       <Box textAlign="center">
-        <Typography color="error.main" variant="subtitle1">
+        <Typography color="error.main" fontSize="0.9rem">
           Expense
         </Typography>
-        <Typography color="error.main" variant="h6">
+        <Typography color="error.main" fontSize="1.1rem">
           ${expense.toLocaleString()}
         </Typography>
       </Box>
 
       <Box textAlign="center">
-        <Typography color="textPrimary" variant="subtitle1">
+        <Typography color="textPrimary" fontSize="0.9rem">
           Total
         </Typography>
-        <Typography color="textPrimary" variant="h6">
+        <Typography color="textPrimary" fontSize="1.1rem">
           ${total.toLocaleString()}
         </Typography>
       </Box>

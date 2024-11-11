@@ -38,7 +38,7 @@ export default function ViewOptions({ onViewChange }: ViewOptionsProps) {
   };
 
   return (
-    <Box display="flex" justifyContent="center" mb={2}>
+    <Box display="flex" justifyContent="center">
       <ToggleButtonGroup
         aria-label="View Options"
         exclusive
