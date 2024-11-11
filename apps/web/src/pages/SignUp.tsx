@@ -1,5 +1,5 @@
-import { ISigninResponse } from "@api/signin";
-import { ISignupResponse } from "@api/signup";
+import { ISigninResponse } from "@api/users/signin";
+import { ISignupResponse } from "@api/users/signup";
 import { LoadingButton } from "@mui/lab";
 import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";

@@ -1,4 +1,4 @@
-import { ISigninResponse } from "@api/signin";
+import { ISigninResponse } from "@api/users/signin";
 import { LoadingButton } from "@mui/lab";
 import { Box, TextField, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
