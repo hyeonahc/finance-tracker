@@ -57,21 +57,24 @@ const ExpenseHistory = () => {
     await getAllTransactions();
   };
 
+  // TODO: Think about what's the best timing to call getAllTransactions data
   useEffect(() => {
     fetchAllTransaction();
-  });
+  }, []);
 
   return (
     <Box>
       <YearMonthPicker displayMode="monthYear" />
       <ViewOptions onViewChange={handleViewChange} />
+      {/* TODO: Ensure the value from the API is displayed immediately when the component first renders, instead of showing initial values */}
       <IncomeExpenseTotal
         expense={financialSummary.expense}
         income={financialSummary.income}
         total={financialSummary.total}
       />
-      <Box mt={2}>
-        {selectedView === "daily" && <DailyView />}
+      {/* TODO: Update selectedMonth with real data */}
+      <Box px={2}>
+        {selectedView === "daily" && <DailyView selectedMonth="2024-05" />}
         {selectedView === "monthly" && <MonthlyView />}
         {selectedView === "calendar" && <CalendarView />}
         {selectedView === "category" && <CategoryView />}

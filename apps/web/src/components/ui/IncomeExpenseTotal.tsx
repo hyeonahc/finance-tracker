@@ -20,7 +20,6 @@ const IncomeExpenseTotal = ({
       borderBottom={`1px solid ${theme.palette.border.main}`}
       display="flex"
       justifyContent="space-around"
-      mb={2}
       padding="10px"
     >
       <Box textAlign="center">
