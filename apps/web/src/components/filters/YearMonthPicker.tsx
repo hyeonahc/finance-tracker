@@ -8,6 +8,8 @@ import { useState } from "react";
 
 interface YearMonthPickerProps {
   displayMode: "monthYear" | "year";
+  selectedDate: Dayjs;
+  setSelectedDate: React.Dispatch<React.SetStateAction<Dayjs>>;
 }
 
 const CustomDatePicker = styled(DatePicker)({
@@ -28,8 +30,11 @@ const CustomDatePicker = styled(DatePicker)({
   },
 });
 
-const YearMonthPicker = ({ displayMode }: YearMonthPickerProps) => {
-  const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
+const YearMonthPicker = ({
+  displayMode,
+  selectedDate,
+  setSelectedDate,
+}: YearMonthPickerProps) => {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
   const handlePrev = () => {

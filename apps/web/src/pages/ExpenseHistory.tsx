@@ -7,10 +7,12 @@ import DailyView from "@components/views/DailyView";
 import MonthlyView from "@components/views/MonthlyView";
 import ViewOptions from "@components/views/ViewOptions";
 import { Box } from "@mui/material";
+import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
 import { useGetAllTransactions } from "src/hooks/transactions/useGetAllTransactions";
 
 const ExpenseHistory = () => {
+  const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
   const [selectedView, setSelectedView] = useState("daily");
   const [financialSummary, setFinancialSummary] = useState({
     expense: 0,
@@ -64,7 +66,11 @@ const ExpenseHistory = () => {
 
   return (
     <Box>
-      <YearMonthPicker displayMode="monthYear" />
+      <YearMonthPicker
+        displayMode="monthYear"
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+      />
       <ViewOptions onViewChange={handleViewChange} />
       {/* TODO: Ensure the value from the API is displayed immediately when the component first renders, instead of showing initial values */}
       <IncomeExpenseTotal
@@ -74,7 +80,9 @@ const ExpenseHistory = () => {
       />
       {/* TODO: Update selectedMonth with real data */}
       <Box px={2}>
-        {selectedView === "daily" && <DailyView selectedMonth="2024-05" />}
+        {selectedView === "daily" && (
+          <DailyView selectedMonth={selectedDate.format("YYYY-MM")} />
+        )}
         {selectedView === "monthly" && <MonthlyView />}
         {selectedView === "calendar" && <CalendarView />}
         {selectedView === "category" && <CategoryView />}
