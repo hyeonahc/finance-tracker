@@ -1,4 +1,7 @@
-import { ITransactionResponse } from "@api/transactions/getAllTransactions";
+import {
+  ITransaction,
+  ITransactionResponse,
+} from "@api/transactions/getAllTransactions";
 import YearMonthPicker from "@components/filters/YearMonthPicker";
 import IncomeExpenseTotal from "@components/ui/IncomeExpenseTotal";
 import CalendarView from "@components/views/CalendarView";
@@ -12,6 +15,7 @@ import { useEffect, useState } from "react";
 import { useGetAllTransactions } from "src/hooks/transactions/useGetAllTransactions";
 
 const ExpenseHistory = () => {
+  // TODO: Consider managing selectedDate in Zustand
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
   const [selectedView, setSelectedView] = useState("daily");
   const [financialSummary, setFinancialSummary] = useState({
@@ -19,6 +23,7 @@ const ExpenseHistory = () => {
     income: 0,
     total: 0,
   });
+  const [transactions, setTransactions] = useState<ITransaction[]>([]);
 
   const handleViewChange = (view: string) => {
     setSelectedView(view);
@@ -27,6 +32,7 @@ const ExpenseHistory = () => {
   const onSuccess = (data: ITransactionResponse) => {
     console.log("onSuccess data: ", data);
     const { transactions } = data;
+    setTransactions(transactions);
     const { expense, income } = transactions.reduce(
       (acc, transaction) => {
         if (transaction.type === "Income") {
@@ -50,7 +56,7 @@ const ExpenseHistory = () => {
     console.log("onError data: ", data);
   };
 
-  const { mutate: getAllTransactions } = useGetAllTransactions({
+  const { isPending, mutate: getAllTransactions } = useGetAllTransactions({
     onError,
     onSuccess,
   });
@@ -81,7 +87,11 @@ const ExpenseHistory = () => {
       {/* TODO: Update selectedMonth with real data */}
       <Box px={2}>
         {selectedView === "daily" && (
-          <DailyView selectedMonth={selectedDate.format("YYYY-MM")} />
+          <DailyView
+            isPending={isPending}
+            selectedMonth={selectedDate.format("YYYY-MM")}
+            transactions={transactions}
+          />
         )}
         {selectedView === "monthly" && <MonthlyView />}
         {selectedView === "calendar" && <CalendarView />}

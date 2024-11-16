@@ -1,3 +1,4 @@
+import { ITransaction } from "@api/transactions/getAllTransactions";
 import {
   Box,
   Divider,
@@ -8,84 +9,19 @@ import {
   useTheme,
 } from "@mui/material";
 import dayjs from "dayjs";
-import { useState } from "react";
-
-interface Transaction {
-  _id: string;
-  amount: number;
-  category: string;
-  date: string;
-  note?: string;
-  type: "Expense" | "Income";
-}
 
 interface DailyViewProps {
+  isPending: boolean;
   selectedMonth: string; // Format: "YYYY-MM" (e.g., "2024-05")
+  transactions: ITransaction[];
 }
 
-const DailyView = ({ selectedMonth }: DailyViewProps) => {
+const DailyView = ({
+  isPending,
+  selectedMonth,
+  transactions,
+}: DailyViewProps) => {
   const theme = useTheme();
-
-  // TODO: Update transactions with real data
-  // Mock data for transactions
-  const [transactions] = useState<Transaction[]>([
-    {
-      _id: "6737a8523098b177484dba44",
-      amount: 22.09,
-      category: "Dining",
-      date: "2024-05-31T00:00:00.000Z",
-      type: "Expense",
-    },
-    {
-      _id: "6737a8743098b177484dba49",
-      amount: 8.58,
-      category: "Treats",
-      date: "2024-05-30T00:00:00.000Z",
-      type: "Expense",
-    },
-    {
-      _id: "6737a8963098b177484dba55",
-      amount: 122.04,
-      category: "Fitness: yoga",
-      date: "2024-05-30T00:00:00.000Z",
-      type: "Expense",
-    },
-    {
-      _id: "6737a8a73098b177484dba58",
-      amount: 5.64,
-      category: "Household",
-      date: "2024-05-30T00:00:00.000Z",
-      type: "Expense",
-    },
-    {
-      _id: "6737a8b43098b177484dba5b",
-      amount: 15.77,
-      category: "Household",
-      date: "2024-05-30T00:00:00.000Z",
-      type: "Expense",
-    },
-    {
-      _id: "6737a8f03098b177484dba67",
-      amount: 82.25,
-      category: "Insurance Reimbursement",
-      date: "2024-05-29T00:00:00.000Z",
-      type: "Income",
-    },
-    {
-      _id: "6737a9033098b177484dba6a",
-      amount: 15.77,
-      category: "Entertainment Subscriptions",
-      date: "2024-05-29T00:00:00.000Z",
-      type: "Expense",
-    },
-    {
-      _id: "6737a9283098b177484dba6f",
-      amount: 2000,
-      category: "Payroll",
-      date: "2024-05-28T00:00:00.000Z",
-      type: "Income",
-    },
-  ]);
 
   // TODO: Emoji should be part of transaction data model
   const getEmoji = (category: string) => {
@@ -125,8 +61,16 @@ const DailyView = ({ selectedMonth }: DailyViewProps) => {
       acc[dateKey].push(transaction);
       return acc;
     },
-    {} as Record<string, Transaction[]>,
+    {} as Record<string, ITransaction[]>,
   );
+
+  if (isPending) {
+    return (
+      <Box mt={4} textAlign="center">
+        <Typography>Loading transactions...</Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box>
