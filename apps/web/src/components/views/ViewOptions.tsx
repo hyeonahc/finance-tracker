@@ -1,4 +1,4 @@
-import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { styled } from "@mui/system";
 import { useState } from "react";
 
@@ -38,25 +38,24 @@ const ViewOptions = ({ onViewChange }: ViewOptionsProps) => {
   };
 
   return (
-    <Box display="flex" justifyContent="center">
-      <ToggleButtonGroup
-        aria-label="View Options"
-        exclusive
-        onChange={handleViewChange}
-        sx={{ justifyContent: "space-around", width: "100%" }}
-        value={view}
-      >
-        {["daily", "monthly", "calendar", "category"].map((option) => (
-          <CustomToggleButton
-            aria-label={`${option} view`}
-            key={option}
-            value={option}
-          >
-            {option}
-          </CustomToggleButton>
-        ))}
-      </ToggleButtonGroup>
-    </Box>
+    <ToggleButtonGroup
+      aria-label="View Options"
+      exclusive
+      fullWidth
+      onChange={handleViewChange}
+      sx={{ justifyContent: "space-around" }}
+      value={view}
+    >
+      {["daily", "monthly", "calendar", "category"].map((option) => (
+        <CustomToggleButton
+          aria-label={`${option} view`}
+          key={option}
+          value={option}
+        >
+          {option}
+        </CustomToggleButton>
+      ))}
+    </ToggleButtonGroup>
   );
 };
 
