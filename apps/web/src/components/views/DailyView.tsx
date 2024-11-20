@@ -98,7 +98,7 @@ const DailyView = ({
                 </Box>
 
                 <ListItemText
-                  primary={<Typography>Transaction title</Typography>}
+                  primary={<Typography>{transaction.title}</Typography>}
                   secondary={
                     <Typography color="text.secondary">
                       {transaction.category || "N/A"}

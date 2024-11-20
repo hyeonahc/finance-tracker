@@ -9,6 +9,7 @@ export interface ITransaction {
   category: string;
   date: string;
   note?: string;
+  title: string;
   type: "Expense" | "Income";
   userId: string;
 }
