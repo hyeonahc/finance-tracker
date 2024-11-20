@@ -1,5 +1,7 @@
 import { Box } from "@mui/material";
 
-export default function FinanceGoal() {
+const FinanceGoal = () => {
   return <Box>This is a finance goal page</Box>;
-}
+};
+
+export default FinanceGoal;

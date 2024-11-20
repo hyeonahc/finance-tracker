@@ -1,13 +1,13 @@
-import { ISigninResponse } from "@api/signin";
-import { ISignupResponse } from "@api/signup";
+import { ISigninResponse } from "@api/users/signin";
+import { ISignupResponse } from "@api/users/signup";
 import { LoadingButton } from "@mui/lab";
 import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSigninMutation } from "src/hooks/useSigninMutation";
-import { useSignupMutation } from "src/hooks/useSignupMutation";
+import { useSigninMutation } from "src/hooks/users/useSigninMutation";
+import { useSignupMutation } from "src/hooks/users/useSignupMutation";
 
-export default function SignUp() {
+const SignUp = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -140,4 +140,6 @@ export default function SignUp() {
       </LoadingButton>
     </Box>
   );
-}
+};
+
+export default SignUp;

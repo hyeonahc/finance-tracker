@@ -1,3 +1,4 @@
+import { Request } from "express";
 import { Document } from "mongoose";
 
 export interface IUserSignup {
@@ -11,6 +12,10 @@ export interface IUserSignup {
 export interface IUserSignin {
   email: string;
   password: string;
+}
+
+export interface AuthenticatedRequest extends Request {
+  user?: IUserModel;
 }
 
 export interface IUserModel extends IUserSignup, Document {

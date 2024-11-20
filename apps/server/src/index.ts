@@ -1,10 +1,11 @@
-import userRouter from "@routers/userRouter";
 import cors from "cors";
-import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 
+import dotenv from "dotenv";
 dotenv.config();
+
+import routers from "@routers/index";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -26,7 +27,10 @@ connectDB();
 
 app.use(cors());
 app.use(express.json());
-app.use("/api", userRouter);
+
+routers.forEach(({ path, router }) => {
+  app.use(`/api${path}`, router);
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

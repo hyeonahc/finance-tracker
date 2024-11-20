@@ -1,4 +1,4 @@
-import { ISignupRequest, signup } from "@api/signup";
+import { ISignupRequest, signup } from "@api/users/signup";
 import { useMutation } from "@tanstack/react-query";
 
 export const useSignupMutation = (options = {}) => {

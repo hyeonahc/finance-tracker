@@ -4,14 +4,12 @@ export interface ISigninRequest {
 }
 
 export interface ISigninResponse {
+  _id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
   message: string;
   token: string;
-  user: {
-    _id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-  };
 }
 
 const API_BASE_URL = import.meta.env.VITE_API_LOCAL_8080;
@@ -19,7 +17,7 @@ const API_BASE_URL = import.meta.env.VITE_API_LOCAL_8080;
 export const signin = async (
   userSigninData: ISigninRequest,
 ): Promise<ISigninResponse> => {
-  const response = await fetch(`${API_BASE_URL}/api/signin`, {
+  const response = await fetch(`${API_BASE_URL}/api/users/signin`, {
     body: JSON.stringify(userSigninData),
     headers: {
       "Content-Type": "application/json",

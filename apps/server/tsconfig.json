@@ -15,7 +15,9 @@
       "@routers/*": ["src/routers/*"],
       "@models/*": ["src/models/*"],
       "@services/*": ["src/services/*"],
-      "@interfaces/*": ["src/interfaces/*"]
+      "@interfaces/*": ["src/interfaces/*"],
+      "@types/*": ["src/types/*"]
     }
-  }
+  },
+  "include": ["src/**/*", "src/types"]
 }
