@@ -4,10 +4,7 @@ import { Response } from "express";
 
 const getAllTransactions = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    if (!req.user) {
-      return res.status(401).json({ message: "User not authenticated" });
-    }
-    const userId = req.user.id;
+    const userId = req.user!.id;
     const transactions = await transactionService.getAllTransactions(userId);
     res.status(200).json({
       message: "Transactions fetched successfully",
@@ -20,10 +17,7 @@ const getAllTransactions = async (req: AuthenticatedRequest, res: Response) => {
 
 const getTransactionById = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    if (!req.user) {
-      return res.status(401).json({ message: "User not authenticated" });
-    }
-    const userId = req.user.id;
+    const userId = req.user!.id;
     const transaction = await transactionService.getTransactionById(
       req.params.id,
       userId,
@@ -45,10 +39,7 @@ const getTransactionById = async (req: AuthenticatedRequest, res: Response) => {
 
 const createTransaction = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    if (!req.user) {
-      return res.status(401).json({ message: "User not authenticated" });
-    }
-    const userId = req.user.id;
+    const userId = req.user!.id;
     const transactionData = { ...req.body, userId };
     const transaction =
       await transactionService.createTransaction(transactionData);
@@ -66,10 +57,7 @@ const updateTransactionById = async (
   res: Response,
 ) => {
   try {
-    if (!req.user) {
-      return res.status(401).json({ message: "User not authenticated" });
-    }
-    const userId = req.user.id;
+    const userId = req.user!.id;
     const transaction = await transactionService.updateTransactionById(
       req.params.id,
       req.body,
@@ -95,10 +83,7 @@ const deleteTransactionById = async (
   res: Response,
 ) => {
   try {
-    if (!req.user) {
-      return res.status(401).json({ message: "User not authenticated" });
-    }
-    const userId = req.user.id;
+    const userId = req.user!.id;
     const transaction = await transactionService.deleteTransactionById(
       req.params.id,
       userId,
