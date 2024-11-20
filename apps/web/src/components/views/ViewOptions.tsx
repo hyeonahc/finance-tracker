@@ -1,9 +1,10 @@
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { styled } from "@mui/system";
-import { useState } from "react";
+import { ViewOption } from "@pages/ExpenseHistory";
 
 interface ViewOptionsProps {
-  onViewChange: (view: string) => void;
+  onViewChange: (view: ViewOption) => void;
+  selectedView: ViewOption;
 }
 
 const CustomToggleButton = styled(ToggleButton)(({ theme }) => ({
@@ -24,15 +25,12 @@ const CustomToggleButton = styled(ToggleButton)(({ theme }) => ({
   textTransform: "capitalize",
 }));
 
-const ViewOptions = ({ onViewChange }: ViewOptionsProps) => {
-  const [view, setView] = useState("daily");
-
+const ViewOptions = ({ onViewChange, selectedView }: ViewOptionsProps) => {
   const handleViewChange = (
     _event: React.MouseEvent<HTMLElement>,
-    newView: null | string,
+    newView: ViewOption | null,
   ) => {
     if (newView) {
-      setView(newView);
       onViewChange(newView);
     }
   };
@@ -44,7 +42,7 @@ const ViewOptions = ({ onViewChange }: ViewOptionsProps) => {
       fullWidth
       onChange={handleViewChange}
       sx={{ justifyContent: "space-around" }}
-      value={view}
+      value={selectedView}
     >
       {["daily", "monthly", "calendar", "category"].map((option) => (
         <CustomToggleButton

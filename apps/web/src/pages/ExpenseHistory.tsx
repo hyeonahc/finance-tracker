@@ -14,10 +14,12 @@ import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
 import { useGetAllTransactions } from "src/hooks/transactions/useGetAllTransactions";
 
+const VIEW_OPTIONS = ["daily", "monthly", "calendar", "category"] as const;
+export type ViewOption = (typeof VIEW_OPTIONS)[number];
+
 const ExpenseHistory = () => {
-  // TODO: Consider managing selectedDate in Zustand
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
-  const [selectedView, setSelectedView] = useState("daily");
+  const [selectedView, setSelectedView] = useState<ViewOption>("daily");
   const [financialSummary, setFinancialSummary] = useState({
     expense: 0,
     income: 0,
@@ -25,7 +27,7 @@ const ExpenseHistory = () => {
   });
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
 
-  const handleViewChange = (view: string) => {
+  const handleViewChange = (view: ViewOption) => {
     setSelectedView(view);
   };
 
@@ -77,7 +79,10 @@ const ExpenseHistory = () => {
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
       />
-      <ViewOptions onViewChange={handleViewChange} />
+      <ViewOptions
+        onViewChange={handleViewChange}
+        selectedView={selectedView}
+      />
       {/* TODO: Ensure the value from the API is displayed immediately when the component first renders, instead of showing initial values */}
       <IncomeExpenseTotal
         expense={financialSummary.expense}
