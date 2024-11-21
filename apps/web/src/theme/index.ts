@@ -1,7 +1,6 @@
 import { ThemeOptions, createTheme } from "@mui/material/styles";
 import { PaletteColorOptions } from "@mui/material/styles/createPalette";
 
-// Extend MUI's Palette to include 'border'
 declare module "@mui/material/styles" {
   interface Palette {
     border: Palette["primary"];
@@ -9,9 +8,11 @@ declare module "@mui/material/styles" {
   interface PaletteOptions {
     border?: PaletteColorOptions;
   }
+  interface TypeText {
+    btn: string;
+  }
 }
 
-// A custom theme for this app
 const theme = createTheme({
   palette: {
     border: {
@@ -27,6 +28,7 @@ const theme = createTheme({
       main: "#21A985",
     },
     text: {
+      btn: "#fff",
       disabled: "#BDBDBD",
       placeholder: "#DEDEDE",
       primary: "#000000",
