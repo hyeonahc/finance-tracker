@@ -1,5 +1,12 @@
+import TopNavigation from "@components/ui/TopNavigation";
+import { Box } from "@mui/material";
+
 const AddTransaction = () => {
-  return <div>AddTransaction</div>;
+  return (
+    <Box>
+      <TopNavigation title="Add Transaction" />
+    </Box>
+  );
 };
 
 export default AddTransaction;
