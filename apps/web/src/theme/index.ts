@@ -13,6 +13,7 @@ declare module "@mui/material/styles" {
   }
 }
 
+// TODO: Find a way to display color palette
 const theme = createTheme({
   palette: {
     border: {
