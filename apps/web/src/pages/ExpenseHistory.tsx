@@ -13,6 +13,7 @@ import ViewOptions from "@components/views/ViewOptions";
 import { Box } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useGetAllTransactions } from "src/hooks/transactions/useGetAllTransactions";
 
 const VIEW_OPTIONS = ["daily", "monthly", "calendar", "category"] as const;
@@ -27,6 +28,8 @@ const ExpenseHistory = () => {
     total: 0,
   });
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
+
+  const navigate = useNavigate();
 
   const handleViewChange = (view: ViewOption) => {
     setSelectedView(view);
@@ -69,7 +72,7 @@ const ExpenseHistory = () => {
   };
 
   const goToAddTransactionPage = () => {
-    console.log("Go to Add Transaction Page");
+    navigate("/add-transaction");
   };
 
   // TODO: Think about what's the best timing to call getAllTransactions data

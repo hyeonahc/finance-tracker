@@ -4,6 +4,7 @@ import LayoutWithBottomNav from "@components/layout/LayoutWithBottomNav";
 import ProtectedRoute from "@components/utility/ProtectedRoute";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import AddTransaction from "@pages/AddTransaction";
 import AnalysisReport from "@pages/AnalysisReport";
 import ExpenseHistory from "@pages/ExpenseHistory";
 import FinanceGoal from "@pages/FinanceGoal";
@@ -33,6 +34,7 @@ const App = () => {
             <Route element={<Layout />} path="/">
               <Route element={<SignIn />} path="signin" />
               <Route element={<SignUp />} path="signup" />
+              <Route element={<AddTransaction />} path="add-transaction" />
             </Route>
           </Route>
         </Routes>
