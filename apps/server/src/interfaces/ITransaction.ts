@@ -4,7 +4,7 @@ export interface ITransaction extends Document {
   title: string;
   type: "Expense" | "Income";
   date: Date;
-  amount: number;
+  cost: number;
   category: string;
   note?: string;
   csv?: string;

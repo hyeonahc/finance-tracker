@@ -114,7 +114,7 @@ const DailyView = ({
                   }
                 >
                   {transaction.type === "Expense" ? "-" : ""}$
-                  {transaction.amount.toLocaleString()}
+                  {transaction.cost.toLocaleString()}
                 </Typography>
               </ListItem>
             ))}

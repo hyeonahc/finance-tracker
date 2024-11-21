@@ -42,9 +42,9 @@ const ExpenseHistory = () => {
     const { expense, income } = transactions.reduce(
       (acc, transaction) => {
         if (transaction.type === "Income") {
-          acc.income += transaction.amount;
+          acc.income += transaction.cost;
         } else if (transaction.type === "Expense") {
-          acc.expense += transaction.amount;
+          acc.expense += transaction.cost;
         }
         return acc;
       },

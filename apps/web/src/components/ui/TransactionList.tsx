@@ -1,3 +1,4 @@
+import { ITransaction } from "@api/transactions/getAllTransactions";
 import {
   Box,
   Divider,
@@ -7,19 +8,8 @@ import {
   Typography,
 } from "@mui/material";
 
-// Define the type for transaction items
-interface Transaction {
-  _id: string;
-  amount: number;
-  category: string;
-  date: string;
-  note?: string;
-  type: "Expense" | "Income";
-}
-
-// Define the component's props type
 interface TransactionListProps {
-  transactions: Transaction[];
+  transactions: ITransaction[];
 }
 
 const TransactionList = ({ transactions }: TransactionListProps) => {
@@ -64,7 +54,7 @@ const TransactionList = ({ transactions }: TransactionListProps) => {
                 variant="subtitle1"
               >
                 {transaction.type === "Expense" ? "-" : ""}$
-                {transaction.amount.toLocaleString()}
+                {transaction.cost.toLocaleString()}
               </Typography>
             </ListItem>
             <Divider />

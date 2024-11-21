@@ -16,7 +16,7 @@ const transactionSchema = new Schema<ITransaction>(
       type: Date,
       required: true,
     },
-    amount: {
+    cost: {
       type: Number,
       required: true,
     },

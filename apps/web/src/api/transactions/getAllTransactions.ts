@@ -5,8 +5,8 @@ export interface ITransactionResponse {
 
 export interface ITransaction {
   _id: string;
-  amount: number;
   category: string;
+  cost: number;
   date: string;
   note?: string;
   title: string;
