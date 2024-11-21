@@ -3,6 +3,7 @@ import {
   ITransactionResponse,
 } from "@api/transactions/getAllTransactions";
 import YearMonthPicker from "@components/filters/YearMonthPicker";
+import AddTransactionBtn from "@components/ui/AddTransactionBtn";
 import IncomeExpenseTotal from "@components/ui/IncomeExpenseTotal";
 import CalendarView from "@components/views/CalendarView";
 import CategoryView from "@components/views/CategoryView";
@@ -67,13 +68,17 @@ const ExpenseHistory = () => {
     await getAllTransactions();
   };
 
+  const goToAddTransactionPage = () => {
+    console.log("Go to Add Transaction Page");
+  };
+
   // TODO: Think about what's the best timing to call getAllTransactions data
   useEffect(() => {
     fetchAllTransaction();
   }, []);
 
   return (
-    <Box>
+    <Box sx={{ position: "relative" }}>
       <YearMonthPicker
         displayMode="monthYear"
         selectedDate={selectedDate}
@@ -102,6 +107,7 @@ const ExpenseHistory = () => {
         {selectedView === "calendar" && <CalendarView />}
         {selectedView === "category" && <CategoryView />}
       </Box>
+      <AddTransactionBtn onClick={goToAddTransactionPage} />
     </Box>
   );
 };
