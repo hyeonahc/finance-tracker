@@ -8,17 +8,13 @@ import { useState } from "react";
 const AddTransaction = () => {
   // TODO: Consider having one state for all the input values
   const [type, setType] = useState<"Expense" | "Income">("Expense");
-  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
-
-  const changeSelectedDate = (date: Dayjs | null) => {
-    setSelectedDate(date);
-  };
+  const [date, setDate] = useState<Dayjs | null>(null);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "16px" }}>
       <TopNavigation title="Add Transaction" />
-      <TransactionTypeToggle changeType={setType} type={type} />
-      <DateInput changeDate={changeSelectedDate} selectedDate={selectedDate} />
+      <TransactionTypeToggle setType={setType} type={type} />
+      <DateInput date={date} setDate={setDate} />
     </Box>
   );
 };

@@ -3,7 +3,7 @@ import { alpha, styled, useTheme } from "@mui/system";
 import { BORDER_RADIUS } from "src/constants/constants";
 
 interface TransactionTypeToggleProps {
-  changeType: (value: "Expense" | "Income") => void;
+  setType: (value: "Expense" | "Income") => void;
   type: "Expense" | "Income";
 }
 
@@ -38,7 +38,7 @@ const CustomToggleButton = styled(ToggleButton, {
 );
 
 const TransactionTypeToggle = ({
-  changeType,
+  setType,
   type,
 }: TransactionTypeToggleProps) => {
   const theme = useTheme();
@@ -48,7 +48,7 @@ const TransactionTypeToggle = ({
     newValue: null | string,
   ) => {
     if (newValue) {
-      changeType(newValue as "Expense" | "Income");
+      setType(newValue as "Expense" | "Income");
     }
   };
 

@@ -3,11 +3,15 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Dayjs } from "dayjs";
 
 interface DateInputProps {
-  changeDate: (date: Dayjs | null) => void;
-  selectedDate: Dayjs | null;
+  date: Dayjs | null;
+  setDate: (date: Dayjs | null) => void;
 }
 
-const DateInput = ({ changeDate, selectedDate }: DateInputProps) => {
+const DateInput = ({ date, setDate }: DateInputProps) => {
+  const changeDate = (date: Dayjs | null) => {
+    setDate(date);
+  };
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
@@ -22,7 +26,7 @@ const DateInput = ({ changeDate, selectedDate }: DateInputProps) => {
             variant: "outlined",
           },
         }}
-        value={selectedDate}
+        value={date}
       />
     </LocalizationProvider>
   );
