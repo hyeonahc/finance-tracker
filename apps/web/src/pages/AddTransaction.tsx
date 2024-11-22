@@ -31,6 +31,12 @@ const AddTransaction = () => {
     setSelectedCategory(newCategory);
   };
 
+  const deleteCategory = (categoryToDelete: string) => {
+    setCategories(
+      categories.filter((category) => category !== categoryToDelete),
+    );
+  };
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "16px" }}>
       <TopNavigation title="Add Transaction" />
@@ -39,6 +45,7 @@ const AddTransaction = () => {
       <CostInput cost={cost} setCost={setCost} />
       <CategoryInput
         categories={categories}
+        deleteCategory={deleteCategory}
         selectedCategory={selectedCategory}
         updateCategory={updateCategory}
       />

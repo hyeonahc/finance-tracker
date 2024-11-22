@@ -1,14 +1,17 @@
-import { Autocomplete, TextField } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { Autocomplete, Box, IconButton, TextField } from "@mui/material";
 import { SyntheticEvent, useRef, useState } from "react";
 
 interface CategoryInputProps {
   categories: string[];
+  deleteCategory: (categoryToDelete: string) => void;
   selectedCategory: string;
   updateCategory: (newCategory: string) => void;
 }
 
 const CategoryInput = ({
   categories,
+  deleteCategory,
   selectedCategory,
   updateCategory,
 }: CategoryInputProps) => {
@@ -16,7 +19,7 @@ const CategoryInput = ({
   const inputRef = useRef<HTMLDivElement>(null);
 
   const changeCategoryAndRemoveFocus = (
-    _event: SyntheticEvent,
+    _e: SyntheticEvent,
     newCategory: null | string,
   ) => {
     if (newCategory) {
@@ -27,17 +30,17 @@ const CategoryInput = ({
     }
   };
 
-  const trackInputChange = (_event: SyntheticEvent, value: string) => {
+  const trackInputChange = (_e: SyntheticEvent, value: string) => {
     setInputValue(value);
   };
 
-  const updateCategoryOnEnter = (event: React.KeyboardEvent) => {
-    if (event.key === "Enter") {
+  const updateCategoryOnEnter = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
       updateCategoryAndClear();
       if (inputRef.current) {
         inputRef.current.blur();
       }
-      event.preventDefault();
     }
   };
 
@@ -48,6 +51,12 @@ const CategoryInput = ({
     setInputValue("");
   };
 
+  const clickCloseIcon = (e: React.MouseEvent, category: string) => {
+    e.stopPropagation();
+    deleteCategory(category);
+  };
+
+  // TODO: Prevent hover background color effect on the category list when the IconButton is hovered.
   return (
     <Autocomplete
       freeSolo
@@ -55,6 +64,7 @@ const CategoryInput = ({
       onChange={changeCategoryAndRemoveFocus}
       onInputChange={trackInputChange}
       options={categories}
+      // NOTE: value={selectedCategory} is intentionally positioned last as per formatting rules
       renderInput={(params) => (
         <TextField
           {...params}
@@ -66,6 +76,24 @@ const CategoryInput = ({
           variant="outlined"
         />
       )}
+      renderOption={(props, category) => {
+        const { key, ...restProps } = props;
+        return (
+          <Box
+            component="li"
+            key={key}
+            {...restProps}
+            sx={{
+              justifyContent: "space-between !important",
+            }}
+          >
+            <span>{category}</span>
+            <IconButton onClick={(e) => clickCloseIcon(e, category)}>
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </Box>
+        );
+      }}
       value={selectedCategory}
     />
   );
