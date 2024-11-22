@@ -85,6 +85,11 @@ const SignIn = () => {
           loading={isPending}
           onClick={handleSigninClick}
           size="large"
+          sx={{
+            color: "#fff",
+            fontWeight: "bold",
+            textTransform: "capitalize",
+          }}
           type="button"
           variant="contained"
         >

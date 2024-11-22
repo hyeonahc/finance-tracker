@@ -133,6 +133,11 @@ const SignUp = () => {
         loading={isPending}
         onClick={handleSignup}
         size="large"
+        sx={{
+          color: "#fff",
+          fontWeight: "bold",
+          textTransform: "capitalize",
+        }}
         type="button"
         variant="contained"
       >
