@@ -1,3 +1,4 @@
+import CategoryInput from "@components/ui/CategoryInput";
 import CostInput from "@components/ui/CostInput";
 import DateInput from "@components/ui/DateInput";
 import TopNavigation from "@components/ui/TopNavigation";
@@ -11,6 +12,24 @@ const AddTransaction = () => {
   const [type, setType] = useState<"Expense" | "Income">("Expense");
   const [date, setDate] = useState<Dayjs | null>(null);
   const [cost, setCost] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  // TODO: Integrate updateTransactionById API
+  const [categories, setCategories] = useState<string[]>([
+    "Dining",
+    "Groceries",
+    "Household",
+    "Fitness: yoga",
+    "Entertainment Subscriptions",
+    "Payroll",
+    "Insurance Reimbursement",
+  ]);
+
+  const updateCategory = (newCategory: string) => {
+    if (!categories.includes(newCategory)) {
+      setCategories([...categories, newCategory]);
+    }
+    setSelectedCategory(newCategory);
+  };
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "16px" }}>
@@ -18,6 +37,11 @@ const AddTransaction = () => {
       <TransactionTypeToggle setType={setType} type={type} />
       <DateInput date={date} setDate={setDate} />
       <CostInput cost={cost} setCost={setCost} />
+      <CategoryInput
+        categories={categories}
+        selectedCategory={selectedCategory}
+        updateCategory={updateCategory}
+      />
     </Box>
   );
 };
