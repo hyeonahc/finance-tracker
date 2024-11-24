@@ -1,3 +1,7 @@
+import {
+  ITransaction,
+  ITransactionResponse,
+} from "@api/transactions/getAllTransactions";
 import CategoryInput from "@components/ui/CategoryInput";
 import CostInput from "@components/ui/CostInput";
 import DateInput from "@components/ui/DateInput";
@@ -5,7 +9,8 @@ import TopNavigation from "@components/ui/TopNavigation";
 import TransactionTypeToggle from "@components/ui/TransactionTypeToggle";
 import { Box, Button } from "@mui/material";
 import { Dayjs } from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useGetAllTransactions } from "src/hooks/transactions/useGetAllTransactions";
 
 const AddTransaction = () => {
   // TODO: Consider having one state for all the input values
@@ -14,15 +19,8 @@ const AddTransaction = () => {
   const [cost, setCost] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   // TODO: Integrate updateTransactionById API
-  const [categories, setCategories] = useState<string[]>([
-    "Dining",
-    "Groceries",
-    "Household",
-    "Fitness: yoga",
-    "Entertainment Subscriptions",
-    "Payroll",
-    "Insurance Reimbursement",
-  ]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [transactions, setTransactions] = useState<ITransaction[]>([]);
 
   const updateCategory = (newCategory: string) => {
     if (!categories.includes(newCategory)) {
@@ -39,6 +37,42 @@ const AddTransaction = () => {
   const onClick = () => {
     console.log("onClick");
   };
+
+  const onSuccess = (data: ITransactionResponse) => {
+    console.log("onSuccess data: ", data);
+    const { transactions } = data;
+    setTransactions(transactions);
+  };
+
+  const onError = (data: Error) => {
+    console.log("onError data: ", data);
+  };
+
+  const { mutate: getAllTransactions } = useGetAllTransactions({
+    onError,
+    onSuccess,
+  });
+
+  const fetchAllTransaction = async () => {
+    await getAllTransactions();
+  };
+
+  useEffect(() => {
+    fetchAllTransaction();
+  }, []);
+
+  useEffect(() => {
+    const extractCategories = () => {
+      const allCategories = transactions.map(
+        (transaction) => transaction.category,
+      );
+      const uniqueCategories = Array.from(new Set(allCategories));
+      setCategories(uniqueCategories);
+    };
+    if (transactions.length > 0) {
+      extractCategories();
+    }
+  }, [transactions]);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "16px" }}>
