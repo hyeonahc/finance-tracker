@@ -33,8 +33,9 @@ const CategoryInput = ({
   };
 
   const updateCategoryAndClear = () => {
-    if (inputValue !== selectedCategory) {
-      updateCategory(inputValue);
+    const trimmedInput = inputValue.trim();
+    if (trimmedInput && trimmedInput !== selectedCategory) {
+      updateCategory(trimmedInput);
       setInputValue("");
     }
   };
@@ -75,6 +76,7 @@ const CategoryInput = ({
             }}
           >
             <span>{category}</span>
+            {/* TODO: Replace the current icon with a trash bin icon to better distinguish it from the clear input functionality */}
             <IconButton onClick={(e) => clickCloseIcon(e, category)}>
               <CloseIcon fontSize="small" />
             </IconButton>
