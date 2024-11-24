@@ -1,7 +1,4 @@
-import {
-  ITransaction,
-  ITransactionResponse,
-} from "@api/transactions/getAllTransactions";
+import { ITransactionResponse } from "@api/transactions/getAllTransactions";
 import CategoryInput from "@components/ui/CategoryInput";
 import CostInput from "@components/ui/CostInput";
 import DateInput from "@components/ui/DateInput";
@@ -11,6 +8,7 @@ import { Box, Button } from "@mui/material";
 import { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
 import { useGetAllTransactions } from "src/hooks/transactions/useGetAllTransactions";
+import { ITransaction } from "src/types/transactions";
 
 const AddTransaction = () => {
   // TODO: Consider having one state for all the input values
@@ -33,9 +31,6 @@ const AddTransaction = () => {
     setCategories(
       categories.filter((category) => category !== categoryToDelete),
     );
-  };
-  const onClick = () => {
-    console.log("onClick");
   };
 
   const onSuccess = (data: ITransactionResponse) => {
@@ -73,6 +68,10 @@ const AddTransaction = () => {
       extractCategories();
     }
   }, [transactions]);
+
+  const onClick = () => {
+    console.log("onClick");
+  };
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "16px" }}>

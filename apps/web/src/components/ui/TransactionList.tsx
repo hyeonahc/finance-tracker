@@ -1,4 +1,3 @@
-import { ITransaction } from "@api/transactions/getAllTransactions";
 import {
   Box,
   Divider,
@@ -7,6 +6,7 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
+import { ITransaction } from "src/types/transactions";
 
 interface TransactionListProps {
   transactions: ITransaction[];

@@ -1,7 +1,4 @@
-import {
-  ITransaction,
-  ITransactionResponse,
-} from "@api/transactions/getAllTransactions";
+import { ITransactionResponse } from "@api/transactions/getAllTransactions";
 import YearMonthPicker from "@components/filters/YearMonthPicker";
 import AddTransactionBtn from "@components/ui/AddTransactionBtn";
 import IncomeExpenseTotal from "@components/ui/IncomeExpenseTotal";
@@ -15,6 +12,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetAllTransactions } from "src/hooks/transactions/useGetAllTransactions";
+import { ITransaction } from "src/types/transactions";
 
 const VIEW_OPTIONS = ["daily", "monthly", "calendar", "category"] as const;
 export type ViewOption = (typeof VIEW_OPTIONS)[number];

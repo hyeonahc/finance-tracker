@@ -1,17 +1,8 @@
+import { ITransaction } from "src/types/transactions";
+
 export interface ITransactionResponse {
   message: string;
   transactions: Array<ITransaction>;
-}
-
-export interface ITransaction {
-  _id: string;
-  category: string;
-  cost: number;
-  date: string;
-  note?: string;
-  title: string;
-  type: "Expense" | "Income";
-  userId: string;
 }
 
 const API_BASE_URL = import.meta.env.VITE_API_LOCAL_8080;

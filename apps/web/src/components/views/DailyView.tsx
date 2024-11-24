@@ -1,4 +1,3 @@
-import { ITransaction } from "@api/transactions/getAllTransactions";
 import {
   Box,
   Divider,
@@ -9,6 +8,7 @@ import {
   useTheme,
 } from "@mui/material";
 import dayjs from "dayjs";
+import { ITransaction } from "src/types/transactions";
 
 interface DailyViewProps {
   isPending: boolean;
