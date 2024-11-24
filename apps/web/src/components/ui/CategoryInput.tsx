@@ -18,6 +18,18 @@ const CategoryInput = ({
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef<HTMLDivElement>(null);
 
+  const changeCategoryAndRemoveFocus = (
+    _e: SyntheticEvent,
+    newCategory: null | string,
+  ) => {
+    if (newCategory) {
+      updateCategory(newCategory);
+      if (inputRef.current) {
+        inputRef.current.blur();
+      }
+    }
+  };
+
   const trackInputChange = (_e: SyntheticEvent, value: string) => {
     setInputValue(value);
   };
@@ -33,10 +45,10 @@ const CategoryInput = ({
   };
 
   const updateCategoryAndClear = () => {
-    if (inputValue !== selectedCategory) {
+    if (inputValue) {
       updateCategory(inputValue);
-      setInputValue("");
     }
+    setInputValue("");
   };
 
   const clickCloseIcon = (e: React.MouseEvent, category: string) => {
@@ -49,6 +61,7 @@ const CategoryInput = ({
     <Autocomplete
       freeSolo
       inputValue={inputValue}
+      onChange={changeCategoryAndRemoveFocus}
       onInputChange={trackInputChange}
       options={categories}
       // NOTE: value={selectedCategory} is intentionally positioned last as per formatting rules

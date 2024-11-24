@@ -22,7 +22,6 @@ const App = () => {
         <Routes>
           <Route element={<AppWrapper />} path="/">
             <Route element={<LayoutWithBottomNav />} path="/">
-              {/* TODO: AddTransaction component should be part of ProtectedRoute */}
               <Route element={<ProtectedRoute />}>
                 <Route element={<Home />} index />
                 <Route element={<ExpenseHistory />} path="expense-history" />
