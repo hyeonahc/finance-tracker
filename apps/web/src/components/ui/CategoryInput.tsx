@@ -1,4 +1,4 @@
-import CloseIcon from "@mui/icons-material/Close";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { Autocomplete, Box, IconButton, TextField } from "@mui/material";
 import { SyntheticEvent, useRef, useState } from "react";
 
@@ -76,9 +76,8 @@ const CategoryInput = ({
             }}
           >
             <span>{category}</span>
-            {/* TODO: Replace the current icon with a trash bin icon to better distinguish it from the clear input functionality */}
             <IconButton onClick={(e) => clickCloseIcon(e, category)}>
-              <CloseIcon fontSize="small" />
+              <DeleteIcon fontSize="small" />
             </IconButton>
           </Box>
         );
