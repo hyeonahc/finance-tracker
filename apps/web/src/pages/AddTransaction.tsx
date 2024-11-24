@@ -8,7 +8,7 @@ import { Box, Button } from "@mui/material";
 import { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
 import { useGetAllTransactions } from "src/hooks/transactions/useGetAllTransactions";
-import { ITransaction } from "src/types/transactions";
+import { ISavedTransaction } from "src/types/transactions";
 
 const AddTransaction = () => {
   // TODO: Consider having one state for all the input values
@@ -18,7 +18,7 @@ const AddTransaction = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   // TODO: Integrate updateTransactionById API
   const [categories, setCategories] = useState<string[]>([]);
-  const [transactions, setTransactions] = useState<ITransaction[]>([]);
+  const [transactions, setTransactions] = useState<ISavedTransaction[]>([]);
 
   const updateCategory = (newCategory: string) => {
     if (!categories.includes(newCategory)) {

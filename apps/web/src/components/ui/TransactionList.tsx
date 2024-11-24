@@ -6,10 +6,10 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import { ITransaction } from "src/types/transactions";
+import { ISavedTransaction } from "src/types/transactions";
 
 interface TransactionListProps {
-  transactions: ITransaction[];
+  transactions: ISavedTransaction[];
 }
 
 const TransactionList = ({ transactions }: TransactionListProps) => {

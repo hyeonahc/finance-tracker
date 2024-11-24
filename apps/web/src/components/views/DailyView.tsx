@@ -8,12 +8,12 @@ import {
   useTheme,
 } from "@mui/material";
 import dayjs from "dayjs";
-import { ITransaction } from "src/types/transactions";
+import { ISavedTransaction } from "src/types/transactions";
 
 interface DailyViewProps {
   isPending: boolean;
   selectedMonth: string; // Format: "YYYY-MM" (e.g., "2024-05")
-  transactions: ITransaction[];
+  transactions: ISavedTransaction[];
 }
 
 const DailyView = ({
@@ -61,7 +61,7 @@ const DailyView = ({
       acc[dateKey].push(transaction);
       return acc;
     },
-    {} as Record<string, ITransaction[]>,
+    {} as Record<string, ISavedTransaction[]>,
   );
 
   if (isPending) {

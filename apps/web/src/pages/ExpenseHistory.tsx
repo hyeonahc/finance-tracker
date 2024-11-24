@@ -12,7 +12,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetAllTransactions } from "src/hooks/transactions/useGetAllTransactions";
-import { ITransaction } from "src/types/transactions";
+import { ISavedTransaction } from "src/types/transactions";
 
 const VIEW_OPTIONS = ["daily", "monthly", "calendar", "category"] as const;
 export type ViewOption = (typeof VIEW_OPTIONS)[number];
@@ -25,7 +25,7 @@ const ExpenseHistory = () => {
     income: 0,
     total: 0,
   });
-  const [transactions, setTransactions] = useState<ITransaction[]>([]);
+  const [transactions, setTransactions] = useState<ISavedTransaction[]>([]);
 
   const navigate = useNavigate();
 
