@@ -21,19 +21,18 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route element={<AppWrapper />} path="/">
-            <Route element={<LayoutWithBottomNav />} path="/">
-              {/* TODO: AddTransaction component should be part of ProtectedRoute */}
-              <Route element={<ProtectedRoute />}>
+            <Route element={<ProtectedRoute />}>
+              <Route element={<LayoutWithBottomNav />} path="/">
                 <Route element={<Home />} index />
                 <Route element={<ExpenseHistory />} path="expense-history" />
                 <Route element={<AnalysisReport />} path="analysis-report" />
                 <Route element={<FinanceGoal />} path="finance-goal" />
                 <Route element={<Setting />} path="setting" />
               </Route>
+              <Route element={<Layout />} path="/">
+                <Route element={<AddTransaction />} path="add-transaction" />
+              </Route>
               <Route element={<NotFound />} path="*" />
-            </Route>
-            <Route element={<Layout />} path="/">
-              <Route element={<AddTransaction />} path="add-transaction" />
             </Route>
             <Route element={<Layout />} path="/">
               <Route element={<SignIn />} path="signin" />
