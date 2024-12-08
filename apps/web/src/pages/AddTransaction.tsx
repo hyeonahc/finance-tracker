@@ -7,11 +7,14 @@ import TransactionTypeToggle from "@components/ui/TransactionTypeToggle";
 import { Box, Button } from "@mui/material";
 import { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCreateTransaction } from "src/hooks/transactions/useCreateTransaction";
 import { useGetAllTransactions } from "src/hooks/transactions/useGetAllTransactions";
-import { ISavedTransaction } from "src/types/transactions";
+import { INewTransaction, ISavedTransaction } from "src/types/transactions";
 
 const AddTransaction = () => {
-  // TODO: Consider having one state for all the input values
+  const navigate = useNavigate();
+
   const [type, setType] = useState<"Expense" | "Income">("Expense");
   const [date, setDate] = useState<Dayjs | null>(null);
   const [cost, setCost] = useState("");
@@ -33,26 +36,26 @@ const AddTransaction = () => {
     );
   };
 
-  const onSuccess = (data: ITransactionResponse) => {
-    console.log("onSuccess data: ", data);
+  // getAllTransactions
+  const getAllTransactionsSuccess = (data: ITransactionResponse) => {
+    console.log("getAllTransactionsSuccess data: ", data);
     const { transactions } = data;
     setTransactions(transactions);
   };
 
-  const onError = (data: Error) => {
-    console.log("onError data: ", data);
+  const getAllTransactionsError = (data: Error) => {
+    console.log("getAllTransactionsError data: ", data);
   };
 
   const { mutate: getAllTransactions } = useGetAllTransactions({
-    onError,
-    onSuccess,
+    onError: getAllTransactionsError,
+    onSuccess: getAllTransactionsSuccess,
   });
 
-  const fetchAllTransaction = async () => {
-    await getAllTransactions();
-  };
-
   useEffect(() => {
+    const fetchAllTransaction = async () => {
+      await getAllTransactions();
+    };
     fetchAllTransaction();
   }, []);
 
@@ -69,14 +72,54 @@ const AddTransaction = () => {
     }
   }, [transactions]);
 
-  const onClick = () => {
-    console.log("onClick");
+  // createTransaction
+  const createTransactionSuccess = (data: ITransactionResponse) => {
+    console.log("createTransactionSuccess data: ", data);
+    navigate("/expense-history");
+  };
+
+  const createTransactionError = (data: Error) => {
+    console.log("createTransactionError data: ", data);
+  };
+
+  const { mutate: createTransaction } = useCreateTransaction({
+    onError: createTransactionError,
+    onSuccess: createTransactionSuccess,
+  });
+
+  const saveNewTransaction = async () => {
+    if (!date) {
+      alert("Please select a date.");
+      return;
+    }
+
+    if (!cost) {
+      alert("Please enter a cost.");
+      return;
+    }
+
+    if (!selectedCategory) {
+      alert("Please select or add a category.");
+      return;
+    }
+
+    const newTransactionData: INewTransaction = {
+      category: selectedCategory,
+      cost: Number(cost),
+      date: date.toISOString(),
+      // TODO: Update title value after creating a title component
+      title: "TBD",
+      type: type,
+    };
+
+    await createTransaction(newTransactionData);
   };
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "16px" }}>
       <TopNavigation title="Add Transaction" />
       <TransactionTypeToggle setType={setType} type={type} />
+      {/* TODO: Create a title text field component and pass it to newTransactionData */}
       <DateInput date={date} setDate={setDate} />
       <CostInput cost={cost} setCost={setCost} />
       <CategoryInput
@@ -90,7 +133,7 @@ const AddTransaction = () => {
       <Button
         color="primary"
         fullWidth
-        onClick={onClick}
+        onClick={saveNewTransaction}
         size="large"
         sx={{
           color: "#fff",

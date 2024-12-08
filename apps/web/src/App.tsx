@@ -33,9 +33,11 @@ const App = () => {
               <Route element={<NotFound />} path="*" />
             </Route>
             <Route element={<Layout />} path="/">
+              <Route element={<AddTransaction />} path="add-transaction" />
+            </Route>
+            <Route element={<Layout />} path="/">
               <Route element={<SignIn />} path="signin" />
               <Route element={<SignUp />} path="signup" />
-              <Route element={<AddTransaction />} path="add-transaction" />
             </Route>
           </Route>
         </Routes>

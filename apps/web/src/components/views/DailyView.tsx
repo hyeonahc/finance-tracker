@@ -81,6 +81,7 @@ const DailyView = ({
               {dayjs(date).format("MMMM DD, YYYY (ddd)")}
             </Typography>
 
+            {/* TODO: The most recently added transaction for the same day should be displayed at the top of the list. */}
             {transactionsOnDate.map((transaction) => (
               <ListItem key={transaction._id}>
                 <Box

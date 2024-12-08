@@ -9,7 +9,7 @@ const CostInput = ({ cost, setCost }: CostInputProps) => {
   const updateCost = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     if (/^\d*\.?\d*$/.test(value)) {
-      setCost(value);
+      setCost(value.trim());
     }
   };
 

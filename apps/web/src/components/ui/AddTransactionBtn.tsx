@@ -10,6 +10,7 @@ const AddTransactionBtn = ({ onClick }: AddTransactionBtnProps) => {
     <Fab
       color="primary"
       onClick={onClick}
+      // TODO: The button position should be based on view port
       sx={{
         bottom: 70,
         position: "absolute",

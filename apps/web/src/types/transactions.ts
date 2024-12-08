@@ -5,7 +5,6 @@ export interface INewTransaction {
   date: string;
   title: string;
   type: "Expense" | "Income";
-  userId: string;
 }
 
 // Interface for a transaction object returned from the server (response payload)
