@@ -10,11 +10,11 @@ const AddTransactionBtn = ({ onClick }: AddTransactionBtnProps) => {
     <Fab
       color="primary"
       onClick={onClick}
-      // TODO: The button position should be based on view port
       sx={{
-        bottom: 70,
-        position: "absolute",
-        right: 20,
+        bottom: "calc(80px + 20px)",
+        position: "fixed",
+        right: "calc((100vw - 767px) / 2 + 30px)",
+        zIndex: 10,
       }}
     >
       {/* TODO: Fix TypeScript error theme.palette.text.btn */}

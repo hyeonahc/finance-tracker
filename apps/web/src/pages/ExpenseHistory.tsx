@@ -79,7 +79,7 @@ const ExpenseHistory = () => {
   }, []);
 
   return (
-    <Box sx={{ position: "relative" }}>
+    <Box>
       <YearMonthPicker
         displayMode="monthYear"
         selectedDate={selectedDate}
@@ -95,7 +95,6 @@ const ExpenseHistory = () => {
         income={financialSummary.income}
         total={financialSummary.total}
       />
-      {/* TODO: Update selectedMonth with real data */}
       <Box px={2}>
         {selectedView === "daily" && (
           <DailyView

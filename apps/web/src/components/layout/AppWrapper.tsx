@@ -11,12 +11,14 @@ const AppWrapper = () => {
         borderLeft: `1px solid ${theme.palette.border.main}`,
         borderRight: `1px solid ${theme.palette.border.main}`,
         height: "100vh",
+        overflow: "hidden",
+        position: "relative",
         width: "767px",
       }}
     >
       <Outlet />
     </Box>
   );
-}
+};
 
 export default AppWrapper;
