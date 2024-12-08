@@ -2,6 +2,7 @@ import { ITransactionResponse } from "@api/transactions/getAllTransactions";
 import CategoryInput from "@components/ui/CategoryInput";
 import CostInput from "@components/ui/CostInput";
 import DateInput from "@components/ui/DateInput";
+import TitleInput from "@components/ui/TitleInput";
 import TopNavigation from "@components/ui/TopNavigation";
 import TransactionTypeToggle from "@components/ui/TransactionTypeToggle";
 import { Box, Button } from "@mui/material";
@@ -15,11 +16,11 @@ import { INewTransaction, ISavedTransaction } from "src/types/transactions";
 const AddTransaction = () => {
   const navigate = useNavigate();
 
+  const [title, setTitle] = useState("");
   const [type, setType] = useState<"Expense" | "Income">("Expense");
   const [date, setDate] = useState<Dayjs | null>(null);
   const [cost, setCost] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  // TODO: Integrate updateTransactionById API
   const [categories, setCategories] = useState<string[]>([]);
   const [transactions, setTransactions] = useState<ISavedTransaction[]>([]);
 
@@ -88,6 +89,11 @@ const AddTransaction = () => {
   });
 
   const saveNewTransaction = async () => {
+    if (!title) {
+      alert("Please enter a title.");
+      return;
+    }
+
     if (!date) {
       alert("Please select a date.");
       return;
@@ -107,8 +113,7 @@ const AddTransaction = () => {
       category: selectedCategory,
       cost: Number(cost),
       date: date.toISOString(),
-      // TODO: Update title value after creating a title component
-      title: "TBD",
+      title: title,
       type: type,
     };
 
@@ -119,7 +124,7 @@ const AddTransaction = () => {
     <Box sx={{ display: "flex", flexDirection: "column", gap: "16px" }}>
       <TopNavigation title="Add Transaction" />
       <TransactionTypeToggle setType={setType} type={type} />
-      {/* TODO: Create a title text field component and pass it to newTransactionData */}
+      <TitleInput setTitle={setTitle} title={title} />
       <DateInput date={date} setDate={setDate} />
       <CostInput cost={cost} setCost={setCost} />
       <CategoryInput
