@@ -6,7 +6,6 @@ interface IncomeExpenseTotalProps {
   total: number;
 }
 
-// TODO: If IncomeExpenseTotalProps has negative values, update the display to show the minus symbol before the dollar sign (e.g., -$750 instead of $-750)
 const IncomeExpenseTotal = ({
   expense,
   income,
@@ -45,7 +44,9 @@ const IncomeExpenseTotal = ({
           Total
         </Typography>
         <Typography color="textPrimary" fontSize="1.1rem">
-          ${total.toLocaleString()}
+          {total < 0
+            ? `-$${Math.abs(total).toLocaleString()}`
+            : `$${total.toLocaleString()}`}
         </Typography>
       </Box>
     </Box>
