@@ -9,7 +9,7 @@ import MonthlyView from "@components/views/MonthlyView";
 import ViewOptions from "@components/views/ViewOptions";
 import { Box } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetAllTransactions } from "src/hooks/transactions/useGetAllTransactions";
 import { ISavedTransaction } from "src/types/transactions";
@@ -33,11 +33,14 @@ const ExpenseHistory = () => {
     setSelectedView(view);
   };
 
-  const onSuccess = (data: ITransactionResponse) => {
-    console.log("onSuccess data: ", data);
-    const { transactions } = data;
-    setTransactions(transactions);
-    const { expense, income } = transactions.reduce(
+  const updateFinancialSummary = useCallback(() => {
+    const currentMonthTransactions = transactions.filter(
+      (transaction) =>
+        dayjs(transaction.date).format("YYYY-MM") ===
+        selectedDate.format("YYYY-MM"),
+    );
+
+    const { expense, income } = currentMonthTransactions.reduce(
       (acc, transaction) => {
         if (transaction.type === "Income") {
           acc.income += transaction.cost;
@@ -48,12 +51,19 @@ const ExpenseHistory = () => {
       },
       { expense: 0, income: 0 },
     );
+
     const total = income - expense;
     setFinancialSummary({
       expense: expense,
       income: income,
       total: total,
     });
+  }, [transactions, selectedDate]);
+
+  const onSuccess = (data: ITransactionResponse) => {
+    console.log("onSuccess data: ", data);
+    const { transactions } = data;
+    setTransactions(transactions);
   };
 
   const onError = (data: Error) => {
@@ -74,9 +84,14 @@ const ExpenseHistory = () => {
   };
 
   // TODO: Think about what's the best timing to call getAllTransactions data
+  // TODO: Resolve eslint error message
   useEffect(() => {
     fetchAllTransaction();
   }, []);
+
+  useEffect(() => {
+    updateFinancialSummary();
+  }, [updateFinancialSummary]);
 
   return (
     <Box>
