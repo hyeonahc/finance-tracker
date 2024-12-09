@@ -75,19 +75,16 @@ const ExpenseHistory = () => {
     onSuccess,
   });
 
-  const fetchAllTransaction = async () => {
-    await getAllTransactions();
-  };
-
   const goToAddTransactionPage = () => {
     navigate("/add-transaction");
   };
 
-  // TODO: Think about what's the best timing to call getAllTransactions data
-  // TODO: Resolve eslint error message
   useEffect(() => {
+    const fetchAllTransaction = async () => {
+      await getAllTransactions();
+    };
     fetchAllTransaction();
-  }, []);
+  }, [getAllTransactions]);
 
   useEffect(() => {
     updateFinancialSummary();
