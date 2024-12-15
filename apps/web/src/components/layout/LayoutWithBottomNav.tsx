@@ -9,7 +9,10 @@ const LayoutWithBottomNav = () => {
       <Box
         component="main"
         sx={{
+          height: "100%",
+          overflowY: "auto",
           paddingBottom: BOTTOM_NAV_HEIGHT,
+          position: "relative",
         }}
       >
         <Outlet />

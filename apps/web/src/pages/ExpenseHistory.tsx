@@ -1,8 +1,6 @@
-import {
-  ITransaction,
-  ITransactionResponse,
-} from "@api/transactions/getAllTransactions";
+import { ITransactionResponse } from "@api/transactions/getAllTransactions";
 import YearMonthPicker from "@components/filters/YearMonthPicker";
+import AddTransactionBtn from "@components/ui/AddTransactionBtn";
 import IncomeExpenseTotal from "@components/ui/IncomeExpenseTotal";
 import CalendarView from "@components/views/CalendarView";
 import CategoryView from "@components/views/CategoryView";
@@ -11,8 +9,10 @@ import MonthlyView from "@components/views/MonthlyView";
 import ViewOptions from "@components/views/ViewOptions";
 import { Box } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useGetAllTransactions } from "src/hooks/transactions/useGetAllTransactions";
+import { ISavedTransaction } from "src/types/transactions";
 
 const VIEW_OPTIONS = ["daily", "monthly", "calendar", "category"] as const;
 export type ViewOption = (typeof VIEW_OPTIONS)[number];
@@ -25,52 +25,66 @@ const ExpenseHistory = () => {
     income: 0,
     total: 0,
   });
-  const [transactions, setTransactions] = useState<ITransaction[]>([]);
+  const [transactions, setTransactions] = useState<ISavedTransaction[]>([]);
+
+  const navigate = useNavigate();
 
   const handleViewChange = (view: ViewOption) => {
     setSelectedView(view);
   };
 
-  const onSuccess = (data: ITransactionResponse) => {
-    console.log("onSuccess data: ", data);
-    const { transactions } = data;
-    setTransactions(transactions);
-    const { expense, income } = transactions.reduce(
+  const updateFinancialSummary = useCallback(() => {
+    const currentMonthTransactions = transactions.filter(
+      (transaction) =>
+        dayjs(transaction.date).format("YYYY-MM") ===
+        selectedDate.format("YYYY-MM"),
+    );
+
+    const { expense, income } = currentMonthTransactions.reduce(
       (acc, transaction) => {
         if (transaction.type === "Income") {
-          acc.income += transaction.amount;
+          acc.income += transaction.cost;
         } else if (transaction.type === "Expense") {
-          acc.expense += transaction.amount;
+          acc.expense += transaction.cost;
         }
         return acc;
       },
       { expense: 0, income: 0 },
     );
+
     const total = income - expense;
     setFinancialSummary({
       expense: expense,
       income: income,
       total: total,
     });
-  };
-
-  const onError = (data: Error) => {
-    console.log("onError data: ", data);
-  };
+  }, [transactions, selectedDate]);
 
   const { isPending, mutate: getAllTransactions } = useGetAllTransactions({
-    onError,
-    onSuccess,
+    onError: (error: Error) => {
+      console.log("getAllTransactions onError data: ", error);
+    },
+    onSuccess: (data: ITransactionResponse) => {
+      console.log("getAllTransactions onSuccess data: ", data);
+      const { transactions } = data;
+      setTransactions(transactions);
+    },
   });
 
-  const fetchAllTransaction = async () => {
-    await getAllTransactions();
+  const goToAddTransactionPage = () => {
+    navigate("/add-transaction");
   };
 
-  // TODO: Think about what's the best timing to call getAllTransactions data
   useEffect(() => {
+    const fetchAllTransaction = async () => {
+      await getAllTransactions();
+    };
     fetchAllTransaction();
-  }, []);
+  }, [getAllTransactions]);
+
+  useEffect(() => {
+    updateFinancialSummary();
+  }, [updateFinancialSummary]);
 
   return (
     <Box>
@@ -89,7 +103,6 @@ const ExpenseHistory = () => {
         income={financialSummary.income}
         total={financialSummary.total}
       />
-      {/* TODO: Update selectedMonth with real data */}
       <Box px={2}>
         {selectedView === "daily" && (
           <DailyView
@@ -102,6 +115,7 @@ const ExpenseHistory = () => {
         {selectedView === "calendar" && <CalendarView />}
         {selectedView === "category" && <CategoryView />}
       </Box>
+      <AddTransactionBtn onClick={goToAddTransactionPage} />
     </Box>
   );
 };

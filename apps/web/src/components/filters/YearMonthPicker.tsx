@@ -1,4 +1,4 @@
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Box, IconButton } from "@mui/material";
 import { styled } from "@mui/system";
@@ -70,8 +70,8 @@ const YearMonthPicker = ({
       gap={2}
       justifyContent="space-between"
     >
-      <IconButton onClick={handlePrev} sx={{ color: "text.primary" }}>
-        <ArrowBackIosNewIcon sx={{ transform: "scale(0.8, 1)" }} />
+      <IconButton onClick={handlePrev}>
+        <ArrowBackIosIcon sx={{ fontSize: "large" }} />
       </IconButton>
 
       <CustomDatePicker
@@ -94,8 +94,8 @@ const YearMonthPicker = ({
         views={displayMode === "year" ? ["year"] : ["year", "month"]}
       />
 
-      <IconButton onClick={handleNext} sx={{ color: "text.primary" }}>
-        <ArrowForwardIosIcon sx={{ transform: "scale(0.8, 1)" }} />
+      <IconButton onClick={handleNext}>
+        <ArrowForwardIosIcon sx={{ fontSize: "large" }} />
       </IconButton>
     </Box>
   );

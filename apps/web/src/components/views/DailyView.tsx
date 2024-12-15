@@ -1,4 +1,3 @@
-import { ITransaction } from "@api/transactions/getAllTransactions";
 import {
   Box,
   Divider,
@@ -9,11 +8,12 @@ import {
   useTheme,
 } from "@mui/material";
 import dayjs from "dayjs";
+import { ISavedTransaction } from "src/types/transactions";
 
 interface DailyViewProps {
   isPending: boolean;
   selectedMonth: string; // Format: "YYYY-MM" (e.g., "2024-05")
-  transactions: ITransaction[];
+  transactions: ISavedTransaction[];
 }
 
 const DailyView = ({
@@ -61,7 +61,7 @@ const DailyView = ({
       acc[dateKey].push(transaction);
       return acc;
     },
-    {} as Record<string, ITransaction[]>,
+    {} as Record<string, ISavedTransaction[]>,
   );
 
   if (isPending) {
@@ -81,6 +81,7 @@ const DailyView = ({
               {dayjs(date).format("MMMM DD, YYYY (ddd)")}
             </Typography>
 
+            {/* TODO: The most recently added transaction for the same day should be displayed at the top of the list. */}
             {transactionsOnDate.map((transaction) => (
               <ListItem key={transaction._id}>
                 <Box
@@ -114,7 +115,7 @@ const DailyView = ({
                   }
                 >
                   {transaction.type === "Expense" ? "-" : ""}$
-                  {transaction.amount.toLocaleString()}
+                  {transaction.cost.toLocaleString()}
                 </Typography>
               </ListItem>
             ))}
