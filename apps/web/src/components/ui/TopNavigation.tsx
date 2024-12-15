@@ -27,7 +27,7 @@ const TopNavigation = ({ title }: TopNavigationProps) => {
           onClick={goToPreviousPage}
           sx={{ m: 0, p: "10px" }}
         >
-          <ArrowBackIosIcon sx={{ fontSize: "18px" }} />
+          <ArrowBackIosIcon sx={{ fontSize: "large" }} />
         </IconButton>
         <Typography sx={{ flexGrow: 1, textAlign: "center" }}>
           {title}

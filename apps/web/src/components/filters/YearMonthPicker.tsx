@@ -71,7 +71,7 @@ const YearMonthPicker = ({
       justifyContent="space-between"
     >
       <IconButton onClick={handlePrev}>
-        <ArrowBackIosIcon sx={{ fontSize: "18px" }} />
+        <ArrowBackIosIcon sx={{ fontSize: "large" }} />
       </IconButton>
 
       <CustomDatePicker
@@ -95,7 +95,7 @@ const YearMonthPicker = ({
       />
 
       <IconButton onClick={handleNext}>
-        <ArrowForwardIosIcon sx={{ fontSize: "18px" }} />
+        <ArrowForwardIosIcon sx={{ fontSize: "large" }} />
       </IconButton>
     </Box>
   );
