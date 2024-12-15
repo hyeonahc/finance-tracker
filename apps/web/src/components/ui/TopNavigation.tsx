@@ -16,7 +16,6 @@ const TopNavigation = ({ title }: TopNavigationProps) => {
   return (
     <AppBar
       elevation={0}
-      position="static"
       sx={{
         bgcolor: "background.paper",
       }}
