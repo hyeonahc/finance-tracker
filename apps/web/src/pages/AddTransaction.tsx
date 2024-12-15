@@ -37,20 +37,14 @@ const AddTransaction = () => {
     );
   };
 
-  // getAllTransactions
-  const getAllTransactionsSuccess = (data: ITransactionResponse) => {
-    console.log("getAllTransactionsSuccess data: ", data);
-    const { transactions } = data;
-    setTransactions(transactions);
-  };
-
-  const getAllTransactionsError = (data: Error) => {
-    console.log("getAllTransactionsError data: ", data);
-  };
-
   const { mutate: getAllTransactions } = useGetAllTransactions({
-    onError: getAllTransactionsError,
-    onSuccess: getAllTransactionsSuccess,
+    onError: (error: Error) => {
+      console.log("getAllTransactions onError data: ", error);
+    },
+    onSuccess: (data: ITransactionResponse) => {
+      console.log("getAllTransactions onSuccess data: ", data);
+      setTransactions(data.transactions);
+    },
   });
 
   useEffect(() => {
@@ -73,19 +67,14 @@ const AddTransaction = () => {
     }
   }, [transactions]);
 
-  // createTransaction
-  const createTransactionSuccess = (data: ITransactionResponse) => {
-    console.log("createTransactionSuccess data: ", data);
-    navigate("/expense-history");
-  };
-
-  const createTransactionError = (data: Error) => {
-    console.log("createTransactionError data: ", data);
-  };
-
   const { mutate: createTransaction } = useCreateTransaction({
-    onError: createTransactionError,
-    onSuccess: createTransactionSuccess,
+    onError: (error: Error) => {
+      console.log("createTransacti onError data: ", error);
+    },
+    onSuccess: (data: ITransactionResponse) => {
+      console.log("createTransacti onSuccess data: ", data);
+      navigate("/expense-history");
+    },
   });
 
   const saveNewTransaction = async () => {

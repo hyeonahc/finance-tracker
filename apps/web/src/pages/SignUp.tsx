@@ -16,44 +16,40 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
-  const handleSigninSuccess = (data: ISigninResponse) => {
-    if (data.token) {
-      localStorage.setItem("token", data.token);
-      navigate("/");
-    }
-  };
-
   const { mutate: signinMutation } = useSigninMutation({
-    onSuccess: handleSigninSuccess,
+    onSuccess: (data: ISigninResponse) => {
+      console.log("signinMutation onSuccess data: ", data);
+
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        navigate("/");
+      }
+    },
   });
 
-  const handleSignupSuccess = async (data: ISignupResponse) => {
-    console.log("onSuccess data: ", data);
-
-    alert(data.message);
-
-    const userSigninData = {
-      email,
-      password,
-    };
-
-    signinMutation(userSigninData);
-  };
-
-  const handleSignupError = (data: Error) => {
-    console.log("onError data: ", data);
-
-    alert(data.message);
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
-  };
-
   const { isPending, mutate: signupMutation } = useSignupMutation({
-    onError: handleSignupError,
-    onSuccess: handleSignupSuccess,
+    onError: (data: Error) => {
+      console.log("signupMutation onError data: ", data);
+
+      alert(data.message);
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+    },
+    onSuccess: async (data: ISignupResponse) => {
+      console.log("signupMutation onSuccess data: ", data);
+
+      alert(data.message);
+
+      const userSigninData = {
+        email,
+        password,
+      };
+
+      signinMutation(userSigninData); // Trigger sign-in after successful sign-up
+    },
   });
 
   const handleSignup = async () => {

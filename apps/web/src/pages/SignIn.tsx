@@ -13,27 +13,23 @@ const SignIn = () => {
   const navigate = useNavigate();
   const theme = useTheme();
 
-  const onSuccess = (data: ISigninResponse) => {
-    console.log("onSuccess data: ", data);
-
-    if (data.token) {
-      localStorage.setItem("token", data.token);
-    }
-    alert(data.message);
-    navigate("/");
-  };
-
-  const onError = (data: Error) => {
-    console.log("onError data: ", data);
-
-    alert(data.message);
-    setEmail("");
-    setPassword("");
-  };
-
   const { isPending, mutate: signinMutation } = useSigninMutation({
-    onError,
-    onSuccess,
+    onError: (error: Error) => {
+      console.log("signinMutation onError data: ", error);
+
+      alert(error.message);
+      setEmail("");
+      setPassword("");
+    },
+    onSuccess: (data: ISigninResponse) => {
+      console.log("signinMutation onSuccess data: ", data);
+
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
+      alert(data.message);
+      navigate("/");
+    },
   });
 
   const handleSigninClick = async () => {

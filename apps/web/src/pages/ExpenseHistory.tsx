@@ -60,19 +60,15 @@ const ExpenseHistory = () => {
     });
   }, [transactions, selectedDate]);
 
-  const onSuccess = (data: ITransactionResponse) => {
-    console.log("onSuccess data: ", data);
-    const { transactions } = data;
-    setTransactions(transactions);
-  };
-
-  const onError = (data: Error) => {
-    console.log("onError data: ", data);
-  };
-
   const { isPending, mutate: getAllTransactions } = useGetAllTransactions({
-    onError,
-    onSuccess,
+    onError: (error: Error) => {
+      console.log("getAllTransactions onError data: ", error);
+    },
+    onSuccess: (data: ITransactionResponse) => {
+      console.log("getAllTransactions onSuccess data: ", data);
+      const { transactions } = data;
+      setTransactions(transactions);
+    },
   });
 
   const goToAddTransactionPage = () => {
