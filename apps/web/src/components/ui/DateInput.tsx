@@ -1,5 +1,4 @@
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers";
 import { Dayjs } from "dayjs";
 
 interface DateInputProps {
@@ -13,22 +12,20 @@ const DateInput = ({ date, setDate }: DateInputProps) => {
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DatePicker
-        disableFuture
-        format="MM/DD/YYYY"
-        label="Date"
-        onChange={changeDate}
-        slotProps={{
-          textField: {
-            fullWidth: true,
-            placeholder: "MM/DD/YYYY",
-            variant: "outlined",
-          },
-        }}
-        value={date}
-      />
-    </LocalizationProvider>
+    <DatePicker
+      disableFuture
+      format="MM/DD/YYYY"
+      label="Date"
+      onChange={changeDate}
+      slotProps={{
+        textField: {
+          fullWidth: true,
+          placeholder: "MM/DD/YYYY",
+          variant: "outlined",
+        },
+      }}
+      value={date}
+    />
   );
 };
 
