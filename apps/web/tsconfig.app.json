@@ -30,7 +30,8 @@
       "@theme/*": ["src/theme/*"],
       "@store/*": ["src/stores/*"],
       "@api/*": ["src/api/*"],
-      "@interfaces/*": ["src/interfaces/*"]
+      "@interfaces/*": ["src/interfaces/*"],
+      "@util/*": ["src/util/*"]
     }
   },
   "include": ["src"]
