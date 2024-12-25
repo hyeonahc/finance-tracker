@@ -18,6 +18,7 @@ const TopNavigation = ({ title }: TopNavigationProps) => {
       elevation={0}
       sx={{
         bgcolor: "background.paper",
+        position: "static",
       }}
     >
       <Toolbar disableGutters sx={{ padding: 0 }}>
