@@ -18,6 +18,9 @@ const VIEW_OPTIONS = ["daily", "monthly", "calendar", "category"] as const;
 export type ViewOption = (typeof VIEW_OPTIONS)[number];
 
 const ExpenseHistory = () => {
+  const [displayMode, setDisplayMode] = useState<"monthYear" | "year">(
+    "monthYear",
+  );
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
   const [selectedView, setSelectedView] = useState<ViewOption>("daily");
   const [financialSummary, setFinancialSummary] = useState({
@@ -76,6 +79,14 @@ const ExpenseHistory = () => {
   };
 
   useEffect(() => {
+    if (selectedView === "monthly") {
+      setDisplayMode("year");
+    } else {
+      setDisplayMode("monthYear");
+    }
+  }, [selectedView]);
+
+  useEffect(() => {
     const fetchAllTransaction = async () => {
       await getAllTransactions();
     };
@@ -89,7 +100,7 @@ const ExpenseHistory = () => {
   return (
     <Box>
       <YearMonthPicker
-        displayMode="monthYear"
+        displayMode={displayMode}
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
       />
@@ -111,7 +122,13 @@ const ExpenseHistory = () => {
             transactions={transactions}
           />
         )}
-        {selectedView === "monthly" && <MonthlyView />}
+        {selectedView === "monthly" && (
+          <MonthlyView
+            isPending={isPending}
+            selectedYear={selectedDate.format("YYYY")}
+            transactions={transactions}
+          />
+        )}
         {selectedView === "calendar" && <CalendarView />}
         {selectedView === "category" && <CategoryView />}
       </Box>
