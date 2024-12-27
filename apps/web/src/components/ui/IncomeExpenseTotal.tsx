@@ -35,7 +35,9 @@ const IncomeExpenseTotal = ({
           Expense
         </Typography>
         <Typography color="error.main" component="p" variant="customMedium">
-          ${expense.toLocaleString()}
+          {expense === 0
+            ? `$${expense.toLocaleString()}`
+            : `-$${expense.toLocaleString()}`}
         </Typography>
       </Box>
 
