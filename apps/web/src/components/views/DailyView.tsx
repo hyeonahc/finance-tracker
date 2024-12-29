@@ -78,7 +78,7 @@ const DailyView = ({
         ([date, transactionsOnDate], index, array) => (
           <Box key={date}>
             <Typography color="text.secondary" mt={2}>
-              {dayjs(date).format("MMMM DD, YYYY (ddd)")}
+              {dayjs(date).format("MMM DD, YYYY (ddd)")}
             </Typography>
 
             {/* TODO: The most recently added transaction for the same day should be displayed at the top of the list. */}
@@ -101,7 +101,7 @@ const DailyView = ({
                 <ListItemText
                   primary={<Typography>{transaction.title}</Typography>}
                   secondary={
-                    <Typography color="text.secondary">
+                    <Typography color="text.secondary" variant="body2">
                       {transaction.category || "N/A"}
                     </Typography>
                   }
