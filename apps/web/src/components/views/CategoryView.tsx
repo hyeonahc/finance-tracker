@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import dayjs from "dayjs";
 import { ISavedTransaction } from "src/types/transactions";
+import getEmoji from "src/util/getEmoji";
 
 interface CategoryViewProps {
   isPending: boolean;
@@ -22,27 +23,6 @@ const CategoryView = ({
   transactions,
 }: CategoryViewProps) => {
   const theme = useTheme();
-
-  const getEmoji = (category: string) => {
-    switch (category) {
-      case "Dining":
-        return "🍽️";
-      case "Treats":
-        return "🍰";
-      case "Fitness: yoga":
-        return "🧘‍♀️";
-      case "Household":
-        return "🏠";
-      case "Insurance Reimbursement":
-        return "💸";
-      case "Entertainment Subscriptions":
-        return "📺";
-      case "Payroll":
-        return "💰";
-      default:
-        return "❓";
-    }
-  };
 
   const monthlyTransactionsByCategory = transactions
     .filter(

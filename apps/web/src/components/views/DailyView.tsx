@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import dayjs from "dayjs";
 import { ISavedTransaction } from "src/types/transactions";
+import getEmoji from "src/util/getEmoji";
 
 interface DailyViewProps {
   isPending: boolean;
@@ -22,28 +23,6 @@ const DailyView = ({
   transactions,
 }: DailyViewProps) => {
   const theme = useTheme();
-
-  // TODO: Emoji should be part of transaction data model
-  const getEmoji = (category: string) => {
-    switch (category) {
-      case "Dining":
-        return "🍽️";
-      case "Treats":
-        return "🍰";
-      case "Fitness: yoga":
-        return "🧘‍♀️";
-      case "Household":
-        return "🏠";
-      case "Insurance Reimbursement":
-        return "💸";
-      case "Entertainment Subscriptions":
-        return "📺";
-      case "Payroll":
-        return "💰";
-      default:
-        return "❓";
-    }
-  };
 
   const monthlyTransactionsByRecentDate = transactions
     .filter(
