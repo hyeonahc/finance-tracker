@@ -119,13 +119,9 @@ const MonthlyView = ({
       </Typography>
       <List sx={{ padding: 0 }}>
         {Object.entries(monthlyTransactionsSummary).map(
-          ([monthName, summary], index) => (
-            <Box>
-              <Box
-                key={index}
-                py={2}
-                sx={{ alignItems: "center", display: "flex" }}
-              >
+          ([monthName, summary]) => (
+            <Box key={monthName}>
+              <Box py={2} sx={{ alignItems: "center", display: "flex" }}>
                 <Typography
                   component="p"
                   sx={{ flex: 1 }}
