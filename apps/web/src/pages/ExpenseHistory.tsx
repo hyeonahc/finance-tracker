@@ -37,11 +37,18 @@ const ExpenseHistory = () => {
   };
 
   const updateFinancialSummary = useCallback(() => {
-    const currentMonthTransactions = transactions.filter(
-      (transaction) =>
+    const currentMonthTransactions = transactions.filter((transaction) => {
+      console.log(displayMode);
+      if (displayMode === "year") {
+        return (
+          dayjs(transaction.date).format("YYYY") === selectedDate.format("YYYY")
+        );
+      }
+      return (
         dayjs(transaction.date).format("YYYY-MM") ===
-        selectedDate.format("YYYY-MM"),
-    );
+        selectedDate.format("YYYY-MM")
+      );
+    });
 
     const { expense, income } = currentMonthTransactions.reduce(
       (acc, transaction) => {
@@ -61,7 +68,7 @@ const ExpenseHistory = () => {
       income: income,
       total: total,
     });
-  }, [transactions, selectedDate]);
+  }, [displayMode, selectedDate, transactions]);
 
   const { isPending, mutate: getAllTransactions } = useGetAllTransactions({
     onError: (error: Error) => {
