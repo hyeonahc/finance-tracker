@@ -38,7 +38,6 @@ const ExpenseHistory = () => {
 
   const updateFinancialSummary = useCallback(() => {
     const currentMonthTransactions = transactions.filter((transaction) => {
-      console.log(displayMode);
       if (displayMode === "year") {
         return (
           dayjs(transaction.date).format("YYYY") === selectedDate.format("YYYY")
