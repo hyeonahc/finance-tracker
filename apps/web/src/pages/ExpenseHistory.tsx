@@ -16,11 +16,10 @@ import { ISavedTransaction } from "src/types/transactions";
 
 const VIEW_OPTIONS = ["daily", "monthly", "calendar", "category"] as const;
 export type ViewOption = (typeof VIEW_OPTIONS)[number];
+type displayMode = "monthYear" | "year";
 
 const ExpenseHistory = () => {
-  const [displayMode, setDisplayMode] = useState<"monthYear" | "year">(
-    "monthYear",
-  );
+  const [displayMode, setDisplayMode] = useState<displayMode>("monthYear");
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
   const [selectedView, setSelectedView] = useState<ViewOption>("daily");
   const [financialSummary, setFinancialSummary] = useState({
