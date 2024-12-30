@@ -26,7 +26,10 @@ const IncomeExpenseTotal = ({
           Income
         </Typography>
         <Typography color="success.main" component="p" variant="customMedium">
-          ${income.toLocaleString()}
+          {income.toLocaleString("en-CA", {
+            currency: "CAD",
+            style: "currency",
+          })}
         </Typography>
       </Box>
 
@@ -35,9 +38,11 @@ const IncomeExpenseTotal = ({
           Expense
         </Typography>
         <Typography color="error.main" component="p" variant="customMedium">
-          {expense === 0
-            ? `$${expense.toLocaleString()}`
-            : `-$${expense.toLocaleString()}`}
+          {expense > 0 && "-"}
+          {expense.toLocaleString("en-CA", {
+            currency: "CAD",
+            style: "currency",
+          })}
         </Typography>
       </Box>
 
@@ -46,9 +51,10 @@ const IncomeExpenseTotal = ({
           Total
         </Typography>
         <Typography color="textPrimary" component="p" variant="customMedium">
-          {total < 0
-            ? `-$${Math.abs(total).toLocaleString()}`
-            : `$${total.toLocaleString()}`}
+          {total.toLocaleString("en-CA", {
+            currency: "CAD",
+            style: "currency",
+          })}
         </Typography>
       </Box>
     </Box>

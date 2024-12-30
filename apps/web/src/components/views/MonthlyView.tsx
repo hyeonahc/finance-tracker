@@ -135,7 +135,10 @@ const MonthlyView = ({
                   sx={{ flex: 1 }}
                   variant="customMedium"
                 >
-                  ${summary.income.toLocaleString()}
+                  {summary.income.toLocaleString("en-CA", {
+                    currency: "CAD",
+                    style: "currency",
+                  })}
                 </Typography>
                 <Typography
                   color="error.main"
@@ -143,18 +146,21 @@ const MonthlyView = ({
                   sx={{ flex: 1 }}
                   variant="customMedium"
                 >
-                  {summary.expense === 0
-                    ? `$${summary.expense.toLocaleString()}`
-                    : `-$${summary.expense.toLocaleString()}`}
+                  {summary.expense > 0 && "-"}
+                  {summary.expense.toLocaleString("en-CA", {
+                    currency: "CAD",
+                    style: "currency",
+                  })}
                 </Typography>
                 <Typography
                   component="p"
                   sx={{ flex: 1 }}
                   variant="customMedium"
                 >
-                  {summary.total < 0
-                    ? `-$${Math.abs(summary.total).toLocaleString()}`
-                    : `$${summary.total.toLocaleString()}`}
+                  {summary.total.toLocaleString("en-CA", {
+                    currency: "CAD",
+                    style: "currency",
+                  })}
                 </Typography>
               </Box>
               <Divider />

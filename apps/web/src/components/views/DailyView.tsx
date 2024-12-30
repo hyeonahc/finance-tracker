@@ -111,8 +111,11 @@ const DailyView = ({
                       : "error.main"
                   }
                 >
-                  {transaction.type === "Expense" ? "-" : ""}$
-                  {transaction.cost.toLocaleString()}
+                  {transaction.type === "Expense" && "-"}
+                  {transaction.cost.toLocaleString("en-CA", {
+                    currency: "CAD",
+                    style: "currency",
+                  })}
                 </Typography>
               </ListItem>
             ))}
