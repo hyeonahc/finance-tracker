@@ -5,23 +5,9 @@ interface MonthlyViewProps {
 }
 import LoadingMessage from "@components/ui/LoadingMessage";
 import { Box, Divider, List, Typography } from "@mui/material";
+import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react";
 import { ISavedTransaction } from "src/types/transactions";
-
-const monthNames = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
 
 type TransactionSummary = {
   expense: number;
@@ -82,7 +68,9 @@ const MonthlyView = ({
           }
         >
       >((acc, [month, transactions]) => {
-        const monthName = monthNames[parseInt(month, 10) - 1];
+        const monthName = dayjs()
+          .month(parseInt(month, 10) - 1)
+          .format("MMM");
 
         let income = 0;
         let expense = 0;
