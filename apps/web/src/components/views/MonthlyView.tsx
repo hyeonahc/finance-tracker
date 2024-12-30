@@ -23,21 +23,20 @@ const monthNames = [
   "Dec",
 ];
 
+type TransactionSummary = {
+  expense: number;
+  income: number;
+  total: number;
+};
+type MonthlyTransactionsSummary = Record<string, TransactionSummary>;
+
 const MonthlyView = ({
   isPending,
   selectedYear,
   transactions,
 }: MonthlyViewProps) => {
-  const [monthlyTransactionsSummary, setMonthlyTransactionsSummary] = useState<
-    Record<
-      string,
-      {
-        expense: number;
-        income: number;
-        total: number;
-      }
-    >
-  >({});
+  const [monthlyTransactionsSummary, setMonthlyTransactionsSummary] =
+    useState<MonthlyTransactionsSummary>({});
 
   const selectedYearTransactions = useMemo(
     () =>
