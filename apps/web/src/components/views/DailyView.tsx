@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import dayjs from "dayjs";
 import { ISavedTransaction } from "src/types/transactions";
+import getEmoji from "src/util/getEmoji";
 
 interface DailyViewProps {
   isPending: boolean;
@@ -23,28 +24,6 @@ const DailyView = ({
   transactions,
 }: DailyViewProps) => {
   const theme = useTheme();
-
-  // TODO: Emoji should be part of transaction data model
-  const getEmoji = (category: string) => {
-    switch (category) {
-      case "Dining":
-        return "🍽️";
-      case "Treats":
-        return "🍰";
-      case "Fitness: yoga":
-        return "🧘‍♀️";
-      case "Household":
-        return "🏠";
-      case "Insurance Reimbursement":
-        return "💸";
-      case "Entertainment Subscriptions":
-        return "📺";
-      case "Payroll":
-        return "💰";
-      default:
-        return "❓";
-    }
-  };
 
   const monthlyTransactionsByRecentDate = transactions
     .filter(
@@ -75,7 +54,7 @@ const DailyView = ({
         ([date, transactionsOnDate], index, array) => (
           <Box key={date}>
             <Typography color="text.secondary" mt={2}>
-              {dayjs(date).format("MMMM DD, YYYY (ddd)")}
+              {dayjs(date).format("MMM DD, YYYY (ddd)")}
             </Typography>
 
             {/* TODO: The most recently added transaction for the same day should be displayed at the top of the list. */}
@@ -98,7 +77,7 @@ const DailyView = ({
                 <ListItemText
                   primary={<Typography>{transaction.title}</Typography>}
                   secondary={
-                    <Typography color="text.secondary">
+                    <Typography color="text.secondary" variant="body2">
                       {transaction.category || "N/A"}
                     </Typography>
                   }

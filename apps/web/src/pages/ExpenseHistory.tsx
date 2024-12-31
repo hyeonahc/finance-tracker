@@ -135,7 +135,13 @@ const ExpenseHistory = () => {
           />
         )}
         {selectedView === "calendar" && <CalendarView />}
-        {selectedView === "category" && <CategoryView />}
+        {selectedView === "category" && (
+          <CategoryView
+            isPending={isPending}
+            selectedMonth={selectedDate.format("YYYY-MM")}
+            transactions={transactions}
+          />
+        )}
       </Box>
       <AddTransactionBtn onClick={goToAddTransactionPage} />
     </Box>
