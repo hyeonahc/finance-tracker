@@ -1,3 +1,4 @@
+import LoadingMessage from "@components/ui/LoadingMessage";
 import {
   Box,
   Divider,
@@ -65,11 +66,7 @@ const DailyView = ({
   );
 
   if (isPending) {
-    return (
-      <Box mt={4} textAlign="center">
-        <Typography>Loading transactions...</Typography>
-      </Box>
-    );
+    return <LoadingMessage />;
   }
 
   return (
@@ -114,8 +111,11 @@ const DailyView = ({
                       : "error.main"
                   }
                 >
-                  {transaction.type === "Expense" ? "-" : ""}$
-                  {transaction.cost.toLocaleString()}
+                  {transaction.type === "Expense" && "-"}
+                  {transaction.cost.toLocaleString("en-CA", {
+                    currency: "CAD",
+                    style: "currency",
+                  })}
                 </Typography>
               </ListItem>
             ))}

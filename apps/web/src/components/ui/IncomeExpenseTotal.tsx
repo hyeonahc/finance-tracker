@@ -22,31 +22,39 @@ const IncomeExpenseTotal = ({
       padding="10px"
     >
       <Box textAlign="center">
-        <Typography color="success.main" fontSize="0.9rem">
+        <Typography color="success.main" component="p" variant="customSmall">
           Income
         </Typography>
-        <Typography color="success.main" fontSize="1.1rem">
-          ${income.toLocaleString()}
+        <Typography color="success.main" component="p" variant="customMedium">
+          {income.toLocaleString("en-CA", {
+            currency: "CAD",
+            style: "currency",
+          })}
         </Typography>
       </Box>
 
       <Box textAlign="center">
-        <Typography color="error.main" fontSize="0.9rem">
+        <Typography color="error.main" component="p" variant="customSmall">
           Expense
         </Typography>
-        <Typography color="error.main" fontSize="1.1rem">
-          ${expense.toLocaleString()}
+        <Typography color="error.main" component="p" variant="customMedium">
+          {expense > 0 && "-"}
+          {expense.toLocaleString("en-CA", {
+            currency: "CAD",
+            style: "currency",
+          })}
         </Typography>
       </Box>
 
       <Box textAlign="center">
-        <Typography color="textPrimary" fontSize="0.9rem">
+        <Typography color="textPrimary" component="p" variant="customSmall">
           Total
         </Typography>
-        <Typography color="textPrimary" fontSize="1.1rem">
-          {total < 0
-            ? `-$${Math.abs(total).toLocaleString()}`
-            : `$${total.toLocaleString()}`}
+        <Typography color="textPrimary" component="p" variant="customMedium">
+          {total.toLocaleString("en-CA", {
+            currency: "CAD",
+            style: "currency",
+          })}
         </Typography>
       </Box>
     </Box>

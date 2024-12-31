@@ -11,6 +11,21 @@ declare module "@mui/material/styles" {
   interface TypeText {
     btn: string;
   }
+  interface TypographyVariants {
+    customMedium: React.CSSProperties;
+    customSmall: React.CSSProperties;
+  }
+  interface TypographyVariantsOptions {
+    customMedium?: React.CSSProperties;
+    customSmall?: React.CSSProperties;
+  }
+}
+
+declare module "@mui/material/Typography" {
+  interface TypographyPropsVariantOverrides {
+    customMedium: true;
+    customSmall: true;
+  }
 }
 
 // TODO: Find a way to display color palette
@@ -34,6 +49,18 @@ const theme = createTheme({
       placeholder: "#DEDEDE",
       primary: "#000000",
       secondary: "#737373",
+    },
+  },
+  typography: {
+    customMedium: {
+      fontSize: "1.1rem",
+      fontWeight: 400,
+      lineHeight: 1.6,
+    },
+    customSmall: {
+      fontSize: "0.9rem",
+      fontWeight: 400,
+      lineHeight: 1.5,
     },
   },
 } as ThemeOptions);

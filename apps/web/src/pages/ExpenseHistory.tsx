@@ -16,8 +16,10 @@ import { ISavedTransaction } from "src/types/transactions";
 
 const VIEW_OPTIONS = ["daily", "monthly", "calendar", "category"] as const;
 export type ViewOption = (typeof VIEW_OPTIONS)[number];
+type displayMode = "monthYear" | "year";
 
 const ExpenseHistory = () => {
+  const [displayMode, setDisplayMode] = useState<displayMode>("monthYear");
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
   const [selectedView, setSelectedView] = useState<ViewOption>("daily");
   const [financialSummary, setFinancialSummary] = useState({
@@ -34,11 +36,17 @@ const ExpenseHistory = () => {
   };
 
   const updateFinancialSummary = useCallback(() => {
-    const currentMonthTransactions = transactions.filter(
-      (transaction) =>
+    const currentMonthTransactions = transactions.filter((transaction) => {
+      if (displayMode === "year") {
+        return (
+          dayjs(transaction.date).format("YYYY") === selectedDate.format("YYYY")
+        );
+      }
+      return (
         dayjs(transaction.date).format("YYYY-MM") ===
-        selectedDate.format("YYYY-MM"),
-    );
+        selectedDate.format("YYYY-MM")
+      );
+    });
 
     const { expense, income } = currentMonthTransactions.reduce(
       (acc, transaction) => {
@@ -58,7 +66,7 @@ const ExpenseHistory = () => {
       income: income,
       total: total,
     });
-  }, [transactions, selectedDate]);
+  }, [displayMode, selectedDate, transactions]);
 
   const { isPending, mutate: getAllTransactions } = useGetAllTransactions({
     onError: (error: Error) => {
@@ -76,6 +84,14 @@ const ExpenseHistory = () => {
   };
 
   useEffect(() => {
+    if (selectedView === "monthly") {
+      setDisplayMode("year");
+    } else {
+      setDisplayMode("monthYear");
+    }
+  }, [selectedView]);
+
+  useEffect(() => {
     const fetchAllTransaction = async () => {
       await getAllTransactions();
     };
@@ -89,7 +105,7 @@ const ExpenseHistory = () => {
   return (
     <Box>
       <YearMonthPicker
-        displayMode="monthYear"
+        displayMode={displayMode}
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
       />
@@ -111,7 +127,13 @@ const ExpenseHistory = () => {
             transactions={transactions}
           />
         )}
-        {selectedView === "monthly" && <MonthlyView />}
+        {selectedView === "monthly" && (
+          <MonthlyView
+            isPending={isPending}
+            selectedYear={selectedDate.format("YYYY")}
+            transactions={transactions}
+          />
+        )}
         {selectedView === "calendar" && <CalendarView />}
         {selectedView === "category" && <CategoryView />}
       </Box>

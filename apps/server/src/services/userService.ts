@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET || "default jwt secret key";
 
+// TODO: Consider: Refresh Tokens, Remember-Me Tokens for the future development
 const generateToken = (user: IUserModel) => {
   return jwt.sign(
     {
