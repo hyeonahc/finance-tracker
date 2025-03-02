@@ -134,7 +134,12 @@ const ExpenseHistory = () => {
             transactions={transactions}
           />
         )}
-        {selectedView === "calendar" && <CalendarView />}
+        {selectedView === "calendar" && (
+          <CalendarView
+            selectedMonth={selectedDate.format("YYYY-MM")}
+            transactions={transactions}
+          />
+        )}
         {selectedView === "category" && (
           <CategoryView
             isPending={isPending}
