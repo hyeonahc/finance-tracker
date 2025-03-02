@@ -6,6 +6,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   optimizeDeps: {
     exclude: ["chunk-ENA3UJBE.js"],
+    include: ["react", "react-dom"],
   },
   plugins: [react(), tsconfigPaths()],
 });
