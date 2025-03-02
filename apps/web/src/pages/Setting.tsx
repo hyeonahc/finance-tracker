@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 const Setting = () => {
   return (
     <Box>
-      <Link href="/">Let's Go to Home</Link>
+      <Link href="/">Homepage</Link>
     </Box>
   );
 };
