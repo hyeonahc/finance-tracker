@@ -35,9 +35,13 @@
    - After build: `pnpm build` then `pnpm start`
 5. To run the project, you may need environment variables. Please contact [hyeonah.hello@gmail.com](hyeonah.hello@gmail.com) for details.
 
+<br />
+
 ## ✨ Project Summary
 
 Finance Tracker helps users track income and expenses. It offers multiple viewing options, filters by date, and provides a clear financial summary. Future updates will include budgeting, goal tracking, and visual insights for better financial management.
+
+<br />
 
 ## 🗓 Development Timeline
 
