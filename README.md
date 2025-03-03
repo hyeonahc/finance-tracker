@@ -1,6 +1,6 @@
 <br/>
 
-<div align="center"><a href="https://hyeonahc-finance-tracker.vercel.app/" target="_blank"><img src="./README-images/finance-tracker-logo-piggy.svg" width="200px"></div>
+<div align="center"><a href="https://hyeonahc-finance-tracker.vercel.app/" target="_blank"><img src="./README-images/finance-tracker-logo-piggy.svg" width="250px"></div>
 
 <br/>
 
