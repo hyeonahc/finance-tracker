@@ -4,8 +4,8 @@
 
 <div align="center">
 
-![last commit](https://img.shields.io/github/last-commit/https://github.com/hyeonahc/finance-tracker?color=green)
-![most language](https://img.shields.io/github/languages/top/https://github.com/hyeonahc/finance-tracker)
+![last commit](https://img.shields.io/github/last-commit/hyeonahc/finance-tracker?color=green)
+![most language](https://img.shields.io/github/languages/top/hyeonahc/finance-tracker)
 [![release](https://img.shields.io/badge/release-v0.1.0-yellow)](https://github.com/https://github.com/hyeonahc/finance-tracker/tree/main)
 
 </div>
