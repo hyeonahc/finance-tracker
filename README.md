@@ -14,14 +14,12 @@
 
 # Finance Tracker
 
-## 📑 Table of Contents
-
 - [🚀 Getting Started](#-getting-started)
 - [✨ Project Summary](#-project-summary)
 - [🗓 Development Timeline](#-development-timeline)
 - [👀 Demo](#demo)
-- [🔑 Key Features: Version 0.1.0](#-key-features)
-- [🪄 Tech Stack & Tools](#-tech-stack--tools)
+- [🔑 Key Features](#-key-features)
+- [🪄 Tech Stack](#-tech-stack)
   - [Front-End Tech Stack](#front-end-tech-stack)
   - [Back-End Tech Stack](#back-end-tech-stack)
 
