@@ -19,12 +19,12 @@ const expiredToken =
 //   "h0R1RzOALXZC-SlE2mKcRZevJHVEP36Cxyh9mVKtqME";
 
 describe("isTokenExpired", () => {
-  it("returns true if token is invalid", () => {
+  it("should return true if token is invalid", () => {
     const result = isTokenExpired(invalidToken);
     expect(result).toBe(true);
   });
 
-  it("returns true if token is valid and expired", () => {
+  it("should return true if token is valid and expired", () => {
     const result = isTokenExpired(expiredToken);
     expect(result).toBe(true);
   });
@@ -37,25 +37,25 @@ describe("isAuthenticated", () => {
 
   // TODO: Fix validFutureToken issue by generating a real token; it's not really valid token
   // The token is not "truly" valid — it's just a Base64 string with an exp but not signed with your backend’s JWT_SECRET
-  // it("returns true if token is valid and non-expired", () => {
+  // it("should return true if token is valid and non-expired", () => {
   //   localStorage.setItem("token", validFutureToken);
   //   const result = isAuthenticated();
   //   expect(result).toBe(true);
   // });
 
-  it("returns false if there is no token in localStorage", () => {
+  it("should return false if there is no token in localStorage", () => {
     localStorage.removeItem("token");
     const result = isAuthenticated();
     expect(result).toBe(false);
   });
 
-  it("returns false if token is invalid", () => {
+  it("should return false if token is invalid", () => {
     localStorage.setItem("token", invalidToken);
     const result = isAuthenticated();
     expect(result).toBe(false);
   });
 
-  it("returns false if token is valid and expired", () => {
+  it("should return false if token is valid and expired", () => {
     localStorage.setItem("token", expiredToken);
     const result = isAuthenticated();
     expect(result).toBe(false);
