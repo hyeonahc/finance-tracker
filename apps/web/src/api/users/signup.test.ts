@@ -1,50 +1,61 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { ISignupRequest, ISignupResponse, signup } from "./signup";
 
-// TODO: Questions
-// 1) vi vs jest
-// 2) vi.stubGlobal & vi.fn
+// 📝 Unit Testing Summary:
+// - Tests the `signup` function in isolation.
+// - Mocks the API call (fetch), so the test does not rely on a real backend.
+// - Focuses on verifying logic and behavior, not external dependencies.
 
-const mockUserData: ISignupRequest = {
-  email: "test@example.com", // TODO: invalid email format passed
-  firstName: "Test",
-  lastName: "User",
-  password: "securepassword123", // TODO: invalid password passed
+const mockSignUpReqData: ISignupRequest = {
+  email: "test@test.com",
+  firstName: "test",
+  lastName: "test",
+  password: "securepassword123",
 };
 
-const mockResponseData: ISignupResponse = {
+// const duplicateSignupData: ISignupRequest = {
+//   email: "liam.smith@example.com",
+//   firstName: "test",
+//   lastName: "test",
+//   password: "securepassword123",
+// };
+
+const mockSignUpResData: ISignupResponse = {
   _id: "abc123",
-  email: "test@example.com",
-  firstName: "Test",
-  lastName: "User",
+  email: "test@test.com",
+  firstName: "test",
+  lastName: "test",
   message: "Signup successful",
 };
 
 describe("signup API request", () => {
-  // TODO:  Why is this step necessary?
   beforeEach(() => {
-    vi.restoreAllMocks(); // reset previous mocks
+    vi.restoreAllMocks();
   });
 
+  // [Unit Testing]
+  // 1. This test verifies the frontend logic, the signup function correctly handles a successful API response and returns the expected data
   it("should return signup response data when the API call is successful", async () => {
-    // TODO: Why the below code is needd?
+    // Instruct Vitest to use a mock fetch instead of the real one
     vi.stubGlobal(
-      // replaces the real fetch function with a mocked version just for this test
       "fetch",
+      // This is the fake fetch function that replaces the real one
       vi.fn(() =>
-        // when fetch is called, execute the below fake function instead
+        // The mock fetch returns a Promise, just like the real fetch
         Promise.resolve({
-          json: () => Promise.resolve(mockResponseData), // returns mock data when .json() is called
-          ok: true, // pretends it succeeded
+          json: () => Promise.resolve(mockSignUpResData), // Returns mock response data
+          ok: true, // Simulates a successful response
         } as Response),
       ),
     );
 
-    const result = await signup(mockUserData);
-    expect(result).toEqual(mockResponseData);
+    const result = await signup(mockSignUpReqData);
+    expect(result).toEqual(mockSignUpResData);
   });
 
+  // [Unit Testing]
+  // 2. This test verifies the frontend logic, the signup function correctly handles a failed API response by throwing an appropriate error when the backend returns an error message
   it("should throw an error when the API call fails", async () => {
     vi.stubGlobal(
       "fetch",
@@ -56,6 +67,16 @@ describe("signup API request", () => {
       ),
     );
 
-    await expect(signup(mockUserData)).rejects.toThrow("Email already exists");
+    await expect(signup(mockSignUpReqData)).rejects.toThrow(
+      "Email already exists",
+    );
   });
+
+  // [Integration Testing]
+  // 3. This test ensures the signup function throws the correct error when trying to register a user with an existing email
+  // it("should return 'Error: Error creating user: User with this email already exists'", async () => {
+  //   await expect(signup(duplicateSignupData)).rejects.toThrow(
+  //     "Error creating user: User with this email already exists",
+  //   );
+  // });
 });
