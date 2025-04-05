@@ -1,63 +1,57 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
-import { isAuthenticated, isTokenExpired } from "./authGuard";
+import { authModule } from "./authGuard";
 
-// TODO: Questions
-// 1) Understand validFutureToken issue
-// 2) Generate a real token for test codes?
-// 3) Should use vi?
+// 📝 How localStorage.setItem() works in test environment
+// - Vitest tests run in a simulated browser environment (jsdom),
+// - so localStorage is mocked and does not affect the actual browser.
 
-const invalidToken = "invalid token";
-// exp: 1 (January 1, 1970)
-const expiredToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-  "eyJleHAiIjoxfQ." +
-  "H7zFA9OSRUzj1DRR3xFxq0VpkVf92AEGrCmXOsEqk4U";
-// const validFutureToken =
-//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-//   "eyJleHAiIjo5OTk5OTk5OTk5fQ." + // exp: 9999999999
-//   "h0R1RzOALXZC-SlE2mKcRZevJHVEP36Cxyh9mVKtqME";
+// 📝 vi.spyOn(authModule, "isTokenExpired").mockReturnValue(...)
+// - vi.spyOn(): Allows you to spy on (monitor and override) a specific function in a module.
+// - vi.spyOn(authModule, "isTokenExpired"):  Spies on the isTokenExpired function inside the authModule.
+// - mockReturnValue(...): Overrides the real implementation of isTokenExpired with a fixed return value.
 
 describe("isTokenExpired", () => {
   it("should return true if token is invalid", () => {
-    const result = isTokenExpired(invalidToken);
+    const invalidToken = "invalid token";
+    const result = authModule.isTokenExpired(invalidToken);
     expect(result).toBe(true);
   });
 
   it("should return true if token is valid and expired", () => {
-    const result = isTokenExpired(expiredToken);
+    const expiredToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+      "eyJleHAiOjE2MDAwMDAwMDB9." +
+      "abc123";
+    const result = authModule.isTokenExpired(expiredToken);
     expect(result).toBe(true);
   });
 });
 
 describe("isAuthenticated", () => {
   beforeEach(() => {
+    // 📝 When the test calls localStorage.clear(), it clears data inside the test context only, not the actual browser.
     localStorage.clear();
+    // TODO:
+    vi.restoreAllMocks();
   });
-
-  // TODO: Fix validFutureToken issue by generating a real token; it's not really valid token
-  // The token is not "truly" valid — it's just a Base64 string with an exp but not signed with your backend’s JWT_SECRET
-  // it("should return true if token is valid and non-expired", () => {
-  //   localStorage.setItem("token", validFutureToken);
-  //   const result = isAuthenticated();
-  //   expect(result).toBe(true);
-  // });
 
   it("should return false if there is no token in localStorage", () => {
-    localStorage.removeItem("token");
-    const result = isAuthenticated();
-    expect(result).toBe(false);
-  });
-
-  it("should return false if token is invalid", () => {
-    localStorage.setItem("token", invalidToken);
-    const result = isAuthenticated();
+    const result = authModule.isAuthenticated();
     expect(result).toBe(false);
   });
 
   it("should return false if token is valid and expired", () => {
-    localStorage.setItem("token", expiredToken);
-    const result = isAuthenticated();
+    localStorage.setItem("token", "expired-token");
+    vi.spyOn(authModule, "isTokenExpired").mockReturnValue(true);
+    const result = authModule.isAuthenticated();
     expect(result).toBe(false);
+  });
+
+  it("should return true if the token is valid and not expired", () => {
+    localStorage.setItem("token", "valid-token");
+    vi.spyOn(authModule, "isTokenExpired").mockReturnValue(false);
+    const result = authModule.isAuthenticated();
+    expect(result).toBe(true);
   });
 });
