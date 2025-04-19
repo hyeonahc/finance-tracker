@@ -77,6 +77,7 @@ const AddTransaction = () => {
     },
   });
 
+  // TODO: Create validation check function in util
   const saveNewTransaction = async () => {
     if (!title) {
       alert("Please enter a title.");
