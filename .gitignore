@@ -27,3 +27,5 @@ dist-ssr
 # env variables
 .env
 .env.local
+
+build/
