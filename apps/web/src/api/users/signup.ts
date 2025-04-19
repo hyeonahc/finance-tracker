@@ -14,12 +14,12 @@ export interface ISignupResponse {
   message: string;
 }
 
-const API_BASE_URL = import.meta.env.API_BASE_URL;
+const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const signup = async (
   userSignupData: ISignupRequest,
 ): Promise<ISignupResponse> => {
-  const response = await fetch(`${API_BASE_URL}/api/users/signup`, {
+  const response = await fetch(`${VITE_API_BASE_URL}/api/users/signup`, {
     body: JSON.stringify(userSignupData),
     headers: {
       "Content-Type": "application/json",
