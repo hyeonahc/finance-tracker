@@ -1,7 +1,7 @@
-import { Box } from "@mui/material";
+import MaintenanceMode from "@components/views/MaintenanceMode";
 
 const FinanceGoal = () => {
-  return <Box>This is a finance goal page</Box>;
+  return <MaintenanceMode pageName="Finance Goal page" />;
 };
 
 export default FinanceGoal;

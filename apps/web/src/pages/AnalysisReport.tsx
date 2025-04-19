@@ -1,7 +1,7 @@
-import { Box } from "@mui/material";
+import MaintenanceMode from "@components/views/MaintenanceMode";
 
 const AnalysisReport = () => {
-  return <Box>This is a analysis & report page</Box>;
+  return <MaintenanceMode pageName="Analysis & Report page" />;
 };
 
 export default AnalysisReport;
