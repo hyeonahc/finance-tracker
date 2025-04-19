@@ -35,7 +35,11 @@ const ExpenseHistory = () => {
     setSelectedView(view);
   };
 
+  // TODO: Create a util function for updateFinancialSummary
   const updateFinancialSummary = useCallback(() => {
+    // TODO: Create objects for displayModeOption and summary
+    // const DisplayModeOption  = { "Year": "year", "Month": "month", "Day": "day" }
+    // const Summary = {"Income": <income value>, "Expense": <expense value>}
     const currentMonthTransactions = transactions.filter((transaction) => {
       if (displayMode === "year") {
         return (
@@ -48,6 +52,7 @@ const ExpenseHistory = () => {
       );
     });
 
+    // TODO: Combine with updateFinancialSummary function
     const { expense, income } = currentMonthTransactions.reduce(
       (acc, transaction) => {
         if (transaction.type === "Income") {
@@ -60,11 +65,12 @@ const ExpenseHistory = () => {
       { expense: 0, income: 0 },
     );
 
+    // TODO: Remove the calculation logic
     const total = income - expense;
     setFinancialSummary({
       expense: expense,
       income: income,
-      total: total,
+      total: total, // TODO: Move the calculation logic here for total value
     });
   }, [displayMode, selectedDate, transactions]);
 
