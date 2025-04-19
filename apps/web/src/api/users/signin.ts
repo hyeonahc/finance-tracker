@@ -28,8 +28,14 @@ export const signin = async (
   console.log("signin api response: ", response);
 
   if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message);
+    let errorMessage = "Unknown error";
+    try {
+      const errorData = await response.json();
+      errorMessage = errorData.message || errorMessage;
+    } catch (err) {
+      console.error("Failed to parse error response:", err);
+    }
+    throw new Error(errorMessage);
   }
 
   const responseData = await response.json();
