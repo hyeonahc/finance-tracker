@@ -9,7 +9,7 @@
     "sourceMap": true,
     "esModuleInterop": true,
     "outDir": "./build",
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
       "@controllers/*": ["controllers/*"],
       "@routers/*": ["routers/*"],
