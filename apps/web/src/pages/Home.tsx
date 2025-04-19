@@ -1,23 +1,24 @@
+import piggyLogo from "@img/finance-tracker-logo-piggy.svg";
 import { Box, Typography } from "@mui/material";
 
 const Home = () => {
   return (
     <Box
+      alignItems="center"
       display="flex"
       flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      width="100%"
       height="100%"
+      justifyContent="center"
       pb={12}
+      width="100%"
     >
       <Box
-        component="img"
-        src="./public/finance-tracker-logo-piggy.svg"
         alt="logo"
+        component="img"
+        src={piggyLogo}
         sx={{
-          width: "100%",
           maxWidth: 300,
+          width: "100%",
         }}
       />
       <Typography>Homepage is under development. Stay tuned!</Typography>
