@@ -5,7 +5,7 @@ export interface ITransactionResponse {
   transaction: ISavedTransaction;
 }
 
-const API_BASE_URL = import.meta.env.VITE_API_LOCAL_8080;
+const API_BASE_URL = import.meta.env.API_BASE_URL;
 
 export const createTransaction = async (
   newTransactionData: Partial<INewTransaction>,

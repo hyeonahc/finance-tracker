@@ -5,7 +5,7 @@ export interface ITransactionResponse {
   transactions: Array<ISavedTransaction>;
 }
 
-const API_BASE_URL = import.meta.env.VITE_API_LOCAL_8080;
+const API_BASE_URL = import.meta.env.API_BASE_URL;
 
 export const getAllTransactions = async (): Promise<ITransactionResponse> => {
   const token = localStorage.getItem("token");
