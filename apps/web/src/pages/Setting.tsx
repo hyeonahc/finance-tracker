@@ -1,12 +1,7 @@
-import { Link } from "@components/navigation/Link";
-import { Box } from "@mui/material";
+import MaintenanceMode from "@components/views/MaintenanceMode";
 
 const Setting = () => {
-  return (
-    <Box>
-      <Link href="/">Homepage</Link>
-    </Box>
-  );
+  return <MaintenanceMode pageName="Setting page" />;
 };
 
 export default Setting;
