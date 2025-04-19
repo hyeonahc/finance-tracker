@@ -9,14 +9,15 @@
     "sourceMap": true,
     "esModuleInterop": true,
     "outDir": "./build",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "paths": {
       "@controllers/*": ["controllers/*"],
       "@routers/*": ["routers/*"],
       "@models/*": ["models/*"],
       "@services/*": ["services/*"],
       "@interfaces/*": ["interfaces/*"],
-      "@types/*": ["types/*"]
+      "@types/*": ["types/*"],
+      "@middleware/*": ["middleware/*"]
     }
   },
   "include": ["src/**/*", "src/types"]
