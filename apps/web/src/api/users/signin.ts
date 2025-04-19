@@ -12,12 +12,12 @@ export interface ISigninResponse {
   token: string;
 }
 
-const API_BASE_URL = import.meta.env.API_BASE_URL;
+const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const signin = async (
   userSigninData: ISigninRequest,
 ): Promise<ISigninResponse> => {
-  const response = await fetch(`${API_BASE_URL}/api/users/signin`, {
+  const response = await fetch(`${VITE_API_BASE_URL}/api/users/signin`, {
     body: JSON.stringify(userSigninData),
     headers: {
       "Content-Type": "application/json",

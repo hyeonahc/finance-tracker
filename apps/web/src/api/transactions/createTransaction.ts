@@ -5,14 +5,14 @@ export interface ITransactionResponse {
   transaction: ISavedTransaction;
 }
 
-const API_BASE_URL = import.meta.env.API_BASE_URL;
+const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const createTransaction = async (
   newTransactionData: Partial<INewTransaction>,
 ): Promise<ITransactionResponse> => {
   const token = localStorage.getItem("token");
 
-  const response = await fetch(`${API_BASE_URL}/api/transactions`, {
+  const response = await fetch(`${VITE_API_BASE_URL}/api/transactions`, {
     body: JSON.stringify(newTransactionData),
     headers: {
       Authorization: `Bearer ${token}`,
