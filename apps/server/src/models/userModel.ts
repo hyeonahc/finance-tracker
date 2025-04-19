@@ -1,5 +1,5 @@
 import { IUserModel } from "@interfaces/IUser";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { Schema, model } from "mongoose";
 import validator from "validator";
 
