@@ -21,15 +21,23 @@ const DISPLAY_MODE_OPTION = {
 type DisplayMode =
   (typeof DISPLAY_MODE_OPTION)[keyof typeof DISPLAY_MODE_OPTION];
 
-const VIEW_OPTIONS = ["daily", "monthly", "calendar", "category"] as const;
-export type ViewOption = (typeof VIEW_OPTIONS)[number];
+const TRANSACTION_VIEW = {
+  CALENDAR: "calendar",
+  CATEGORY: "category",
+  DAILY: "daily",
+  MONTHLY: "monthly",
+} as const;
+export type TransactionView =
+  (typeof TRANSACTION_VIEW)[keyof typeof TRANSACTION_VIEW];
 
 const ExpenseHistory = () => {
   const [displayMode, setDisplayMode] = useState<DisplayMode>(
     DISPLAY_MODE_OPTION.MONTH,
   );
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
-  const [selectedView, setSelectedView] = useState<ViewOption>("daily");
+  const [selectedView, setSelectedView] = useState<TransactionView>(
+    TRANSACTION_VIEW.DAILY,
+  );
   const [financialSummary, setFinancialSummary] = useState({
     expense: 0,
     income: 0,
@@ -39,7 +47,7 @@ const ExpenseHistory = () => {
 
   const navigate = useNavigate();
 
-  const handleViewChange = (view: ViewOption) => {
+  const handleViewChange = (view: TransactionView) => {
     setSelectedView(view);
   };
 
@@ -93,7 +101,7 @@ const ExpenseHistory = () => {
   };
 
   useEffect(() => {
-    if (selectedView === "monthly") {
+    if (selectedView === TRANSACTION_VIEW.MONTHLY) {
       setDisplayMode(DISPLAY_MODE_OPTION.YEAR);
     } else {
       setDisplayMode(DISPLAY_MODE_OPTION.MONTH);
@@ -129,27 +137,27 @@ const ExpenseHistory = () => {
         total={financialSummary.total}
       />
       <Box px={2}>
-        {selectedView === "daily" && (
+        {selectedView === TRANSACTION_VIEW.DAILY && (
           <DailyView
             isPending={isPending}
             selectedMonth={selectedDate.format("YYYY-MM")}
             transactions={transactions}
           />
         )}
-        {selectedView === "monthly" && (
+        {selectedView === TRANSACTION_VIEW.MONTHLY && (
           <MonthlyView
             isPending={isPending}
             selectedYear={selectedDate.format("YYYY")}
             transactions={transactions}
           />
         )}
-        {selectedView === "calendar" && (
+        {selectedView === TRANSACTION_VIEW.CALENDAR && (
           <CalendarView
             selectedMonth={selectedDate.format("YYYY-MM")}
             transactions={transactions}
           />
         )}
-        {selectedView === "category" && (
+        {selectedView === TRANSACTION_VIEW.CATEGORY && (
           <CategoryView
             isPending={isPending}
             selectedMonth={selectedDate.format("YYYY-MM")}
