@@ -10,11 +10,11 @@ export interface FinancialSummary {
 
 export const calculateFinancialSummary = (
   transactions: ISavedTransaction[],
-  displayMode: DateDisplayMode,
+  dateDisplayMode: DateDisplayMode,
   selectedDate: Dayjs,
 ): FinancialSummary => {
   const filteredTransactions = transactions.filter((transaction) => {
-    if (displayMode === DATE_DISPLAY_MODE.YEAR) {
+    if (dateDisplayMode === DATE_DISPLAY_MODE.YEAR) {
       return (
         dayjs(transaction.date).format("YYYY") === selectedDate.format("YYYY")
       );

@@ -32,7 +32,7 @@ export type TransactionView =
   (typeof TRANSACTION_VIEW)[keyof typeof TRANSACTION_VIEW];
 
 const ExpenseHistory = () => {
-  const [displayMode, setDisplayMode] = useState<DateDisplayMode>(
+  const [dateDisplayMode, setDateDisplayMode] = useState<DateDisplayMode>(
     DATE_DISPLAY_MODE.MONTH,
   );
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
@@ -69,9 +69,9 @@ const ExpenseHistory = () => {
 
   useEffect(() => {
     if (selectedView === TRANSACTION_VIEW.MONTHLY) {
-      setDisplayMode(DATE_DISPLAY_MODE.YEAR);
+      setDateDisplayMode(DATE_DISPLAY_MODE.YEAR);
     } else {
-      setDisplayMode(DATE_DISPLAY_MODE.MONTH);
+      setDateDisplayMode(DATE_DISPLAY_MODE.MONTH);
     }
   }, [selectedView]);
 
@@ -85,7 +85,7 @@ const ExpenseHistory = () => {
   useEffect(() => {
     const { expense, income, total } = calculateFinancialSummary(
       transactions,
-      displayMode,
+      dateDisplayMode,
       selectedDate,
     );
     setFinancialSummary({
@@ -93,12 +93,12 @@ const ExpenseHistory = () => {
       income: income,
       total: total,
     });
-  }, [transactions, displayMode, selectedDate]);
+  }, [transactions, dateDisplayMode, selectedDate]);
 
   return (
     <Box>
       <YearMonthPicker
-        displayMode={displayMode}
+        dateDisplayMode={dateDisplayMode}
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
       />

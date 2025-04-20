@@ -7,7 +7,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { useState } from "react";
 
 interface YearMonthPickerProps {
-  displayMode: "month" | "year";
+  dateDisplayMode: "month" | "year";
   selectedDate: Dayjs;
   setSelectedDate: React.Dispatch<React.SetStateAction<Dayjs>>;
 }
@@ -31,7 +31,7 @@ const CustomDatePicker = styled(DatePicker)({
 });
 
 const YearMonthPicker = ({
-  displayMode,
+  dateDisplayMode,
   selectedDate,
   setSelectedDate,
 }: YearMonthPickerProps) => {
@@ -39,7 +39,7 @@ const YearMonthPicker = ({
 
   const handlePrev = () => {
     setSelectedDate(
-      displayMode === "year"
+      dateDisplayMode === "year"
         ? selectedDate.subtract(1, "year")
         : selectedDate.subtract(1, "month"),
     );
@@ -47,7 +47,7 @@ const YearMonthPicker = ({
 
   const handleNext = () => {
     const nextDate =
-      displayMode === "year"
+      dateDisplayMode === "year"
         ? selectedDate.add(1, "year")
         : selectedDate.add(1, "month");
 
@@ -79,19 +79,19 @@ const YearMonthPicker = ({
         onChange={handleDateChange}
         onClose={() => setIsDatePickerOpen(false)}
         open={isDatePickerOpen}
-        openTo={displayMode === "year" ? "year" : "month"}
+        openTo={dateDisplayMode === "year" ? "year" : "month"}
         slotProps={{
           textField: {
             onClick: () => setIsDatePickerOpen(true),
             placeholder:
-              displayMode === "year"
+              dateDisplayMode === "year"
                 ? selectedDate.format("YYYY")
                 : selectedDate.format("MMMM, YYYY"),
             variant: "outlined",
           },
         }}
         value={selectedDate}
-        views={displayMode === "year" ? ["year"] : ["year", "month"]}
+        views={dateDisplayMode === "year" ? ["year"] : ["year", "month"]}
       />
 
       <IconButton onClick={handleNext}>
