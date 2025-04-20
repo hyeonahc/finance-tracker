@@ -8,20 +8,37 @@ import DailyView from "@components/views/DailyView";
 import MonthlyView from "@components/views/MonthlyView";
 import ViewOptions from "@components/views/ViewOptions";
 import { Box } from "@mui/material";
+import { calculateFinancialSummary } from "@util/calculateFinancialSummary";
 import dayjs, { Dayjs } from "dayjs";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetAllTransactions } from "src/hooks/transactions/useGetAllTransactions";
 import { ISavedTransaction } from "src/types/transactions";
 
-const VIEW_OPTIONS = ["daily", "monthly", "calendar", "category"] as const;
-export type ViewOption = (typeof VIEW_OPTIONS)[number];
-type displayMode = "monthYear" | "year";
+const DATE_DISPLAY_MODE = {
+  MONTH: "month",
+  YEAR: "year",
+} as const;
+type DateDisplayMode =
+  (typeof DATE_DISPLAY_MODE)[keyof typeof DATE_DISPLAY_MODE];
+
+const TRANSACTION_VIEW = {
+  CALENDAR: "calendar",
+  CATEGORY: "category",
+  DAILY: "daily",
+  MONTHLY: "monthly",
+} as const;
+export type TransactionView =
+  (typeof TRANSACTION_VIEW)[keyof typeof TRANSACTION_VIEW];
 
 const ExpenseHistory = () => {
-  const [displayMode, setDisplayMode] = useState<displayMode>("monthYear");
+  const [dateDisplayMode, setDateDisplayMode] = useState<DateDisplayMode>(
+    DATE_DISPLAY_MODE.MONTH,
+  );
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
-  const [selectedView, setSelectedView] = useState<ViewOption>("daily");
+  const [selectedView, setSelectedView] = useState<TransactionView>(
+    TRANSACTION_VIEW.DAILY,
+  );
   const [financialSummary, setFinancialSummary] = useState({
     expense: 0,
     income: 0,
@@ -31,48 +48,9 @@ const ExpenseHistory = () => {
 
   const navigate = useNavigate();
 
-  const handleViewChange = (view: ViewOption) => {
+  const handleViewChange = (view: TransactionView) => {
     setSelectedView(view);
   };
-
-  // TODO: Create a util function for updateFinancialSummary
-  const updateFinancialSummary = useCallback(() => {
-    // TODO: Create objects for displayModeOption and summary
-    // const DisplayModeOption  = { "Year": "year", "Month": "month", "Day": "day" }
-    // const Summary = {"Income": <income value>, "Expense": <expense value>}
-    const currentMonthTransactions = transactions.filter((transaction) => {
-      if (displayMode === "year") {
-        return (
-          dayjs(transaction.date).format("YYYY") === selectedDate.format("YYYY")
-        );
-      }
-      return (
-        dayjs(transaction.date).format("YYYY-MM") ===
-        selectedDate.format("YYYY-MM")
-      );
-    });
-
-    // TODO: Combine with updateFinancialSummary function
-    const { expense, income } = currentMonthTransactions.reduce(
-      (acc, transaction) => {
-        if (transaction.type === "Income") {
-          acc.income += transaction.cost;
-        } else if (transaction.type === "Expense") {
-          acc.expense += transaction.cost;
-        }
-        return acc;
-      },
-      { expense: 0, income: 0 },
-    );
-
-    // TODO: Remove the calculation logic
-    const total = income - expense;
-    setFinancialSummary({
-      expense: expense,
-      income: income,
-      total: total, // TODO: Move the calculation logic here for total value
-    });
-  }, [displayMode, selectedDate, transactions]);
 
   const { isPending, mutate: getAllTransactions } = useGetAllTransactions({
     onError: (error: Error) => {
@@ -90,10 +68,10 @@ const ExpenseHistory = () => {
   };
 
   useEffect(() => {
-    if (selectedView === "monthly") {
-      setDisplayMode("year");
+    if (selectedView === TRANSACTION_VIEW.MONTHLY) {
+      setDateDisplayMode(DATE_DISPLAY_MODE.YEAR);
     } else {
-      setDisplayMode("monthYear");
+      setDateDisplayMode(DATE_DISPLAY_MODE.MONTH);
     }
   }, [selectedView]);
 
@@ -105,13 +83,22 @@ const ExpenseHistory = () => {
   }, [getAllTransactions]);
 
   useEffect(() => {
-    updateFinancialSummary();
-  }, [updateFinancialSummary]);
+    const { expense, income, total } = calculateFinancialSummary(
+      transactions,
+      dateDisplayMode,
+      selectedDate,
+    );
+    setFinancialSummary({
+      expense: expense,
+      income: income,
+      total: total,
+    });
+  }, [transactions, dateDisplayMode, selectedDate]);
 
   return (
     <Box>
       <YearMonthPicker
-        displayMode={displayMode}
+        dateDisplayMode={dateDisplayMode}
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
       />
@@ -126,27 +113,27 @@ const ExpenseHistory = () => {
         total={financialSummary.total}
       />
       <Box px={2}>
-        {selectedView === "daily" && (
+        {selectedView === TRANSACTION_VIEW.DAILY && (
           <DailyView
             isPending={isPending}
             selectedMonth={selectedDate.format("YYYY-MM")}
             transactions={transactions}
           />
         )}
-        {selectedView === "monthly" && (
+        {selectedView === TRANSACTION_VIEW.MONTHLY && (
           <MonthlyView
             isPending={isPending}
             selectedYear={selectedDate.format("YYYY")}
             transactions={transactions}
           />
         )}
-        {selectedView === "calendar" && (
+        {selectedView === TRANSACTION_VIEW.CALENDAR && (
           <CalendarView
             selectedMonth={selectedDate.format("YYYY-MM")}
             transactions={transactions}
           />
         )}
-        {selectedView === "category" && (
+        {selectedView === TRANSACTION_VIEW.CATEGORY && (
           <CategoryView
             isPending={isPending}
             selectedMonth={selectedDate.format("YYYY-MM")}
