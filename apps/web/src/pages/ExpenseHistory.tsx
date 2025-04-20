@@ -14,12 +14,20 @@ import { useNavigate } from "react-router-dom";
 import { useGetAllTransactions } from "src/hooks/transactions/useGetAllTransactions";
 import { ISavedTransaction } from "src/types/transactions";
 
+const DISPLAY_MODE_OPTION = {
+  MONTH: "month",
+  YEAR: "year",
+} as const;
+type DisplayMode =
+  (typeof DISPLAY_MODE_OPTION)[keyof typeof DISPLAY_MODE_OPTION];
+
 const VIEW_OPTIONS = ["daily", "monthly", "calendar", "category"] as const;
 export type ViewOption = (typeof VIEW_OPTIONS)[number];
-type displayMode = "monthYear" | "year";
 
 const ExpenseHistory = () => {
-  const [displayMode, setDisplayMode] = useState<displayMode>("monthYear");
+  const [displayMode, setDisplayMode] = useState<DisplayMode>(
+    DISPLAY_MODE_OPTION.MONTH,
+  );
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
   const [selectedView, setSelectedView] = useState<ViewOption>("daily");
   const [financialSummary, setFinancialSummary] = useState({
@@ -37,11 +45,8 @@ const ExpenseHistory = () => {
 
   // TODO: Create a util function for updateFinancialSummary
   const updateFinancialSummary = useCallback(() => {
-    // TODO: Create objects for displayModeOption and summary
-    // const DisplayModeOption  = { "Year": "year", "Month": "month", "Day": "day" }
-    // const Summary = {"Income": <income value>, "Expense": <expense value>}
     const currentMonthTransactions = transactions.filter((transaction) => {
-      if (displayMode === "year") {
+      if (displayMode === DISPLAY_MODE_OPTION.YEAR) {
         return (
           dayjs(transaction.date).format("YYYY") === selectedDate.format("YYYY")
         );
@@ -65,12 +70,10 @@ const ExpenseHistory = () => {
       { expense: 0, income: 0 },
     );
 
-    // TODO: Remove the calculation logic
-    const total = income - expense;
     setFinancialSummary({
       expense: expense,
       income: income,
-      total: total, // TODO: Move the calculation logic here for total value
+      total: income - expense,
     });
   }, [displayMode, selectedDate, transactions]);
 
@@ -91,9 +94,9 @@ const ExpenseHistory = () => {
 
   useEffect(() => {
     if (selectedView === "monthly") {
-      setDisplayMode("year");
+      setDisplayMode(DISPLAY_MODE_OPTION.YEAR);
     } else {
-      setDisplayMode("monthYear");
+      setDisplayMode(DISPLAY_MODE_OPTION.MONTH);
     }
   }, [selectedView]);
 

@@ -7,7 +7,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { useState } from "react";
 
 interface YearMonthPickerProps {
-  displayMode: "monthYear" | "year";
+  displayMode: "month" | "year";
   selectedDate: Dayjs;
   setSelectedDate: React.Dispatch<React.SetStateAction<Dayjs>>;
 }
