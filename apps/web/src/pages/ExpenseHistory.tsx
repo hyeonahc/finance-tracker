@@ -14,12 +14,12 @@ import { useNavigate } from "react-router-dom";
 import { useGetAllTransactions } from "src/hooks/transactions/useGetAllTransactions";
 import { ISavedTransaction } from "src/types/transactions";
 
-const DISPLAY_MODE_OPTION = {
+const DATE_DISPLAY_MODE = {
   MONTH: "month",
   YEAR: "year",
 } as const;
-type DisplayMode =
-  (typeof DISPLAY_MODE_OPTION)[keyof typeof DISPLAY_MODE_OPTION];
+type DateDisplayMode =
+  (typeof DATE_DISPLAY_MODE)[keyof typeof DATE_DISPLAY_MODE];
 
 const TRANSACTION_VIEW = {
   CALENDAR: "calendar",
@@ -31,8 +31,8 @@ export type TransactionView =
   (typeof TRANSACTION_VIEW)[keyof typeof TRANSACTION_VIEW];
 
 const ExpenseHistory = () => {
-  const [displayMode, setDisplayMode] = useState<DisplayMode>(
-    DISPLAY_MODE_OPTION.MONTH,
+  const [displayMode, setDisplayMode] = useState<DateDisplayMode>(
+    DATE_DISPLAY_MODE.MONTH,
   );
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
   const [selectedView, setSelectedView] = useState<TransactionView>(
@@ -54,7 +54,7 @@ const ExpenseHistory = () => {
   // TODO: Create a util function for updateFinancialSummary
   const updateFinancialSummary = useCallback(() => {
     const currentMonthTransactions = transactions.filter((transaction) => {
-      if (displayMode === DISPLAY_MODE_OPTION.YEAR) {
+      if (displayMode === DATE_DISPLAY_MODE.YEAR) {
         return (
           dayjs(transaction.date).format("YYYY") === selectedDate.format("YYYY")
         );
@@ -102,9 +102,9 @@ const ExpenseHistory = () => {
 
   useEffect(() => {
     if (selectedView === TRANSACTION_VIEW.MONTHLY) {
-      setDisplayMode(DISPLAY_MODE_OPTION.YEAR);
+      setDisplayMode(DATE_DISPLAY_MODE.YEAR);
     } else {
-      setDisplayMode(DISPLAY_MODE_OPTION.MONTH);
+      setDisplayMode(DATE_DISPLAY_MODE.MONTH);
     }
   }, [selectedView]);
 
