@@ -8,8 +8,9 @@ import DailyView from "@components/views/DailyView";
 import MonthlyView from "@components/views/MonthlyView";
 import ViewOptions from "@components/views/ViewOptions";
 import { Box } from "@mui/material";
+import { calculateFinancialSummary } from "@util/calculateFinancialSummary";
 import dayjs, { Dayjs } from "dayjs";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetAllTransactions } from "src/hooks/transactions/useGetAllTransactions";
 import { ISavedTransaction } from "src/types/transactions";
@@ -51,40 +52,6 @@ const ExpenseHistory = () => {
     setSelectedView(view);
   };
 
-  // TODO: Create a util function for updateFinancialSummary
-  const updateFinancialSummary = useCallback(() => {
-    const currentMonthTransactions = transactions.filter((transaction) => {
-      if (displayMode === DATE_DISPLAY_MODE.YEAR) {
-        return (
-          dayjs(transaction.date).format("YYYY") === selectedDate.format("YYYY")
-        );
-      }
-      return (
-        dayjs(transaction.date).format("YYYY-MM") ===
-        selectedDate.format("YYYY-MM")
-      );
-    });
-
-    // TODO: Combine with updateFinancialSummary function
-    const { expense, income } = currentMonthTransactions.reduce(
-      (acc, transaction) => {
-        if (transaction.type === "Income") {
-          acc.income += transaction.cost;
-        } else if (transaction.type === "Expense") {
-          acc.expense += transaction.cost;
-        }
-        return acc;
-      },
-      { expense: 0, income: 0 },
-    );
-
-    setFinancialSummary({
-      expense: expense,
-      income: income,
-      total: income - expense,
-    });
-  }, [displayMode, selectedDate, transactions]);
-
   const { isPending, mutate: getAllTransactions } = useGetAllTransactions({
     onError: (error: Error) => {
       console.log("getAllTransactions onError data: ", error);
@@ -116,8 +83,17 @@ const ExpenseHistory = () => {
   }, [getAllTransactions]);
 
   useEffect(() => {
-    updateFinancialSummary();
-  }, [updateFinancialSummary]);
+    const { expense, income, total } = calculateFinancialSummary(
+      transactions,
+      displayMode,
+      selectedDate,
+    );
+    setFinancialSummary({
+      expense: expense,
+      income: income,
+      total: total,
+    });
+  }, [transactions, displayMode, selectedDate]);
 
   return (
     <Box>
