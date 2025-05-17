@@ -5,12 +5,12 @@ import { styled } from "@mui/system";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import { useState } from "react";
+import { useDateFilterStore } from "src/store/useDateFilterStore";
 
 // TODO: Create a componentProps file and store it
 interface YearMonthPickerProps {
   dateDisplayMode: "month" | "year";
   selectedDate: Dayjs;
-  setSelectedDate: React.Dispatch<React.SetStateAction<Dayjs>>;
 }
 
 const CustomDatePicker = styled(DatePicker)({
@@ -34,12 +34,11 @@ const CustomDatePicker = styled(DatePicker)({
 const YearMonthPicker = ({
   dateDisplayMode,
   selectedDate,
-  setSelectedDate,
 }: YearMonthPickerProps) => {
+  const { setSelectedDate } = useDateFilterStore();
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
   const handlePrev = () => {
-    // TODO: Use DATE_DISPLAY_MODE
     setSelectedDate(
       dateDisplayMode === "year"
         ? selectedDate.subtract(1, "year")
