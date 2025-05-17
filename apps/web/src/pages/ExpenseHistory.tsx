@@ -7,34 +7,25 @@ import CategoryView from "@components/views/CategoryView";
 import DailyView from "@components/views/DailyView";
 import MonthlyView from "@components/views/MonthlyView";
 import ViewOptions from "@components/views/ViewOptions";
+import {
+  DATE_DISPLAY_MODE,
+  EXPENSE_VIEW,
+  EXPENSE_VIEW_ORDER,
+} from "@constants/constants";
+import { ISavedTransaction } from "@custom-types/transactions";
+import { useGetAllTransactions } from "@hooks/transactions/useGetAllTransactions";
 import { Box } from "@mui/material";
+import { useDateFilterStore } from "@stores/useDateFilterStore";
+import { useViewOptionStore } from "@stores/useViewOptionStore";
 import { calculateFinancialSummary } from "@util/calculateFinancialSummary";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useGetAllTransactions } from "src/hooks/transactions/useGetAllTransactions";
-import {
-  DATE_DISPLAY_MODE,
-  useDateFilterStore,
-} from "src/store/useDateFilterStore";
-import { ISavedTransaction } from "src/types/transactions";
-
-// TODO: Move to const file
-const TRANSACTION_VIEW = {
-  CALENDAR: "calendar",
-  CATEGORY: "category",
-  DAILY: "daily",
-  MONTHLY: "monthly",
-} as const;
-export type TransactionView =
-  (typeof TRANSACTION_VIEW)[keyof typeof TRANSACTION_VIEW];
 
 const ExpenseHistory = () => {
   const { dateDisplayMode, selectedDate, setDateDisplayMode } =
     useDateFilterStore();
+  const { selectedView, setViewOptions } = useViewOptionStore();
 
-  const [selectedView, setSelectedView] = useState<TransactionView>(
-    TRANSACTION_VIEW.DAILY,
-  );
   const [financialSummary, setFinancialSummary] = useState({
     expense: 0,
     income: 0,
@@ -43,10 +34,6 @@ const ExpenseHistory = () => {
   const [transactions, setTransactions] = useState<ISavedTransaction[]>([]);
 
   const navigate = useNavigate();
-
-  const handleViewChange = (view: TransactionView) => {
-    setSelectedView(view);
-  };
 
   const { isPending, mutate: getAllTransactions } = useGetAllTransactions({
     onError: (error: Error) => {
@@ -64,12 +51,16 @@ const ExpenseHistory = () => {
   };
 
   useEffect(() => {
-    if (selectedView === TRANSACTION_VIEW.MONTHLY) {
+    if (selectedView === EXPENSE_VIEW.MONTHLY) {
       setDateDisplayMode(DATE_DISPLAY_MODE.YEAR);
     } else {
       setDateDisplayMode(DATE_DISPLAY_MODE.MONTH);
     }
   }, [selectedView, setDateDisplayMode]);
+
+  useEffect(() => {
+    setViewOptions(EXPENSE_VIEW_ORDER);
+  }, [setViewOptions]);
 
   useEffect(() => {
     const fetchAllTransaction = () => {
@@ -97,10 +88,7 @@ const ExpenseHistory = () => {
         dateDisplayMode={dateDisplayMode}
         selectedDate={selectedDate}
       />
-      <ViewOptions
-        onViewChange={handleViewChange}
-        selectedView={selectedView}
-      />
+      <ViewOptions options={EXPENSE_VIEW_ORDER} selectedView={selectedView} />
       {/* TODO: Ensure the value from the API is displayed immediately when the component first renders, instead of showing initial values */}
       <IncomeExpenseTotal
         expense={financialSummary.expense}
@@ -109,27 +97,27 @@ const ExpenseHistory = () => {
       />
       <Box px={2}>
         {/* TODO: Create a logic omponent to handle logic to pass the view */}
-        {selectedView === TRANSACTION_VIEW.DAILY && (
+        {selectedView === EXPENSE_VIEW.DAILY && (
           <DailyView
             isPending={isPending}
             selectedMonth={selectedDate.format("YYYY-MM")}
             transactions={transactions}
           />
         )}
-        {selectedView === TRANSACTION_VIEW.MONTHLY && (
+        {selectedView === EXPENSE_VIEW.MONTHLY && (
           <MonthlyView
             isPending={isPending}
             selectedYear={selectedDate.format("YYYY")}
             transactions={transactions}
           />
         )}
-        {selectedView === TRANSACTION_VIEW.CALENDAR && (
+        {selectedView === EXPENSE_VIEW.CALENDAR && (
           <CalendarView
             selectedMonth={selectedDate.format("YYYY-MM")}
             transactions={transactions}
           />
         )}
-        {selectedView === TRANSACTION_VIEW.CATEGORY && (
+        {selectedView === EXPENSE_VIEW.CATEGORY && (
           <CategoryView
             isPending={isPending}
             selectedMonth={selectedDate.format("YYYY-MM")}

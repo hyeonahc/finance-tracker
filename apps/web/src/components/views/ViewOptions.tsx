@@ -1,10 +1,11 @@
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { styled } from "@mui/system";
-import { ViewOption } from "@pages/ExpenseHistory";
+import { useViewOptionStore } from "@stores/useViewOptionStore";
+import { ExpenseViewType } from "src/constants/constants";
 
 interface ViewOptionsProps {
-  onViewChange: (view: ViewOption) => void;
-  selectedView: ViewOption;
+  options: ExpenseViewType[];
+  selectedView: ExpenseViewType;
 }
 
 const CustomToggleButton = styled(ToggleButton)(({ theme }) => ({
@@ -25,13 +26,15 @@ const CustomToggleButton = styled(ToggleButton)(({ theme }) => ({
   textTransform: "capitalize",
 }));
 
-const ViewOptions = ({ onViewChange, selectedView }: ViewOptionsProps) => {
+const ViewOptions = ({ options, selectedView }: ViewOptionsProps) => {
+  const { setSelectedView } = useViewOptionStore();
+
   const handleViewChange = (
     _event: React.MouseEvent<HTMLElement>,
-    newView: ViewOption | null, // TODO: Avoid using or null type
+    newView: ExpenseViewType | null, // TODO: Avoid using or null type
   ) => {
     if (newView) {
-      onViewChange(newView);
+      setSelectedView(newView);
     }
   };
 
@@ -45,7 +48,7 @@ const ViewOptions = ({ onViewChange, selectedView }: ViewOptionsProps) => {
       value={selectedView}
     >
       {/* TODO: Replace the below to const object */}
-      {["daily", "monthly", "calendar", "category"].map((option) => (
+      {options.map((option) => (
         <CustomToggleButton
           aria-label={`${option} view`}
           key={option}
