@@ -5,7 +5,7 @@ import { styled } from "@mui/system";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import { useState } from "react";
-import { useDateFilterStore } from "src/store/useDateFilterStore";
+import { useDateFilterStore } from "src/stores/useDateFilterStore";
 
 // TODO: Create a componentProps file and store it
 interface YearMonthPickerProps {

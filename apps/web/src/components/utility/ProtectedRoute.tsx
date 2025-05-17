@@ -1,5 +1,5 @@
-import { authModule } from "@util/authGuard";
 import { Navigate, Outlet } from "react-router-dom";
+import { authModule } from "src/util/authGuard";
 
 const ProtectedRoute = () => {
   const token = localStorage.getItem("token");
