@@ -113,6 +113,7 @@ const AddTransaction = () => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "16px" }}>
       <TopNavigation title="Add Transaction" />
+      {/* TODO: Create one general input component */}
       <TransactionTypeToggle setType={setType} type={type} />
       <TitleInput setTitle={setTitle} title={title} />
       <DateInput date={date} setDate={setDate} />

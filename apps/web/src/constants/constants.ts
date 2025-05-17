@@ -7,6 +7,4 @@ export const DATE_DISPLAY_MODE = {
   YEAR: "year",
 } as const;
 
-// Question: Where should I include type?
-export type DateDisplayMode =
-  (typeof DATE_DISPLAY_MODE)[keyof typeof DATE_DISPLAY_MODE];
+// TODO: Move TRANSACTION_VIEW here

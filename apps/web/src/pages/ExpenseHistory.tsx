@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { useGetAllTransactions } from "src/hooks/transactions/useGetAllTransactions";
 import { ISavedTransaction } from "src/types/transactions";
 
+// TODO: Move to const file
 const DATE_DISPLAY_MODE = {
   MONTH: "month",
   YEAR: "year",
@@ -32,6 +33,7 @@ export type TransactionView =
   (typeof TRANSACTION_VIEW)[keyof typeof TRANSACTION_VIEW];
 
 const ExpenseHistory = () => {
+  // TODO: Create global state for the below
   const [dateDisplayMode, setDateDisplayMode] = useState<DateDisplayMode>(
     DATE_DISPLAY_MODE.MONTH,
   );
@@ -76,8 +78,8 @@ const ExpenseHistory = () => {
   }, [selectedView]);
 
   useEffect(() => {
-    const fetchAllTransaction = async () => {
-      await getAllTransactions();
+    const fetchAllTransaction = () => {
+      getAllTransactions();
     };
     fetchAllTransaction();
   }, [getAllTransactions]);
@@ -113,6 +115,7 @@ const ExpenseHistory = () => {
         total={financialSummary.total}
       />
       <Box px={2}>
+        {/* TODO: Create a logic omponent to handle logic to pass the view */}
         {selectedView === TRANSACTION_VIEW.DAILY && (
           <DailyView
             isPending={isPending}

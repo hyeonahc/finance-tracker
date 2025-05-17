@@ -25,6 +25,8 @@ const DailyView = ({
 }: DailyViewProps) => {
   const theme = useTheme();
 
+  // TODO: All the cal logic should be moved to parent component
+  // TODO: USe useCallback or useMemo
   const monthlyTransactionsByRecentDate = transactions
     .filter(
       (transaction) =>

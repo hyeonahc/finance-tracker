@@ -28,7 +28,7 @@ const CustomToggleButton = styled(ToggleButton)(({ theme }) => ({
 const ViewOptions = ({ onViewChange, selectedView }: ViewOptionsProps) => {
   const handleViewChange = (
     _event: React.MouseEvent<HTMLElement>,
-    newView: ViewOption | null,
+    newView: ViewOption | null, // TODO: Avoid using or null type
   ) => {
     if (newView) {
       onViewChange(newView);
@@ -44,6 +44,7 @@ const ViewOptions = ({ onViewChange, selectedView }: ViewOptionsProps) => {
       sx={{ justifyContent: "space-around" }}
       value={selectedView}
     >
+      {/* TODO: Replace the below to const object */}
       {["daily", "monthly", "calendar", "category"].map((option) => (
         <CustomToggleButton
           aria-label={`${option} view`}
