@@ -7,11 +7,8 @@ import CategoryView from "@components/views/CategoryView";
 import DailyView from "@components/views/DailyView";
 import MonthlyView from "@components/views/MonthlyView";
 import ViewOptions from "@components/views/ViewOptions";
-import {
-  DATE_DISPLAY_MODE,
-  EXPENSE_VIEW,
-  EXPENSE_VIEW_ORDER,
-} from "@constants/constants";
+import { DATE_DISPLAY_MODE } from "@constants/constants";
+import { EXPENSE_VIEW, EXPENSE_VIEW_ORDER } from "@constants/expenseView";
 import { ISavedTransaction } from "@custom-types/transactions";
 import { useGetAllTransactions } from "@hooks/transactions/useGetAllTransactions";
 import { Box } from "@mui/material";
@@ -24,7 +21,8 @@ import { useNavigate } from "react-router-dom";
 const ExpenseHistory = () => {
   const { dateDisplayMode, selectedDate, setDateDisplayMode } =
     useDateFilterStore();
-  const { selectedView, setViewOptions } = useViewOptionStore();
+  const { selectedView, setDefaultViews, setSelectedView } =
+    useViewOptionStore();
 
   const [financialSummary, setFinancialSummary] = useState({
     expense: 0,
@@ -59,8 +57,8 @@ const ExpenseHistory = () => {
   }, [selectedView, setDateDisplayMode]);
 
   useEffect(() => {
-    setViewOptions(EXPENSE_VIEW_ORDER);
-  }, [setViewOptions]);
+    setDefaultViews("expense");
+  }, [setDefaultViews]);
 
   useEffect(() => {
     const fetchAllTransaction = () => {
@@ -88,7 +86,11 @@ const ExpenseHistory = () => {
         dateDisplayMode={dateDisplayMode}
         selectedDate={selectedDate}
       />
-      <ViewOptions options={EXPENSE_VIEW_ORDER} selectedView={selectedView} />
+      <ViewOptions
+        options={EXPENSE_VIEW_ORDER}
+        selectedView={selectedView}
+        setSelectedView={setSelectedView}
+      />
       {/* TODO: Ensure the value from the API is displayed immediately when the component first renders, instead of showing initial values */}
       <IncomeExpenseTotal
         expense={financialSummary.expense}

@@ -1,11 +1,10 @@
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { styled } from "@mui/system";
-import { useViewOptionStore } from "@stores/useViewOptionStore";
-import { ExpenseViewType } from "src/constants/constants";
 
-interface ViewOptionsProps {
-  options: ExpenseViewType[];
-  selectedView: ExpenseViewType;
+interface ViewOptionsProps<T extends string> {
+  options: T[];
+  selectedView: T;
+  setSelectedView: (view: T) => void;
 }
 
 const CustomToggleButton = styled(ToggleButton)(({ theme }) => ({
@@ -26,12 +25,14 @@ const CustomToggleButton = styled(ToggleButton)(({ theme }) => ({
   textTransform: "capitalize",
 }));
 
-const ViewOptions = ({ options, selectedView }: ViewOptionsProps) => {
-  const { setSelectedView } = useViewOptionStore();
-
+const ViewOptions = <T extends string>({
+  options,
+  selectedView,
+  setSelectedView,
+}: ViewOptionsProps<T>) => {
   const handleViewChange = (
     _event: React.MouseEvent<HTMLElement>,
-    newView: ExpenseViewType | null, // TODO: Avoid using or null type
+    newView: T | null, // TODO: Avoid using or null type
   ) => {
     if (newView) {
       setSelectedView(newView);
@@ -47,7 +48,6 @@ const ViewOptions = ({ options, selectedView }: ViewOptionsProps) => {
       sx={{ justifyContent: "space-around" }}
       value={selectedView}
     >
-      {/* TODO: Replace the below to const object */}
       {options.map((option) => (
         <CustomToggleButton
           aria-label={`${option} view`}
