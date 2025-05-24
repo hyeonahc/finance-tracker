@@ -8,7 +8,7 @@ import DailyView from "@components/views/DailyView";
 import MonthlyView from "@components/views/MonthlyView";
 import ViewOptions from "@components/views/ViewOptions";
 import { DATE_DISPLAY_MODE } from "@constants/constants";
-import { EXPENSE_VIEW, EXPENSE_VIEW_ORDER } from "@constants/expenseView";
+import { EXPENSE_VIEW } from "@constants/expenseView";
 import { ISavedTransaction } from "@custom-types/transactions";
 import { useGetAllTransactions } from "@hooks/transactions/useGetAllTransactions";
 import { Box } from "@mui/material";
@@ -87,7 +87,7 @@ const ExpenseHistory = () => {
         selectedDate={selectedDate}
       />
       <ViewOptions
-        options={EXPENSE_VIEW_ORDER}
+        options={Object.values(EXPENSE_VIEW)}
         selectedView={selectedView}
         setSelectedView={setSelectedView}
       />

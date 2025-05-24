@@ -1,6 +1,6 @@
 import YearMonthPicker from "@components/filters/YearMonthPicker";
 import ViewOptions from "@components/views/ViewOptions";
-import { REPORT_VIEW_ORDER } from "@constants/reportView";
+import { REPORT_VIEW } from "@constants/reportView";
 import { Box } from "@mui/material";
 import { useDateFilterStore } from "@stores/useDateFilterStore";
 import { useViewOptionStore } from "@stores/useViewOptionStore";
@@ -22,7 +22,7 @@ const AnalysisReport = () => {
         selectedDate={selectedDate}
       />
       <ViewOptions
-        options={REPORT_VIEW_ORDER}
+        options={Object.values(REPORT_VIEW)}
         selectedView={selectedView}
         setSelectedView={setSelectedView}
       />

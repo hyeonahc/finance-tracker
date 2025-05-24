@@ -1,13 +1,5 @@
-import {
-  EXPENSE_VIEW,
-  EXPENSE_VIEW_ORDER,
-  ExpenseViewType,
-} from "src/constants/expenseView";
-import {
-  REPORT_VIEW,
-  REPORT_VIEW_ORDER,
-  ReportView,
-} from "src/constants/reportView";
+import { EXPENSE_VIEW, ExpenseViewType } from "src/constants/expenseView";
+import { REPORT_VIEW, ReportView } from "src/constants/reportView";
 import { create } from "zustand";
 
 export type ViewType = ExpenseViewType | ReportView;
@@ -26,16 +18,16 @@ export const useViewOptionStore = create<ViewOptionStore>((set) => ({
     if (type === "expense") {
       set({
         selectedView: EXPENSE_VIEW.DAILY,
-        viewOptions: EXPENSE_VIEW_ORDER,
+        viewOptions: Object.values(EXPENSE_VIEW),
       });
     } else if (type === "report") {
       set({
         selectedView: REPORT_VIEW.NET_WORTH,
-        viewOptions: REPORT_VIEW_ORDER,
+        viewOptions: Object.values(REPORT_VIEW),
       });
     }
   },
   setSelectedView: (view) => set({ selectedView: view }),
   setViewOptions: (options) => set({ viewOptions: options }),
-  viewOptions: EXPENSE_VIEW_ORDER,
+  viewOptions: Object.values(EXPENSE_VIEW),
 }));
