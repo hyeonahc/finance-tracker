@@ -6,15 +6,15 @@ import CalendarView from "@components/views/CalendarView";
 import CategoryView from "@components/views/CategoryView";
 import DailyView from "@components/views/DailyView";
 import MonthlyView from "@components/views/MonthlyView";
-import ViewOptions from "@components/views/ViewOptions";
-import { DATE_DISPLAY_MODE } from "@constants/constants";
+import ViewOptions from "@components/views/dateViewSelector";
 import { EXPENSE_VIEW } from "@constants/expenseView";
+import { DATE_DISPLAY_MODE } from "@constants/monthYearSelector";
 import { useGetAllTransactions } from "@hooks/transactions/useGetAllTransactions";
 import { Box } from "@mui/material";
 import { useDateFilterStore } from "@stores/useDateFilterStore";
 import { useTransactionStore } from "@stores/useTransactionStore";
 import { useViewOptionStore } from "@stores/useViewOptionStore";
-import { calculateFinancialSummary } from "@util/calculateFinancialSummary";
+import { getFinancialSummary } from "@util/transactionUtils";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -68,7 +68,7 @@ const ExpenseHistory = () => {
   }, [getAllTransactions]);
 
   useEffect(() => {
-    const { expense, income, total } = calculateFinancialSummary(
+    const { expense, income, total } = getFinancialSummary(
       transactions,
       dateDisplayMode,
       selectedDate,

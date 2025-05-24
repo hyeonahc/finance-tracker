@@ -1,7 +1,7 @@
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { styled } from "@mui/system";
 
-interface ViewOptionsProps<T extends string> {
+interface dateViewSelectorProps<T extends string> {
   options: T[];
   selectedView: T;
   setSelectedView: (view: T) => void;
@@ -25,11 +25,11 @@ const CustomToggleButton = styled(ToggleButton)(({ theme }) => ({
   textTransform: "capitalize",
 }));
 
-const ViewOptions = <T extends string>({
+const dateViewSelector = <T extends string>({
   options,
   selectedView,
   setSelectedView,
-}: ViewOptionsProps<T>) => {
+}: dateViewSelectorProps<T>) => {
   const handleViewChange = (
     _event: React.MouseEvent<HTMLElement>,
     newView: T | null, // TODO: Avoid using or null type
@@ -61,4 +61,4 @@ const ViewOptions = <T extends string>({
   );
 };
 
-export default ViewOptions;
+export default dateViewSelector;
