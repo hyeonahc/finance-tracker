@@ -18,5 +18,7 @@ module.exports = {
       "warn",
       { allowConstantExport: true },
     ],
+    "perfectionist/sort-objects": "off",
+    "perfectionist/sort-interfaces": "off",
   },
 };

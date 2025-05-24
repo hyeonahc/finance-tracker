@@ -9,10 +9,10 @@ import MonthlyView from "@components/views/MonthlyView";
 import ViewOptions from "@components/views/ViewOptions";
 import { DATE_DISPLAY_MODE } from "@constants/constants";
 import { EXPENSE_VIEW } from "@constants/expenseView";
-import { ISavedTransaction } from "@custom-types/transactions";
 import { useGetAllTransactions } from "@hooks/transactions/useGetAllTransactions";
 import { Box } from "@mui/material";
 import { useDateFilterStore } from "@stores/useDateFilterStore";
+import { useTransactionStore } from "@stores/useTransactionStore";
 import { useViewOptionStore } from "@stores/useViewOptionStore";
 import { calculateFinancialSummary } from "@util/calculateFinancialSummary";
 import { useEffect, useState } from "react";
@@ -23,13 +23,13 @@ const ExpenseHistory = () => {
     useDateFilterStore();
   const { selectedView, setDefaultViews, setSelectedView } =
     useViewOptionStore();
+  const { setTransactions, transactions } = useTransactionStore();
 
   const [financialSummary, setFinancialSummary] = useState({
     expense: 0,
     income: 0,
     total: 0,
   });
-  const [transactions, setTransactions] = useState<ISavedTransaction[]>([]);
 
   const navigate = useNavigate();
 
