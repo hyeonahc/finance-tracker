@@ -13,7 +13,8 @@ import { Box } from "@mui/material";
 import { useDateFilterStore } from "@stores/useDateFilterStore";
 import { useTransactionStore } from "@stores/useTransactionStore";
 import { useViewOptionStore } from "@stores/useViewOptionStore";
-import { useEffect } from "react";
+import { getFinancialSummary } from "@util/transactionUtils";
+import { useEffect, useState } from "react";
 
 const AnalysisReport = () => {
   const { dateDisplayMode, selectedDate, setDateDisplayMode } =
@@ -21,6 +22,12 @@ const AnalysisReport = () => {
   const { selectedView, setDefaultViews, setSelectedView } =
     useViewOptionStore();
   const { setTransactions, transactions } = useTransactionStore();
+
+  const [financialSummary, setFinancialSummary] = useState({
+    expense: 0,
+    income: 0,
+    total: 0,
+  });
 
   useEffect(() => {
     setDefaultViews("report");
@@ -52,6 +59,20 @@ const AnalysisReport = () => {
     }
   }, [selectedView, setDateDisplayMode]);
 
+  useEffect(() => {
+    const { expense, income, total } = getFinancialSummary(
+      transactions,
+      dateDisplayMode,
+      selectedDate,
+      false,
+    );
+    setFinancialSummary({
+      expense: expense,
+      income: income,
+      total: total,
+    });
+  }, [transactions, dateDisplayMode, selectedDate]);
+
   return (
     <Box>
       <YearMonthPicker
@@ -66,9 +87,8 @@ const AnalysisReport = () => {
       <Box px={2}>
         {selectedView === REPORT_VIEW.NET_WORTH && (
           <NetWorthView
+            financialSummary={financialSummary}
             isPending={isPending}
-            selectedYear={selectedDate.format("YYYY")}
-            transactions={transactions}
           />
         )}
         {selectedView === REPORT_VIEW.SUBSCRIPTIONS && <SubscriptionsView />}

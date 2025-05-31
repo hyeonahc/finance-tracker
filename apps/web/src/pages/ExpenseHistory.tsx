@@ -25,7 +25,7 @@ const ExpenseHistory = () => {
     useViewOptionStore();
   const { setTransactions, transactions } = useTransactionStore();
 
-  const [financialSummary, setFinancialSummary] = useState({
+  const [filteredFinancialSummary, setFilteredFinancialSummary] = useState({
     expense: 0,
     income: 0,
     total: 0,
@@ -73,7 +73,7 @@ const ExpenseHistory = () => {
       dateDisplayMode,
       selectedDate,
     );
-    setFinancialSummary({
+    setFilteredFinancialSummary({
       expense: expense,
       income: income,
       total: total,
@@ -93,9 +93,9 @@ const ExpenseHistory = () => {
       />
       {/* TODO: Ensure the value from the API is displayed immediately when the component first renders, instead of showing initial values */}
       <IncomeExpenseTotal
-        expense={financialSummary.expense}
-        income={financialSummary.income}
-        total={financialSummary.total}
+        expense={filteredFinancialSummary.expense}
+        income={filteredFinancialSummary.income}
+        total={filteredFinancialSummary.total}
       />
       <Box px={2}>
         {/* TODO: Create a logic omponent to handle logic to pass the view */}
