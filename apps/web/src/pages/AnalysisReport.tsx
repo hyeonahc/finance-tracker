@@ -8,12 +8,21 @@ import SubscriptionsView from "@components/views/analysisReport/SubscriptionsVie
 import ViewOptions from "@components/views/dateViewSelector";
 import { DATE_DISPLAY_MODE } from "@constants/monthYearSelector";
 import { REPORT_VIEW } from "@constants/reportView";
+import {
+  AllTxSummary,
+  MonthlyTxSummary,
+  YearlyTxSummary,
+} from "@custom-types/transactions";
 import { useGetAllTransactions } from "@hooks/transactions/useGetAllTransactions";
 import { Box } from "@mui/material";
 import { useDateFilterStore } from "@stores/useDateFilterStore";
 import { useTransactionStore } from "@stores/useTransactionStore";
 import { useViewOptionStore } from "@stores/useViewOptionStore";
-import { getFinancialSummary } from "@util/transactionUtils";
+import {
+  getAllTx,
+  getTxByYear,
+  getTxByYearMonth,
+} from "@util/transactionUtils";
 import { useEffect, useState } from "react";
 
 const AnalysisReport = () => {
@@ -23,11 +32,15 @@ const AnalysisReport = () => {
     useViewOptionStore();
   const { setTransactions, transactions } = useTransactionStore();
 
-  const [financialSummary, setFinancialSummary] = useState({
+  const [allTxSummary, setAllTxSummary] = useState<AllTxSummary>({
     expense: 0,
     income: 0,
     total: 0,
   });
+  const [yearlyTxSummary, setYearlyTxSummary] = useState<YearlyTxSummary>({});
+  const [monthlyTxSummary, setMonthlyTxSummary] = useState<MonthlyTxSummary>(
+    {},
+  );
 
   useEffect(() => {
     setDefaultViews("report");
@@ -60,18 +73,10 @@ const AnalysisReport = () => {
   }, [selectedView, setDateDisplayMode]);
 
   useEffect(() => {
-    const { expense, income, total } = getFinancialSummary(
-      transactions,
-      dateDisplayMode,
-      selectedDate,
-      false,
-    );
-    setFinancialSummary({
-      expense: expense,
-      income: income,
-      total: total,
-    });
-  }, [transactions, dateDisplayMode, selectedDate]);
+    setAllTxSummary(getAllTx(transactions));
+    setYearlyTxSummary(getTxByYear(transactions));
+    setMonthlyTxSummary(getTxByYearMonth(transactions));
+  }, [transactions]);
 
   return (
     <Box>
@@ -86,10 +91,7 @@ const AnalysisReport = () => {
       />
       <Box px={2}>
         {selectedView === REPORT_VIEW.NET_WORTH && (
-          <NetWorthView
-            financialSummary={financialSummary}
-            isPending={isPending}
-          />
+          <NetWorthView allTxSummary={allTxSummary} isPending={isPending} />
         )}
         {selectedView === REPORT_VIEW.SUBSCRIPTIONS && <SubscriptionsView />}
         {selectedView === REPORT_VIEW.EXPENSE_BREAKDOWN && (

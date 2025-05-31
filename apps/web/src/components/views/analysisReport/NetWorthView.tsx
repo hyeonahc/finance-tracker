@@ -1,16 +1,13 @@
 import LoadingMessage from "@components/ui/LoadingMessage";
+import { AllTxSummary } from "@custom-types/transactions";
 import { Box, Typography } from "@mui/material";
 
 interface NetWorthViewProps {
   isPending: boolean;
-  financialSummary: {
-    expense: number;
-    income: number;
-    total: number;
-  };
+  allTxSummary: AllTxSummary;
 }
 
-const NetWorthView = ({ isPending, financialSummary }: NetWorthViewProps) => {
+const NetWorthView = ({ isPending, allTxSummary }: NetWorthViewProps) => {
   if (isPending) {
     return <LoadingMessage />;
   }
@@ -20,7 +17,7 @@ const NetWorthView = ({ isPending, financialSummary }: NetWorthViewProps) => {
       <Typography sx={{ fontWeight: "bold" }} variant="h6">
         Net Worth Summary
       </Typography>
-      <Typography>Cash: {financialSummary.total}</Typography>
+      <Typography>Cash: {allTxSummary.total}</Typography>
     </Box>
   );
 };

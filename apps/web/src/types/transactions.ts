@@ -20,3 +20,27 @@ export interface ISavedTransaction {
   updatedAt: string; // ISO date string
   userId: string;
 }
+
+export type AllTxSummary = {
+  expense: number;
+  income: number;
+  total: number;
+};
+
+export type YearlyTxSummary = {
+  [year: string]: {
+    expense: number;
+    income: number;
+    total: number;
+  };
+};
+
+export type MonthlyTxSummary = {
+  [year: string]: {
+    [month: string]: {
+      expense: number;
+      income: number;
+      total: number;
+    };
+  };
+};

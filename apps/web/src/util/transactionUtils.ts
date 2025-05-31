@@ -19,31 +19,25 @@ export interface FinancialSummary {
 // transactions: 사용자가 저장한 모든 거래 데이터
 // dateDisplayMode: 날짜 표시 방식 ("year" 또는 "month")
 // selectedDate: 기준이 되는 날짜 (Dayjs 객체)
-// filterByDate:
-//   - true(기본값): selectedDate와 dateDisplayMode를 사용해 거래 데이터를 필터링
-//                  dateDisplayMode가 "month"인 경우 > selectedDate와 같은 연월을 가진 거래 필터링
-//                  dateDisplayMode가 "year"인 경우 > selectedDate와 같은 연도만 가진 거래 필터링
-//   - false: 전체 거래 데이터를 사용하여 요약 계산
+// selectedDate와 dateDisplayMode를 사용해 거래 데이터를 필터링
+// dateDisplayMode가 "month"인 경우 > selectedDate와 같은 연월을 가진 거래 필터링
+// dateDisplayMode가 "year"인 경우 > selectedDate와 같은 연도만 가진 거래 필터링
 export const getFinancialSummary = (
   transactions: ISavedTransaction[],
   dateDisplayMode: DateDisplayMode,
   selectedDate: Dayjs,
-  filterByDate: boolean = true,
 ): FinancialSummary => {
   let filtered = transactions;
 
-  // filterByDater가 true일 때
   // 1) selectedDate = 2024-05-01, dateDisplayMode = "month"인 경우
   //    > "2024-05"와 같은 연월을 가진 거래만 필터링
   // 2) selectedDate = 2023-01-01, dateDisplayMode = "year"인 경우
   //    > "2023"년도에 발생한 모든 거래만 필터링
-  if (filterByDate) {
-    const format = dateDisplayMode === "year" ? "YYYY" : "YYYY-MM";
-    const target = selectedDate.format(format);
-    filtered = transactions.filter(
-      (tx) => dayjs(tx.date).format(format) === target,
-    );
-  }
+  const format = dateDisplayMode === "year" ? "YYYY" : "YYYY-MM";
+  const target = selectedDate.format(format);
+  filtered = transactions.filter(
+    (tx) => dayjs(tx.date).format(format) === target,
+  );
 
   let income = 0;
   let expense = 0;
@@ -62,5 +56,100 @@ export const getFinancialSummary = (
   };
 };
 
-// TODO: Create a new util function that returns all trnsaction by year and month
-// return { 2024: { Jan: ... , Feb: ... }  }
+export const getAllTx = (txs: ISavedTransaction[]) => {
+  const result: {
+    expense: number;
+    income: number;
+    total: number;
+  } = { expense: 0, income: 0, total: 0 };
+
+  for (const tx of txs) {
+    if (tx.type === "Expense") {
+      result.expense += tx.cost;
+    } else if (tx.type === "Income") {
+      result.income += tx.cost;
+    }
+  }
+
+  result.total = result.income - result.expense;
+
+  return result;
+};
+
+export const getTxByYear = (txs: ISavedTransaction[]) => {
+  const result: {
+    [year: string]: {
+      expense: number;
+      income: number;
+      total: number;
+    };
+  } = {};
+
+  for (const tx of txs) {
+    const year = dayjs(tx.date).format("YYYY");
+
+    if (!result[year]) {
+      result[year] = {
+        expense: 0,
+        income: 0,
+        total: 0,
+      };
+    }
+
+    if (tx.type === "Expense") {
+      result[year].expense += tx.cost;
+    } else if (tx.type === "Income") {
+      result[year].income += tx.cost;
+    }
+  }
+
+  for (const year in result) {
+    result[year].total = result[year].income - result[year].expense;
+  }
+
+  return result;
+};
+
+export const getTxByYearMonth = (txs: ISavedTransaction[]) => {
+  const result: {
+    [year: string]: {
+      [month: string]: {
+        expense: number;
+        income: number;
+        total: number;
+      };
+    };
+  } = {};
+
+  for (const tx of txs) {
+    const year = dayjs(tx.date).format("YYYY");
+    const month = dayjs(tx.date).format("MM");
+
+    if (!result[year]) {
+      result[year] = {};
+    }
+
+    if (!result[year][month]) {
+      result[year][month] = {
+        expense: 0,
+        income: 0,
+        total: 0,
+      };
+    }
+
+    if (tx.type === "Expense") {
+      result[year][month].expense += tx.cost;
+    } else if (tx.type === "Income") {
+      result[year][month].income += tx.cost;
+    }
+  }
+
+  for (const year in result) {
+    for (const month in result[year]) {
+      result[year][month].total =
+        result[year][month].income - result[year][month].expense;
+    }
+  }
+
+  return result;
+};
