@@ -91,7 +91,11 @@ const AnalysisReport = () => {
       />
       <Box px={2}>
         {selectedView === REPORT_VIEW.NET_WORTH && (
-          <NetWorthView allTxSummary={allTxSummary} isPending={isPending} />
+          <NetWorthView
+            allTxSummary={allTxSummary}
+            isPending={isPending}
+            yearlyTxSummary={yearlyTxSummary}
+          />
         )}
         {selectedView === REPORT_VIEW.SUBSCRIPTIONS && <SubscriptionsView />}
         {selectedView === REPORT_VIEW.EXPENSE_BREAKDOWN && (
