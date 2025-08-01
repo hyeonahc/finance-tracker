@@ -8,7 +8,13 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import {
+  getTxByLatest,
+  getTxBySelectedMonth,
+  groupTxDate,
+} from "@util/transactionUtils";
 import dayjs from "dayjs";
+import { useEffect, useState } from "react";
 import { ISavedTransaction } from "src/types/transactions";
 import getEmoji from "src/util/getEmoji";
 
@@ -25,26 +31,17 @@ const DailyView = ({
 }: DailyViewProps) => {
   const theme = useTheme();
 
-  // TODO: All the cal logic should be moved to parent component
-  // TODO: USe useCallback or useMemo
-  const monthlyTransactionsByRecentDate = transactions
-    .filter(
-      (transaction) =>
-        dayjs(transaction.date).format("YYYY-MM") === selectedMonth,
-    )
-    .sort((a, b) => dayjs(b.date).diff(dayjs(a.date)));
+  const [dailyViewTx, setDailyViewTx] = useState<
+    Record<string, ISavedTransaction[]>
+  >({});
 
-  const transactionsByDateGroup = monthlyTransactionsByRecentDate.reduce(
-    (acc, transaction) => {
-      const dateKey = dayjs(transaction.date).format("YYYY-MM-DD");
-      if (!acc[dateKey]) {
-        acc[dateKey] = [];
-      }
-      acc[dateKey].push(transaction);
-      return acc;
-    },
-    {} as Record<string, ISavedTransaction[]>,
-  );
+  useEffect(() => {
+    const filtered = getTxBySelectedMonth(transactions, selectedMonth);
+    const sorted = getTxByLatest(filtered);
+    const grouped = groupTxDate(sorted);
+
+    setDailyViewTx(grouped);
+  }, [transactions, selectedMonth]);
 
   if (isPending) {
     return <LoadingMessage />;
@@ -52,7 +49,7 @@ const DailyView = ({
 
   return (
     <List sx={{ padding: 0 }}>
-      {Object.entries(transactionsByDateGroup).map(
+      {Object.entries(dailyViewTx).map(
         ([date, transactionsOnDate], index, array) => (
           <Box key={date}>
             <Typography color="text.secondary" mt={2}>

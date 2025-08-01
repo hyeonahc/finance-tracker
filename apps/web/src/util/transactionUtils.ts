@@ -154,3 +154,43 @@ export const getTxByYearMonth = (txs: ISavedTransaction[]) => {
 
   return result;
 };
+
+export const getTxBySelectedMonth = (
+  txs: ISavedTransaction[],
+  selectedMonth: string,
+) => {
+  const newTxs = txs.filter(
+    (tx) => dayjs(tx.date).format("YYYY-MM") === selectedMonth,
+  );
+  return newTxs;
+};
+
+export const getTxByLatest = (txs: ISavedTransaction[]) => {
+  txs.sort((a, b) => dayjs(b.date).diff(dayjs(a.date)));
+  return txs;
+};
+
+/**
+ * groupTxDate return value example:
+ * {
+ *   "2024-11-15": [tx1, tx2],
+ *   "2024-11-16": [tx3]
+ * }
+ *
+ * - Key: formatted date string (YYYY-MM-DD)
+ * - Value: array of transactions on that date
+ */
+export const groupTxDate = (txs: ISavedTransaction[]) => {
+  return txs.reduce(
+    (acc, transaction) => {
+      console.log("acc: ", acc);
+      const dateKey = dayjs(transaction.date).format("YYYY-MM-DD");
+      if (!acc[dateKey]) {
+        acc[dateKey] = [];
+      }
+      acc[dateKey].push(transaction);
+      return acc;
+    },
+    {} as Record<string, ISavedTransaction[]>,
+  );
+};
