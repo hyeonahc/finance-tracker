@@ -5,8 +5,8 @@ import IncomeExpenseTotal from "@components/ui/IncomeExpenseTotal";
 import CalendarView from "@components/views/CalendarView";
 import CategoryView from "@components/views/CategoryView";
 import DailyView from "@components/views/DailyView";
+import DateViewSelector from "@components/views/DateViewSelect";
 import MonthlyView from "@components/views/MonthlyView";
-import ViewOptions from "@components/views/dateViewSelector";
 import { EXPENSE_VIEW } from "@constants/expenseView";
 import { DATE_DISPLAY_MODE } from "@constants/monthYearSelector";
 import { useGetAllTransactions } from "@hooks/transactions/useGetAllTransactions";
@@ -86,7 +86,7 @@ const ExpenseHistory = () => {
         dateDisplayMode={dateDisplayMode}
         selectedDate={selectedDate}
       />
-      <ViewOptions
+      <DateViewSelector
         options={Object.values(EXPENSE_VIEW)}
         selectedView={selectedView}
         setSelectedView={setSelectedView}

@@ -56,6 +56,7 @@ export const getFinancialSummary = (
   };
 };
 
+// TODO: Comebine all util function to one (getAllTx, getTxByYear, getTxByYearMonth)
 export const getAllTx = (txs: ISavedTransaction[]) => {
   const result: {
     expense: number;

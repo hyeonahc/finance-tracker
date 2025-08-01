@@ -30,6 +30,8 @@ const NetWorthView = ({
   allTxSummary,
   yearlyTxSummary,
 }: NetWorthViewProps) => {
+  // TODO: Move the below code to parent component
+  // Add condition when networth is slecteed
   const [chartData, setChartData] = useState<ChartData[]>();
 
   useEffect(() => {

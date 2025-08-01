@@ -21,6 +21,7 @@ export interface ISavedTransaction {
   userId: string;
 }
 
+// TODO: use extends
 export type AllTxSummary = {
   expense: number;
   income: number;

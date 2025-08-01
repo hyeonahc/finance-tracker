@@ -1,11 +1,11 @@
 import { ITransactionResponse } from "@api/transactions/getAllTransactions";
 import YearMonthPicker from "@components/filters/YearMonthPicker";
+import DateViewSelector from "@components/views/DateViewSelect";
 import CashFlowView from "@components/views/analysisReport/CashFlowView";
 import ExpenseBreakdownView from "@components/views/analysisReport/ExpenseBreakdownView";
 import NetWorthView from "@components/views/analysisReport/NetWorthView";
 import SavingsRateView from "@components/views/analysisReport/SavingsRateView";
 import SubscriptionsView from "@components/views/analysisReport/SubscriptionsView";
-import ViewOptions from "@components/views/dateViewSelector";
 import { DATE_DISPLAY_MODE } from "@constants/monthYearSelector";
 import { REPORT_VIEW } from "@constants/reportView";
 import {
@@ -84,7 +84,7 @@ const AnalysisReport = () => {
         dateDisplayMode={dateDisplayMode}
         selectedDate={selectedDate}
       />
-      <ViewOptions
+      <DateViewSelector
         options={Object.values(REPORT_VIEW)}
         selectedView={selectedView}
         setSelectedView={setSelectedView}
