@@ -1,13 +1,13 @@
 interface MonthlyViewProps {
   isPending: boolean;
   selectedYear: string; // Format: "YYYY" (e.g., "2024")
-  transactions: ISavedTransaction[];
+  transactions: Transaction[];
 }
 import LoadingMessage from "@components/ui/LoadingMessage";
 import { Box, Divider, List, Typography } from "@mui/material";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react";
-import { ISavedTransaction } from "src/types/transactions";
+import { Transaction } from "src/types/transactions";
 
 type TransactionSummary = {
   expense: number;
@@ -34,7 +34,7 @@ const MonthlyView = ({
 
   const monthlyGroupedTransactions = useMemo(
     () =>
-      selectedYearTransactions.reduce<Record<string, ISavedTransaction[]>>(
+      selectedYearTransactions.reduce<Record<string, Transaction[]>>(
         (acc, transaction) => {
           const month = transaction.date.slice(5, 7);
           if (!acc[month]) {

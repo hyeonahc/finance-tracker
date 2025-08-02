@@ -1,11 +1,8 @@
 import dayjs, { Dayjs } from "dayjs";
 import { DateDisplayMode } from "src/constants/monthYearSelector";
-import { ISavedTransaction } from "src/types/transactions";
+import { Transaction } from "src/types/transactions";
 
-export const filterTxByYear = (
-  transactions: ISavedTransaction[],
-  year: string,
-) => {
+export const filterTxByYear = (transactions: Transaction[], year: string) => {
   return transactions.filter((tx) => dayjs(tx.date).format("YYYY") === year);
 };
 
@@ -23,7 +20,7 @@ export interface FinancialSummary {
 // dateDisplayMode가 "month"인 경우 > selectedDate와 같은 연월을 가진 거래 필터링
 // dateDisplayMode가 "year"인 경우 > selectedDate와 같은 연도만 가진 거래 필터링
 export const getFinancialSummary = (
-  transactions: ISavedTransaction[],
+  transactions: Transaction[],
   dateDisplayMode: DateDisplayMode,
   selectedDate: Dayjs,
 ): FinancialSummary => {
@@ -57,7 +54,7 @@ export const getFinancialSummary = (
 };
 
 // TODO: Comebine all util function to one (getAllTx, getTxByYear, getTxByYearMonth)
-export const getAllTx = (txs: ISavedTransaction[]) => {
+export const getAllTx = (txs: Transaction[]) => {
   const result: {
     expense: number;
     income: number;
@@ -77,7 +74,7 @@ export const getAllTx = (txs: ISavedTransaction[]) => {
   return result;
 };
 
-export const getTxByYear = (txs: ISavedTransaction[]) => {
+export const getTxByYear = (txs: Transaction[]) => {
   const result: {
     [year: string]: {
       expense: number;
@@ -111,7 +108,7 @@ export const getTxByYear = (txs: ISavedTransaction[]) => {
   return result;
 };
 
-export const getTxByYearMonth = (txs: ISavedTransaction[]) => {
+export const getTxByYearMonth = (txs: Transaction[]) => {
   const result: {
     [year: string]: {
       [month: string]: {
@@ -156,7 +153,7 @@ export const getTxByYearMonth = (txs: ISavedTransaction[]) => {
 };
 
 export const getTxBySelectedMonth = (
-  txs: ISavedTransaction[],
+  txs: Transaction[],
   selectedMonth: string,
 ) => {
   const newTxs = txs.filter(
@@ -165,7 +162,7 @@ export const getTxBySelectedMonth = (
   return newTxs;
 };
 
-export const getTxByLatest = (txs: ISavedTransaction[]) => {
+export const getTxByLatest = (txs: Transaction[]) => {
   txs.sort((a, b) => dayjs(b.date).diff(dayjs(a.date)));
   return txs;
 };
@@ -180,7 +177,7 @@ export const getTxByLatest = (txs: ISavedTransaction[]) => {
  * - Key: formatted date string (YYYY-MM-DD)
  * - Value: array of transactions on that date
  */
-export const groupTxDate = (txs: ISavedTransaction[]) => {
+export const groupTxDate = (txs: Transaction[]) => {
   return txs.reduce(
     (acc, transaction) => {
       console.log("acc: ", acc);
@@ -191,6 +188,6 @@ export const groupTxDate = (txs: ISavedTransaction[]) => {
       acc[dateKey].push(transaction);
       return acc;
     },
-    {} as Record<string, ISavedTransaction[]>,
+    {} as Record<string, Transaction[]>,
   );
 };

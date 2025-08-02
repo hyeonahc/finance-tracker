@@ -1,9 +1,9 @@
-import { ISavedTransaction } from "@custom-types/transactions";
+import { Transaction } from "@custom-types/transactions";
 import { create } from "zustand";
 
 interface TransactionStore {
-  transactions: ISavedTransaction[];
-  setTransactions: (transactions: ISavedTransaction[]) => void;
+  transactions: Transaction[];
+  setTransactions: (transactions: Transaction[]) => void;
   resetTransactions: () => void;
 }
 

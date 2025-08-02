@@ -15,13 +15,13 @@ import {
 } from "@util/transactionUtils";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { ISavedTransaction } from "src/types/transactions";
+import { Transaction } from "src/types/transactions";
 import getEmoji from "src/util/getEmoji";
 
 interface DailyViewProps {
   isPending: boolean;
   selectedMonth: string; // Format: "YYYY-MM" (e.g., "2024-05")
-  transactions: ISavedTransaction[];
+  transactions: Transaction[];
 }
 
 const DailyView = ({
@@ -31,9 +31,9 @@ const DailyView = ({
 }: DailyViewProps) => {
   const theme = useTheme();
 
-  const [dailyViewTx, setDailyViewTx] = useState<
-    Record<string, ISavedTransaction[]>
-  >({});
+  const [dailyViewTx, setDailyViewTx] = useState<Record<string, Transaction[]>>(
+    {},
+  );
 
   useEffect(() => {
     const filtered = getTxBySelectedMonth(transactions, selectedMonth);

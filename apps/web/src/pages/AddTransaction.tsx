@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCreateTransaction } from "src/hooks/transactions/useCreateTransaction";
 import { useGetAllTransactions } from "src/hooks/transactions/useGetAllTransactions";
-import { INewTransaction, ISavedTransaction } from "src/types/transactions";
+import { NewTransaction, Transaction } from "src/types/transactions";
 
 const AddTransaction = () => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const AddTransaction = () => {
   const [cost, setCost] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState<string[]>([]);
-  const [transactions, setTransactions] = useState<ISavedTransaction[]>([]);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   const updateCategory = (newCategory: string) => {
     if (!categories.includes(newCategory)) {
@@ -99,7 +99,7 @@ const AddTransaction = () => {
       return;
     }
 
-    const newTransactionData: INewTransaction = {
+    const newTransactionData: NewTransaction = {
       category: selectedCategory,
       cost: Number(cost),
       date: date.toISOString(),

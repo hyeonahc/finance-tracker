@@ -1,14 +1,14 @@
-import { INewTransaction, ISavedTransaction } from "src/types/transactions";
+import { NewTransaction, Transaction } from "src/types/transactions";
 
 export interface ITransactionResponse {
   message: string;
-  transaction: ISavedTransaction;
+  transaction: Transaction;
 }
 
 const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const createTransaction = async (
-  newTransactionData: Partial<INewTransaction>,
+  newTransactionData: Partial<NewTransaction>,
 ): Promise<ITransactionResponse> => {
   const token = localStorage.getItem("token");
 

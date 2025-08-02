@@ -8,13 +8,13 @@ import {
   useTheme,
 } from "@mui/material";
 import dayjs from "dayjs";
-import { ISavedTransaction } from "src/types/transactions";
+import { Transaction } from "src/types/transactions";
 import getEmoji from "src/util/getEmoji";
 
 interface CategoryViewProps {
   isPending: boolean;
   selectedMonth: string; // Format: "YYYY-MM" (e.g., "2024-05")
-  transactions: ISavedTransaction[];
+  transactions: Transaction[];
 }
 
 const CategoryView = ({
@@ -40,7 +40,7 @@ const CategoryView = ({
       acc[categoryKey].push(transaction);
       return acc;
     },
-    {} as Record<string, ISavedTransaction[]>,
+    {} as Record<string, Transaction[]>,
   );
 
   if (isPending) {
