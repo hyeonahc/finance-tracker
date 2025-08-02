@@ -167,27 +167,45 @@ export const getTxByLatest = (txs: Transaction[]) => {
   return txs;
 };
 
-/**
- * groupTxDate return value example:
- * {
- *   "2024-11-15": [tx1, tx2],
- *   "2024-11-16": [tx3]
- * }
+/*
+ * Groups transactions by the specified key (either "date" or "category").
  *
- * - Key: formatted date string (YYYY-MM-DD)
- * - Value: array of transactions on that date
+ * Example when groupBy is "date":
+ * [
+ *   ["2024-11-15", [tx1, tx2]],
+ *   ["2024-11-16", [tx3]]
+ * ]
+ *
+ * Example when groupBy is "category":
+ * [
+ *   ["Food", [tx1, tx2]],
+ *   ["Transport", [tx3]]
+ * ]
+ *
+ * - Each entry is a tuple of [key, transactions[]]
+ * - Key is either a formatted date (YYYY-MM-DD) or a category name
+ * - Useful for rendering grouped lists (e.g., daily or category views)
  */
-export const groupTxDate = (txs: Transaction[]) => {
-  return txs.reduce(
+
+type GroupBy = "category" | "date";
+
+export const groupTx = (txs: Transaction[], groupBy: GroupBy) => {
+  const grouped = txs.reduce(
     (acc, transaction) => {
-      console.log("acc: ", acc);
-      const dateKey = dayjs(transaction.date).format("YYYY-MM-DD");
-      if (!acc[dateKey]) {
-        acc[dateKey] = [];
+      const key =
+        groupBy === "date"
+          ? dayjs(transaction.date).format("YYYY-MM-DD")
+          : transaction.category;
+
+      if (!acc[key]) {
+        acc[key] = [];
       }
-      acc[dateKey].push(transaction);
+      acc[key].push(transaction);
       return acc;
     },
     {} as Record<string, Transaction[]>,
   );
+
+  // Convert to array of [key, Transaction[]]
+  return Object.entries(grouped);
 };
