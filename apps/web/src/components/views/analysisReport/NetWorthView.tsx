@@ -1,4 +1,5 @@
 import LoadingMessage from "@components/ui/LoadingMessage";
+import TransactionListItem from "@components/ui/TransactionListItem";
 import { AllTxSummary, YearlyTxSummary } from "@custom-types/transactions";
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -52,7 +53,7 @@ const NetWorthView = ({
         Net Worth Summary
       </Typography>
 
-      <Box height={300}>
+      <Box height={300} m={2}>
         <ResponsiveContainer height="100%" width="100%">
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -70,7 +71,12 @@ const NetWorthView = ({
         </ResponsiveContainer>
       </Box>
 
-      <Typography>Cash: {allTxSummary.total}</Typography>
+      <TransactionListItem
+        cost={allTxSummary.total}
+        emoji="cash"
+        title="Total Cash"
+        type="Income"
+      />
     </Box>
   );
 };

@@ -50,8 +50,8 @@ const getEmoji = (category: string) => {
       ],
     },
     {
-      emoji: "💰",
-      keywords: ["payroll", "salary", "income", "bonus"],
+      emoji: "💵",
+      keywords: ["payroll", "salary", "income", "bonus", "cash"],
     },
     {
       emoji: "🚗",

@@ -1,15 +1,8 @@
 import { Transaction } from "@custom-types/transactions";
-import {
-  Box,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-} from "@mui/material";
-import theme from "@theme/index";
+import { Box, Divider, List, Typography } from "@mui/material";
 import dayjs from "dayjs";
-import getEmoji from "src/util/getEmoji";
+
+import TransactionListItem from "./TransactionListItem";
 
 type TransactionCardProps = {
   groupByDateTxs: [string, Transaction[]][];
@@ -25,40 +18,13 @@ const TransactionCard = ({ groupByDateTxs }: TransactionCardProps) => {
           </Typography>
 
           {transactionsOnDate.map((tx) => (
-            <ListItem key={tx._id}>
-              <Box
-                alignItems="center"
-                bgcolor={theme.palette.border.main}
-                borderRadius="50%"
-                display="inline-flex"
-                height={32}
-                justifyContent="center"
-                mr={2}
-                p="18px"
-                width={32}
-              >
-                <Typography>{getEmoji(tx.category)}</Typography>
-              </Box>
-
-              <ListItemText
-                primary={<Typography>{tx.title}</Typography>}
-                secondary={
-                  <Typography color="text.secondary" variant="body2">
-                    {tx.category || "N/A"}
-                  </Typography>
-                }
-              />
-
-              <Typography
-                color={tx.type === "Income" ? "success.main" : "error.main"}
-              >
-                {tx.type === "Expense" && "-"}
-                {tx.cost.toLocaleString("en-CA", {
-                  currency: "CAD",
-                  style: "currency",
-                })}
-              </Typography>
-            </ListItem>
+            <TransactionListItem
+              category={tx.category}
+              cost={tx.cost}
+              key={tx._id}
+              title={tx.title}
+              type={tx.type}
+            />
           ))}
           {index < array.length - 1 && <Divider />}
         </Box>
