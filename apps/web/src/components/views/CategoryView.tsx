@@ -1,20 +1,17 @@
+import LoadingMessage from "@components/ui/LoadingMessage";
+import TransactionCard from "@components/ui/TransactionCard";
 import {
-  Box,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-  useTheme,
-} from "@mui/material";
-import dayjs from "dayjs";
-import { ISavedTransaction } from "src/types/transactions";
-import getEmoji from "src/util/getEmoji";
+  getTxByLatest,
+  getTxBySelectedMonth,
+  groupTx,
+} from "@util/transactionUtils";
+import { useEffect, useState } from "react";
+import { Transaction } from "src/types/transactions";
 
 interface CategoryViewProps {
   isPending: boolean;
   selectedMonth: string; // Format: "YYYY-MM" (e.g., "2024-05")
-  transactions: ISavedTransaction[];
+  transactions: Transaction[];
 }
 
 const CategoryView = ({
@@ -22,87 +19,23 @@ const CategoryView = ({
   selectedMonth,
   transactions,
 }: CategoryViewProps) => {
-  const theme = useTheme();
+  const [categoryViewTx, setCategoryViewTx] = useState<
+    [string, Transaction[]][]
+  >([]);
 
-  const monthlyTransactionsByCategory = transactions
-    .filter(
-      (transaction) =>
-        dayjs(transaction.date).format("YYYY-MM") === selectedMonth,
-    )
-    .sort((a, b) => a.category.localeCompare(b.category));
+  useEffect(() => {
+    const filtered = getTxBySelectedMonth(transactions, selectedMonth);
+    const sorted = getTxByLatest(filtered);
+    const grouped = groupTx(sorted, "category");
 
-  const transactionsByCategoryGroup = monthlyTransactionsByCategory.reduce(
-    (acc, transaction) => {
-      const categoryKey = transaction.category;
-      if (!acc[categoryKey]) {
-        acc[categoryKey] = [];
-      }
-      acc[categoryKey].push(transaction);
-      return acc;
-    },
-    {} as Record<string, ISavedTransaction[]>,
-  );
+    setCategoryViewTx(grouped);
+  }, [transactions, selectedMonth]);
 
   if (isPending) {
-    return (
-      <Box mt={4} textAlign="center">
-        <Typography>Loading transactions...</Typography>
-      </Box>
-    );
+    return <LoadingMessage />;
   }
 
-  return (
-    <List sx={{ padding: 0 }}>
-      {Object.entries(transactionsByCategoryGroup).map(
-        ([category, transactionsOnCategory], index, array) => (
-          <Box key={category}>
-            <Typography color="text.secondary" mt={2}>
-              {category}
-            </Typography>
-
-            {transactionsOnCategory.map((transaction) => (
-              <ListItem key={transaction._id}>
-                <Box
-                  alignItems="center"
-                  bgcolor={theme.palette.border.main}
-                  borderRadius="50%"
-                  display="inline-flex"
-                  height={32}
-                  justifyContent="center"
-                  mr={2}
-                  p="18px"
-                  width={32}
-                >
-                  <Typography>{getEmoji(transaction.category)}</Typography>
-                </Box>
-
-                <ListItemText
-                  primary={<Typography>{transaction.title}</Typography>}
-                  secondary={
-                    <Typography color="text.secondary" variant="body2">
-                      {dayjs(transaction.date).format("MMM DD (ddd)")}
-                    </Typography>
-                  }
-                />
-
-                <Typography
-                  color={
-                    transaction.type === "Income"
-                      ? "success.main"
-                      : "error.main"
-                  }
-                >
-                  {transaction.type === "Expense" ? "-" : ""}$
-                  {transaction.cost.toLocaleString()}
-                </Typography>
-              </ListItem>
-            ))}
-            {index < array.length - 1 && <Divider />}
-          </Box>
-        ),
-      )}
-    </List>
-  );
+  return <TransactionCard groupByDateTxs={categoryViewTx} />;
 };
 
 export default CategoryView;

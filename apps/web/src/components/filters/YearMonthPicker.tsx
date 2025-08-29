@@ -5,11 +5,12 @@ import { styled } from "@mui/system";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import { useState } from "react";
+import { useDateFilterStore } from "src/stores/useDateFilterStore";
 
+// TODO: Create a componentProps file and store it
 interface YearMonthPickerProps {
-  displayMode: "monthYear" | "year";
+  dateDisplayMode: "month" | "year";
   selectedDate: Dayjs;
-  setSelectedDate: React.Dispatch<React.SetStateAction<Dayjs>>;
 }
 
 const CustomDatePicker = styled(DatePicker)({
@@ -31,15 +32,15 @@ const CustomDatePicker = styled(DatePicker)({
 });
 
 const YearMonthPicker = ({
-  displayMode,
+  dateDisplayMode,
   selectedDate,
-  setSelectedDate,
 }: YearMonthPickerProps) => {
+  const { setSelectedDate } = useDateFilterStore();
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
   const handlePrev = () => {
     setSelectedDate(
-      displayMode === "year"
+      dateDisplayMode === "year"
         ? selectedDate.subtract(1, "year")
         : selectedDate.subtract(1, "month"),
     );
@@ -47,7 +48,7 @@ const YearMonthPicker = ({
 
   const handleNext = () => {
     const nextDate =
-      displayMode === "year"
+      dateDisplayMode === "year"
         ? selectedDate.add(1, "year")
         : selectedDate.add(1, "month");
 
@@ -79,19 +80,19 @@ const YearMonthPicker = ({
         onChange={handleDateChange}
         onClose={() => setIsDatePickerOpen(false)}
         open={isDatePickerOpen}
-        openTo={displayMode === "year" ? "year" : "month"}
+        openTo={dateDisplayMode === "year" ? "year" : "month"}
         slotProps={{
           textField: {
             onClick: () => setIsDatePickerOpen(true),
             placeholder:
-              displayMode === "year"
+              dateDisplayMode === "year"
                 ? selectedDate.format("YYYY")
                 : selectedDate.format("MMMM, YYYY"),
             variant: "outlined",
           },
         }}
         value={selectedDate}
-        views={displayMode === "year" ? ["year"] : ["year", "month"]}
+        views={dateDisplayMode === "year" ? ["year"] : ["year", "month"]}
       />
 
       <IconButton onClick={handleNext}>

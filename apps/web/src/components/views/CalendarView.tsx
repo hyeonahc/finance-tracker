@@ -6,7 +6,7 @@ import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import dayjs from "dayjs";
 import { useMemo } from "react";
-import { ISavedTransaction } from "src/types/transactions";
+import { Transaction } from "src/types/transactions";
 
 interface CustomEvent extends EventContentArg {
   event: { cost?: string } & EventContentArg["event"];
@@ -15,7 +15,7 @@ interface CustomEvent extends EventContentArg {
 
 interface CalendarViewProps {
   selectedMonth: string;
-  transactions: ISavedTransaction[];
+  transactions: Transaction[];
 }
 
 const CalendarView = ({ selectedMonth, transactions }: CalendarViewProps) => {

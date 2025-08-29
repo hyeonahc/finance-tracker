@@ -1,10 +1,10 @@
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { styled } from "@mui/system";
-import { ViewOption } from "@pages/ExpenseHistory";
 
-interface ViewOptionsProps {
-  onViewChange: (view: ViewOption) => void;
-  selectedView: ViewOption;
+interface DateViewSelectProps<T extends string> {
+  options: T[];
+  selectedView: T;
+  setSelectedView: (view: T) => void;
 }
 
 const CustomToggleButton = styled(ToggleButton)(({ theme }) => ({
@@ -25,13 +25,17 @@ const CustomToggleButton = styled(ToggleButton)(({ theme }) => ({
   textTransform: "capitalize",
 }));
 
-const ViewOptions = ({ onViewChange, selectedView }: ViewOptionsProps) => {
+const DateViewSelect = <T extends string>({
+  options,
+  selectedView,
+  setSelectedView,
+}: DateViewSelectProps<T>) => {
   const handleViewChange = (
     _event: React.MouseEvent<HTMLElement>,
-    newView: ViewOption | null,
+    newView: T | null, // TODO: Avoid using or null type
   ) => {
     if (newView) {
-      onViewChange(newView);
+      setSelectedView(newView);
     }
   };
 
@@ -44,7 +48,7 @@ const ViewOptions = ({ onViewChange, selectedView }: ViewOptionsProps) => {
       sx={{ justifyContent: "space-around" }}
       value={selectedView}
     >
-      {["daily", "monthly", "calendar", "category"].map((option) => (
+      {options.map((option) => (
         <CustomToggleButton
           aria-label={`${option} view`}
           key={option}
@@ -57,4 +61,4 @@ const ViewOptions = ({ onViewChange, selectedView }: ViewOptionsProps) => {
   );
 };
 
-export default ViewOptions;
+export default DateViewSelect;
